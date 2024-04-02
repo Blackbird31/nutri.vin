@@ -73,9 +73,12 @@
 
 <h3>Information nutritionelle</h3>
   <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="nutritionnel" name="nutritionnel" value="<?php echo $qrcode->nutritionnel; ?>"/>
-      <label form="nutritionnel" class="form-label">Nutritionnel</label>
-      <div id="nutritionnel_help" class="form-text">nutritionnel</div>
+      <input type="text" class="form-control" id="nutritionnel_energie" name="nutritionnel_energie" value="<?php echo $qrcode->nutritionnel_energie; ?>"/>
+      <label form="nutritionnel_energie" class="form-label">Matières énergie</label>
+  </div>
+  <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="nutritionnel_matieres_grasses" name="nutritionnel_matieres_grasses" value="<?php echo $qrcode->nutritionnel_matieres_grasses; ?>"/>
+      <label form="nutritionnel_matieres_grasses" class="form-label">Matière grasses</label>
   </div>
 
   <?php if ($qrcode->exists('authorization_key')): ?>
