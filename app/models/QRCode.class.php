@@ -15,15 +15,21 @@ class QRCode extends MapperTable {
 	}
 
 	static $copy_field_filter =  array(
-		   "nom" => 1, "appellation" => 1, "couleur" => 1,
-		   "alcool_degre" => 1, "quantite" => 1, "millesime" => 1, "lot" => 1,
-		   "ingredients" => 1, "nutritionnel" => 1
+		   "domaine_nom" => 1,
+		   "cuvee_nom" => 1, "appellation" => 1, "couleur" => 1,
+		   "alcool_degre" => 1, "centilisation" => 1, "millesime" => 1,
+		   "ingredients" => 1,
+		   "nutritionnel_energie" => 1, "nutritionnel_matieres_grasses" => 1,
+		   "etiquette" => 1,
+		   "authorization_key" => 1
      );
 
 	 static function getFieldsAndType() {
 		 $fields = parent::getFieldsAndType();
 
 		 $fields['id'] = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+		 $fields['user_id'] = 'VARCHAR(255)';
+
 		 $fields['domaine_nom'] = 'VARCHAR(255)';
 
 		 $fields['appellation'] = 'VARCHAR(255)';
@@ -43,6 +49,7 @@ class QRCode extends MapperTable {
 
  		 $fields['etiquette'] = 'BLOB';
 
+		 $fields['authorization_key'] = 'VARCHAR(100)';
 		 return $fields;
  	}
 

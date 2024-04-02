@@ -1,6 +1,5 @@
 <h2>Création d'un vin</h2>
-
-<form method="POST" action="<?php echo $urlbase; ?>/qrcode/write">
+<form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write">
 <?php if (isset($qrcode->id)): ?>
     <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
 <?php endif; ?>
@@ -15,7 +14,7 @@
 <h3>Information relative au vin</h3>
 
   <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
+      <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
       <label for="cuvee_nom">Nom de la cuvee</label>
   </div>
 
@@ -43,7 +42,7 @@
   <div class="mb-3">
       <label form="quantite" class="col-sm-2 col-form-label">Centilisation</label>
       <div class="input-group col-sm-10">
-          <input type="text" class="form-control" id="quantite" name="quantite" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
+          <input type="text" class="form-control" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
           <span class="input-group-text" id="basic-addon2">cl</span>
       </div>
   </div>
@@ -66,7 +65,7 @@
 
 <h3>Liste des ingrédients</h3>
   <div class="form-floating mb-3">
-      <textarea type="text" class="form-control" id="ingredients" name="ingredients" value="<?php echo $qrcode->ingredients; ?>" style="height: 100px"></textarea>
+      <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
       <label form="ingredients" class="form-label">Ingredients</label>
       <div id="ingredients_help" class="form-text">ingredients</div>
   </div>

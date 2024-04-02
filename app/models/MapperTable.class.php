@@ -42,7 +42,7 @@ class MapperTable extends DB\SQL\Mapper {
 	static function filterCopyFrom($fields) {
 		return array_intersect_key(
 			$fields,
-			self::$copy_field_filter
+			get_called_class()::$copy_field_filter
 		);
 	}
 
