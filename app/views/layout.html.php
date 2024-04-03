@@ -11,7 +11,7 @@
     <link href="<?php echo $urlbase; ?>/css/nutrivin.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container-sm p-3"  style="max-width: 768px;">
+    <div class="container-sm p-3">
         <?php include($content); ?>
     </div>
   </body>

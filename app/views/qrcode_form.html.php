@@ -1,87 +1,188 @@
 <h2>Création d'un vin</h2>
-<form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write">
-<?php if (isset($qrcode->id)): ?>
-    <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
-<?php endif; ?>
 
-<h3>Information commerciale</h3>
+<div class="row justify-content-end">
+  <div class="col-8">
+      <form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write" enctype="multipart/form-data">
+      <?php if (isset($qrcode->id)): ?>
+          <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
+      <?php endif; ?>
 
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
-      <label for="domaine_nom">Nom du Domaine</label>
-  </div>
 
-<h3>Information relative au vin</h3>
+      <h3 class="mt-4 mb-4">Information commerciale</h3>
 
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
-      <label for="cuvee_nom">Nom de la cuvee</label>
-  </div>
+      <div class="form-floating mb-3 col-sm-10">
+          <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
+          <label for="domaine_nom">Nom du Domaine</label>
+      </div>
 
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
-      <label form="appellation" class="form-label">Appellation</label>
-  </div>
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Couleur"/>
-      <label form="couleur" class="form-label">Couleur</label>
-  </div>
 
-  <h3>Information complémentaires</h3>
-  <div class="mb-3">
-      <label form="alcool_degre" class="col-sm-2 col-form-label">Degré d'alcool</label>
-      <div class="col-sm-10">
-        <div class="input-group">
-          <input type="text" class="form-control" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Alcool"/>
-          <span class="input-group-text" id="basic-addon2">%</span>
+      <h3 class="mt-4 mb-4">Information relative au vin</h3>
+
+
+      <div class="form-floating mb-3 col-sm-10">
+           <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
+           <label for="cuvee_nom">Nom de la cuvee</label>
+       </div>
+
+       <div class="form-floating mb-3 col-sm-10">
+           <input type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
+           <label form="appellation" class="form-label">Appellation</label>
+       </div>
+
+       <div class="form-floating mb-3 col-sm-10">
+           <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Couleur"/>
+           <label form="couleur" class="form-label">Couleur</label>
+       </div>
+
+
+        <h3 class="mt-4 mb-4">Informations complémentaires</h3>
+
+        <div class="mb-3 col-sm-3">
+            <label form="alcool_degre" class="col-form-label">Degré d'alcool</label>
+              <div class="input-group">
+                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Alcool"/>
+                <span class="input-group-text" id="basic-addon2">%</span>
+              </div>
         </div>
-      </div>
-  </div>
 
-  <div class="row">
-  <div class="mb-3">
-      <label form="quantite" class="col-sm-2 col-form-label">Centilisation</label>
-      <div class="input-group col-sm-10">
-          <input type="text" class="form-control" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
-          <span class="input-group-text" id="basic-addon2">cl</span>
-      </div>
-  </div>
+        <div class="mb-3 col-sm-3">
+            <label form="quantite" class="col-form-label">Centilisation</label>
+            <div class="input-group">
+                <input type="text" class="form-control text-sm-end" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
+                <span class="input-group-text" id="basic-addon2">cl</span>
+            </div>
+        </div>
 
-  <div class="mb-3">
-    <label form="millesime" class="col-sm-2 col-form-label">Millesime</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millesime"/>
-    </div>
-  </div>
+        <div class="mb-3 col-sm-3">
+          <label form="millesime" class="col-form-label">Millesime</label>
+            <input type="text" class="form-control text-sm-end" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millesime"/>
+          </div>
 
-  <h3>Photos de l'étiquette</h3>
-  <div class="mb-3">
-      <label form="etiquette" class="col-sm-2 form-label">Étiquette</label>
-      <div class="col-sm-10">
-      <input type="text" class="form-control" id="etiquette" name="etiquette" value="<?php echo $qrcode->etiquette; ?>" placeholder="Étiquette"/>
-      </div>
+        <h3 class="mt-4 mb-4">Photos de l'étiquette</h3>
+
+        <div class="mb-3">
+            <div class="col-sm-10">
+              <label for="etiquette" class="form-label">Fichier étiquette</label>
+              <input type="file" class="form-control" id="etiquette" name="etiquette" value="<?php echo $qrcode->etiquette; ?>" placeholder="Étiquette"/>
+            </div>
+        </div>
+
+      <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
+        <div class="form-floating mb-3 col-sm-10">
+            <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
+            <label form="ingredients" class="form-label">Ingredients</label>
+            <div id="ingredients_help" class="form-text">ingredients</div>
+        </div>
+
+      <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
+
+        <div class="form-floating mb-3 col-sm-10">
+          <table class="table table-striped">
+            <tbody>
+
+
+              <tr>
+                <td class="align-middle">énergie</td>
+                  <td>
+                    <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie" name="nutritionnel_energie" value="<?php echo $qrcode->nutritionnel_energie; ?>"/>
+                      <span class="input-group-text" id="basic-addon-cal">kj/kcal</span>
+                    </div>
+                  </div>
+                  </td>
+              </tr>
+
+
+              <tr>
+                <td class="align-middle">graisses</td>
+                  <td class="text-sm-start">
+                    <div class="col-6 offset-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-sm-end" id="nutritionnel_graisses" name="nutritionnel_graisses" value="<?php echo $qrcode->nutritionnel_graisses; ?>"/>
+                        <span class="input-group-text" id="basic-addon-graisses">g</span>
+                      </div>
+                    </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td class="ps-5 align-middle">- dont acides gras saturés</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_acides_gras" name="nutritionnel_acides_gras" value="<?php echo $qrcode->nutritionnel_acides_gras; ?>"/>
+                      <span class="input-group-text" id="basic-addon-gras">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td class="align-middle">glucides</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_glucides" name="nutritionnel_glucides" value="<?php echo $qrcode->nutritionnel_glucides; ?>"/>
+                      <span class="input-group-text" id="basic-addon-glucides">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td class="ps-5 align-middle">- dont sucres</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sucres" name="nutritionnel_sucres" value="<?php echo $qrcode->nutritionnel_sucres; ?>"/>
+                      <span class="input-group-text" id="basic-addon-sucres">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td class="align-middle">protéines</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_proteines" name="nutritionnel_proteines" value="<?php echo $qrcode->nutritionnel_proteines; ?>"/>
+                      <span class="input-group-text" id="basic-addon-proteines">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td class="align-middle">sel</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sel" name="nutritionnel_sel" value="<?php echo $qrcode->nutritionnel_sel; ?>"/>
+                      <span class="input-group-text" id="basic-addon-sel">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+        <?php if ($qrcode->exists('authorization_key')): ?>
+        <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
+        <?php endif; ?>
+        <button type="submit" class="btn btn-primary">Créer le vin</button>
+      </form>
+  </div>
+  <div class="col-4 text-center border border-primary bg-primary-subtle">
+    <h3>Présentation</div>
   </div>
 </div>
-
-<h3>Liste des ingrédients</h3>
-  <div class="form-floating mb-3">
-      <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
-      <label form="ingredients" class="form-label">Ingredients</label>
-      <div id="ingredients_help" class="form-text">ingredients</div>
-  </div>
-
-<h3>Information nutritionelle</h3>
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="nutritionnel_energie" name="nutritionnel_energie" value="<?php echo $qrcode->nutritionnel_energie; ?>"/>
-      <label form="nutritionnel_energie" class="form-label">Matières énergie</label>
-  </div>
-  <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="nutritionnel_matieres_grasses" name="nutritionnel_matieres_grasses" value="<?php echo $qrcode->nutritionnel_matieres_grasses; ?>"/>
-      <label form="nutritionnel_matieres_grasses" class="form-label">Matière grasses</label>
-  </div>
-
-  <?php if ($qrcode->exists('authorization_key')): ?>
-  <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
-  <?php endif; ?>
-  <button type="submit" class="btn btn-primary">Créer le vin</button>
-</form>

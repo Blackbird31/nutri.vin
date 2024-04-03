@@ -19,7 +19,10 @@ class QRCode extends MapperTable {
 		   "cuvee_nom" => 1, "appellation" => 1, "couleur" => 1,
 		   "alcool_degre" => 1, "centilisation" => 1, "millesime" => 1,
 		   "ingredients" => 1,
-		   "nutritionnel_energie" => 1, "nutritionnel_matieres_grasses" => 1,
+		   "nutritionnel_energie" => 1, "nutritionnel_graisses" => 1,
+			 "nutritionnel_acides_gras" => 1, "nutritionnel_glucides" => 1,
+			 "nutritionnel_sucres" => 1, "nutritionnel_proteines" => 1,
+			 "nutritionnel_sel" => 1,
 		   "etiquette" => 1,
 		   "authorization_key" => 1
      );
@@ -45,7 +48,12 @@ class QRCode extends MapperTable {
  		 $fields['ingredients'] = 'TEXT';
 
 		 $fields['nutritionnel_energie'] = 'INTEGER';
-		 $fields['nutritionnel_matieres_grasses'] = 'INTEGER';
+		 $fields['nutritionnel_graisses'] = 'INTEGER';
+		 $fields['nutritionnel_acides_gras'] = 'INTEGER';
+		 $fields['nutritionnel_glucides'] = 'INTEGER';
+		 $fields['nutritionnel_sucres'] = 'INTEGER';
+		 $fields['nutritionnel_proteines'] = 'INTEGER';
+		 $fields['nutritionnel_sel'] = 'INTEGER';
 
  		 $fields['etiquette'] = 'BLOB';
 
