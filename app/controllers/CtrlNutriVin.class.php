@@ -32,6 +32,24 @@ class CtrlNutriVin {
             if (!$qrcode->user_id) {
                 $qrcode->user_id = $f3->get('PARAMS.userid');
             }
+
+            $overwrite = false;
+            $slug = true;
+            $upload = Web::instance()->receive(function($file, $formFieldName){
+              if ($file['type'] != 'application/pdf') {
+                return false;
+              }
+              return true;
+            },
+            $overwrite,
+            $slug
+          );
+
+          if ($upload) {
+            $qrcode->etiquette = array_keys($upload)[0];
+          } else {
+            //erreur etiquette
+          }
             $qrcode->save();
             $qrcode = QRCode::findById($qrcode->id);
             return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id, false);
