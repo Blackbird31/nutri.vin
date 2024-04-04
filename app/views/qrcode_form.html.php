@@ -80,6 +80,22 @@
             <label form="ingredients" class="form-label">Ingredients</label>
             <div id="ingredients_help" class="form-text">ingredients</div>
         </div>
+        <?php if ($qrcode->ingredients): ?>
+        <p>
+            <?php $x = 0; foreach($qrcode->getListeIngredients() as $i): $x++?>
+                <select name="ingredients_<?php echo $x; ?>">
+                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <option value="<?php echo $i; ?> (bio)"><?php echo $i; ?> (bio)</option>
+                </select>
+            <?php endforeach; ?>
+            <select name="ingredients_<?php echo $x++; ?>">
+                <option></option>
+                <?php foreach(QRCode::getFullListeIngredients() as $i):?>
+                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </p>
+        <?php endif; ?>
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 

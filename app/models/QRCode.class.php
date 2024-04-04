@@ -65,6 +65,36 @@ class QRCode extends MapperTable {
 		 return $fields;
  	}
 
+	function getListeIngredients() {
+		return preg_split('/ *, */', $this->ingredients);
+	}
+
+	static function getFullListeIngredients() {
+		return array(
+			"Raisins",
+			"Moût de raisin concentré",
+			"Liqueur de tirage et liqueur d'expédition",
+			"Acide tartrique",
+			"E 334",
+			"Acide malique",
+			"E 296",
+			"Acide lactique",
+			"E 270",
+			"Tartrate de potassium",
+			"E 336",
+			"Bicarbonate de potassium",
+			"E 501",
+			"Carbonate de calcium",
+			"E 170",
+			"Tartrate de calcium",
+			"E 354",
+			"Sulfate de calcium",
+			"E 516",
+			"Carbonate de potassium",
+			"E 501",
+		);
+	}
+
 	static function insertExample($a = null) {
 		$qr = new QRCode();
 		$qr->save();
