@@ -62,8 +62,15 @@
 
         <div class="mb-3">
             <div class="col-sm-10">
+<?php if ($qrcode->etiquette) : ?>
+                <div class="col-sm-4">
+                <img src="<?php echo $qrcode->etiquette ?>" class="img-thumbnail"/><br/>
+                <center><a href="./<?php echo $qrcode->id; ?>/img/0/delete">(suppr)</a></center>
+                </div>
+<?php else:?>
               <label for="etiquette" class="form-label">Fichier étiquette</label>
               <input type="file" class="form-control" id="etiquette" name="etiquette" value="<?php echo $qrcode->etiquette; ?>" placeholder="Étiquette"/>
+<?php endif; ?>
             </div>
         </div>
 

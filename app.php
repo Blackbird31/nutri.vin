@@ -18,8 +18,6 @@ $f3->set('config', $config);
 require_once('app/models/DBManager.class.php');
 require_once('app/models/QRCode.class.php');
 
-$f3->set('UPLOADS', 'uploads/');
-
 DBManager::createDB('sqlite:'.$f3->get('ROOT').'/nutrivin.sqlite');
 
 include('app/routes.php');

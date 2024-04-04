@@ -32,29 +32,24 @@ class CtrlNutriVin {
             if (!$qrcode->user_id) {
                 $qrcode->user_id = $f3->get('PARAMS.userid');
             }
-
-            $overwrite = false;
-            $slug = true;
-            $upload = Web::instance()->receive(function($file, $formFieldName){
-              if ($file['type'] != 'application/pdf') {
-                return false;
-              }
-              return true;
-            },
-            $overwrite,
-            $slug
-          );
-
-          if ($upload) {
-            $qrcode->etiquette = array_keys($upload)[0];
-          } else {
-            //erreur etiquette
-          }
+            if(isset($_FILES['etiquette']) && in_array($_FILES['etiquette']['type'], array('image/jpeg', 'image/png'))) {
+                $qrcode->etiquette = 'data:'.$_FILES['etiquette']['type'].';base64,'.base64_encode(file_get_contents($_FILES['etiquette']['tmp_name']));
+            }
             $qrcode->save();
             $qrcode = QRCode::findById($qrcode->id);
             return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id, false);
         }
         return $f3->reroute('/qrcode', false);
+    }
+
+    function qrcodeDeleteImage(Base $f3) {
+        $qrcode = QRCode::findById($f3->get('PARAMS.id'));
+        if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
+            throw new Exception('not allowed');
+        }
+        $qrcode->etiquette = null;
+        $qrcode->save();
+        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id, false);
     }
 
     function qrcodeCreate(Base $f3) {
