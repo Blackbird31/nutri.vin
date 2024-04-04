@@ -39,21 +39,21 @@ class QRCode extends MapperTable {
 		 $fields['couleur'] = 'VARCHAR(255)';
 		 $fields['cuvee_nom'] = 'VARCHAR(255)';
 
-		 $fields['alcool_degre'] = 'VARCHAR(255)';
-		 $fields['centilisation'] = 'VARCHAR(255)';
+		 $fields['alcool_degre'] = 'FLOAT';
+		 $fields['centilisation'] = 'FLOAT';
 
 		 $fields['millesime'] = 'VARCHAR(255)';
 		 $fields['lot'] = 'VARCHAR(255)';
 
  		 $fields['ingredients'] = 'TEXT';
 
-		 $fields['nutritionnel_energie'] = 'INTEGER';
-		 $fields['nutritionnel_graisses'] = 'INTEGER';
-		 $fields['nutritionnel_acides_gras'] = 'INTEGER';
-		 $fields['nutritionnel_glucides'] = 'INTEGER';
-		 $fields['nutritionnel_sucres'] = 'INTEGER';
-		 $fields['nutritionnel_proteines'] = 'INTEGER';
-		 $fields['nutritionnel_sel'] = 'INTEGER';
+		 $fields['nutritionnel_energie'] = 'FLOAT';
+		 $fields['nutritionnel_graisses'] = 'FLOAT';
+		 $fields['nutritionnel_acides_gras'] = 'FLOAT';
+		 $fields['nutritionnel_glucides'] = 'FLOAT';
+		 $fields['nutritionnel_sucres'] = 'FLOAT';
+		 $fields['nutritionnel_proteines'] = 'FLOAT';
+		 $fields['nutritionnel_sel'] = 'FLOAT';
 
  		 $fields['etiquette'] = 'BLOB';
 
