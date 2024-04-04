@@ -27,6 +27,9 @@ class MapperTable extends DB\SQL\Mapper {
 		$class = get_called_class();
 		$e = new $class();
 		$e->load(array('id=?',$id));
+		if (!$e->id) {
+			return null;
+		}
 		return $e;
 	}
 

@@ -9,7 +9,7 @@ class QRCode extends MapperTable {
 			$this->authorization_key = sha1(implode(',',$this->values()).rand());
 		}
 		if (!$this->id) {
-			$this->id = null;
+			$this->id = self::generateId();
 		}
 		return parent::save();
 	}
@@ -30,7 +30,7 @@ class QRCode extends MapperTable {
 	 static function getFieldsAndType() {
 		 $fields = parent::getFieldsAndType();
 
-		 $fields['id'] = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
 
 		 $fields['domaine_nom'] = 'VARCHAR(255)';
@@ -65,6 +65,23 @@ class QRCode extends MapperTable {
 		$qr = new QRCode();
 		$qr->save();
 		return $qr;
+	}
+
+	static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
+	                 'AZERTYUIOPQSDFGHJKLMWXCVBN'.
+					 '0123456789';
+	static function generateId() {
+		for($x = 0 ; $x < 10 ; $x++) {
+			$id = '10';
+			for($i = strlen($id) ; $i < 8 ; $i++) {
+				$id .= substr(self::$CHARID, rand(0, strlen(self::$CHARID)), 1);
+			}
+			$qr = self::findById($id);
+			if (! $qr) {
+				return $id;
+			}
+		}
+		throw new Exception('no free id found');
 	}
 
 }
