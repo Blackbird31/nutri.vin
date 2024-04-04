@@ -15,4 +15,6 @@
         <?php include($content); ?>
     </div>
   </body>
+  <script src="<?php echo $urlbase; ?>/js/jquery-3.7.1.min.js"></script>
+  <script src="<?php echo $urlbase; ?>/js/bootstrap.bundle.min.js"></script>
 </html>

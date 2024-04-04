@@ -89,12 +89,23 @@
 
 
               <tr>
-                <td class="align-middle">énergie</td>
+                <td class="align-middle">Énergie (kJ)</td>
                   <td>
                     <div class="col-6 offset-6">
                     <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie" name="nutritionnel_energie" value="<?php echo $qrcode->nutritionnel_energie; ?>"/>
-                      <span class="input-group-text" id="basic-addon-cal">kj/kcal</span>
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" onChange="$('#nutritionnel_energie_kcal').val(parseInt($('#nutritionnel_energie_kj').val()/4.184))" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
+                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
+                    </div>
+                  </div>
+                  </td>
+              </tr>
+              <tr>
+                <td class="align-middle">Énergie (kcal)</td>
+                  <td>
+                    <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" onChange="$('#nutritionnel_energie_kj').val(parseInt($('#nutritionnel_energie_kcal').val()*4.184))" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
+                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
                     </div>
                   </div>
                   </td>
@@ -102,7 +113,7 @@
 
 
               <tr>
-                <td class="align-middle">graisses</td>
+                <td class="align-middle">Graisses</td>
                   <td class="text-sm-start">
                     <div class="col-6 offset-6">
                       <div class="input-group">
@@ -128,7 +139,7 @@
 
 
               <tr>
-                <td class="align-middle">glucides</td>
+                <td class="align-middle">Glucides</td>
                 <td class="text-sm-start">
                   <div class="col-6 offset-6">
                     <div class="input-group">
@@ -152,9 +163,20 @@
                 </td>
               </tr>
 
+              <tr>
+                  <td class="align-middle">Fibres alimentaires</td>
+                  <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                          <div class="input-group">
+                              <input type="text" class="form-control text-sm-end" id="nutritionnel_fibres" name="nutritionnel_fibres" value="<?php echo $qrcode->nutritionnel_fibres; ?>"/>
+                              <span class="input-group-text" id="basic-addon-fibres">g</span>
+                          </div>
+                      </div>
+                  </td>
+              </tr>
 
               <tr>
-                <td class="align-middle">protéines</td>
+                <td class="align-middle">Protéines</td>
                 <td class="text-sm-start">
                   <div class="col-6 offset-6">
                     <div class="input-group">
@@ -167,7 +189,7 @@
 
 
               <tr>
-                <td class="align-middle">sel</td>
+                <td class="align-middle">Sel</td>
                 <td class="text-sm-start">
                   <div class="col-6 offset-6">
                     <div class="input-group">
@@ -178,6 +200,17 @@
                 </td>
               </tr>
 
+              <tr>
+                <td class="align-middle">Sodium</td>
+                <td class="text-sm-start">
+                  <div class="col-6 offset-6">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sodium" name="nutritionnel_sodium" value="<?php echo $qrcode->nutritionnel_sodium; ?>"/>
+                      <span class="input-group-text" id="basic-addon-sodium">g</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
 
             </tbody>
           </table>

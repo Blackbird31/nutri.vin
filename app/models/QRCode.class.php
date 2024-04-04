@@ -15,16 +15,17 @@ class QRCode extends MapperTable {
 	}
 
 	static $copy_field_filter =  array(
-		   "domaine_nom" => 1,
-		   "cuvee_nom" => 1, "appellation" => 1, "couleur" => 1,
-		   "alcool_degre" => 1, "centilisation" => 1, "millesime" => 1,
-		   "ingredients" => 1,
-		   "nutritionnel_energie" => 1, "nutritionnel_graisses" => 1,
-			 "nutritionnel_acides_gras" => 1, "nutritionnel_glucides" => 1,
-			 "nutritionnel_sucres" => 1, "nutritionnel_proteines" => 1,
-			 "nutritionnel_sel" => 1,
-		   "etiquette" => 1,
-		   "authorization_key" => 1
+		"domaine_nom" => 1,
+		"cuvee_nom" => 1, "appellation" => 1, "couleur" => 1,
+		"alcool_degre" => 1, "centilisation" => 1, "millesime" => 1,
+		"ingredients" => 1,
+		"nutritionnel_energie_kj" => 1, "nutritionnel_energie_kcal" => 1,
+		"nutritionnel_graisses" => 1, "nutritionnel_acides_gras" => 1,
+		"nutritionnel_glucides" => 1, "nutritionnel_sucres" => 1,
+		"nutritionnel_proteines" => 1,
+		"nutritionnel_sel" => 1, "nutritionnel_sodium" => 1,
+		"etiquette" => 1,
+		"authorization_key" => 1
      );
 
 	 static function getFieldsAndType() {
@@ -47,13 +48,16 @@ class QRCode extends MapperTable {
 
  		 $fields['ingredients'] = 'TEXT';
 
-		 $fields['nutritionnel_energie'] = 'FLOAT';
+		 $fields['nutritionnel_energie_kj'] = 'FLOAT';
+		 $fields['nutritionnel_energie_kcal'] = 'FLOAT';
 		 $fields['nutritionnel_graisses'] = 'FLOAT';
 		 $fields['nutritionnel_acides_gras'] = 'FLOAT';
 		 $fields['nutritionnel_glucides'] = 'FLOAT';
 		 $fields['nutritionnel_sucres'] = 'FLOAT';
+		 $fields['nutritionnel_fibres'] = 'FLOAT';
 		 $fields['nutritionnel_proteines'] = 'FLOAT';
 		 $fields['nutritionnel_sel'] = 'FLOAT';
+		 $fields['nutritionnel_sodium'] = 'FLOAT';
 
  		 $fields['etiquette'] = 'BLOB';
 
