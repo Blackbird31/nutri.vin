@@ -81,21 +81,67 @@
             <div id="ingredients_help" class="form-text">ingredients</div>
         </div>
         <?php if ($qrcode->ingredients): ?>
-        <p>
+        <p id="ingredientSelects">
             <?php $x = 0; foreach($qrcode->getListeIngredients() as $i): $x++?>
                 <select name="ingredients_<?php echo $x; ?>">
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                    <option value="<?php echo $i; ?> (bio)"><?php echo $i; ?> (bio)</option>
+                    <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
+                    <option value="<?php echo htmlspecialchars($i); ?> (bio)"><?php echo htmlspecialchars($i); ?> (bio)</option>
                 </select>
             <?php endforeach; ?>
-            <select name="ingredients_<?php echo $x++; ?>">
+            <?php echo ',' . '&nbsp'; ?>
+            <select id="newIngredientSelect" name="ingredients_<?php echo $x++; ?>" class="ingredientSelect">
                 <option></option>
                 <?php foreach(QRCode::getFullListeIngredients() as $i):?>
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
                 <?php endforeach; ?>
             </select>
+            <?php echo ',' . '&nbsp'; ?>
         </p>
         <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function addNewSelect() {
+        var prevSelect = document.querySelector('.ingredientSelect');
+        if (prevSelect) {
+            prevSelect.removeEventListener('change', selectChangeHandler);
+        }
+
+        var newSelect = document.createElement('select');
+        newSelect.name = 'ingredients_' + document.querySelectorAll('select[name^="ingredients_"]').length;
+        newSelect.classList.add('ingredientSelect');
+
+        var defaultOption = document.createElement('option');
+        newSelect.appendChild(defaultOption);
+
+        <?php foreach(QRCode::getFullListeIngredients() as $i): ?>
+            var option = document.createElement('option');
+            option.value = '<?php echo htmlspecialchars($i); ?>';
+            option.textContent = '<?php echo htmlspecialchars($i); ?>';
+            newSelect.appendChild(option);
+        <?php endforeach; ?>
+
+        document.getElementById('ingredientSelects').appendChild(newSelect);
+
+        newSelect.addEventListener('change', selectChangeHandler);
+
+        var newComma = document.createElement('span');
+        newComma.textContent = ",";
+        newComma.classList.add('pe-2');
+        document.getElementById('ingredientSelects').appendChild(newComma);
+    }
+
+    function selectChangeHandler() {
+        var selectedValue = this.value;
+        if (selectedValue) {
+            addNewSelect();
+        }
+    }
+
+    var initialSelect = document.querySelector('.ingredientSelect');
+    initialSelect.addEventListener('change', selectChangeHandler);
+});
+</script>
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
