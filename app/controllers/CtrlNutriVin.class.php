@@ -79,4 +79,13 @@ class CtrlNutriVin {
         return $f3->reroute('/qrcode/userid/create', false);
     }
 
+    function qrcodeList(Base $f3) {
+      if ($f3->exists('PARAMS.userid')) {
+        $f3->set('qrlist', QRCode::findByUserid($f3->get('PARAMS.userid')));
+        $f3->set('userid', $f3->get('PARAMS.userid'));
+        $f3->set('content', 'qrcode_list.html.php');
+        echo View::instance()->render('layout.html.php');
+      }
+    }
+
 }

@@ -118,4 +118,10 @@ class QRCode extends MapperTable {
 		throw new Exception('no free id found');
 	}
 
+	static function findByUserid($userid) {
+		$class = get_called_class();
+		$e = new $class();
+		return $e->find(array('user_id=?',$userid));
+	}
+
 }
