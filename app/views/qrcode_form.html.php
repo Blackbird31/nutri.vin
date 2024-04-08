@@ -78,9 +78,39 @@
         <div class="form-floating mb-3 col-sm-10">
             <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
             <label form="ingredients" class="form-label">Ingredients</label>
-            <div id="ingredients_help" class="form-text">ingredients</div>
+            <!-- <div id="ingredients_help" class="form-text">ingredients</div> -->
         </div>
-        <?php if ($qrcode->ingredients): ?>
+
+        <div class="container col-sm-10 m-0 p-0" >
+        <table class="table table-bordered col-sm-10">
+        <caption class="caption-top">Tableau des ingrédients</caption>
+            <thead class="table-dark text-center" >
+              <tr>
+                <th class="col-4" scope="col">Ingredient</th>
+                <th class="col-4" scope="col">Type</th>
+                <th class="col-1" scope="col">Bio</th>
+                <th class="col-1" scope="col">All.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center" >
+                <th scope="row"></th>
+                <th></th>
+
+                <th>
+                  <input class="form-check-input" type="checkbox" id="checkboxBio" value="" aria-label="case à cocher pour ingrédient bio">
+                </th>
+                <th>
+                <input class="form-check-input" type="checkbox" id="checkboxAllergene" value="" aria-label="case à cocher pour ingrédient allergène">
+                </th>
+              </tr>
+            </tbody>
+        </table>
+        <figcaption class="figure-caption" >All. = Allergène</caption>
+
+        </div>
+
+        <!-- <?php if ($qrcode->ingredients): ?>
         <p id="ingredientSelects">
             <?php $x = 0; foreach($qrcode->getListeIngredients() as $i): $x++?>
                 <select name="ingredients_<?php echo $x; ?>">
