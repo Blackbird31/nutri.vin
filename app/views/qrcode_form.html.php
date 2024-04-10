@@ -365,7 +365,25 @@ const liveform = (function () {
             console.error("Pas d'élément liveform avec l'attribut : "+el.name)
             return false;
         }
-        toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+
+        if (el.type === 'file') {
+            const file = el.files[0]
+            if (!file.type) {
+                status.textContent = 'Error: The File.type property does not appear to be supported on this browser.';
+                return;
+            }
+            if (!file.type.match('image.*')) {
+                status.textContent = 'Error: The selected file does not appear to be an image.'
+                return;
+            }
+            const reader = new FileReader();
+            reader.addEventListener('load', event => {
+                toUpdate.src = event.target.result;
+            });
+            reader.readAsDataURL(file);
+        } else {
+            toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+        }
 
         _template.scrollTop = toUpdate.closest('div').offsetTop
     }
