@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="submit" class="btn btn-primary">Créer le vin</button>
       </form>
   </div>
-  <div class="col-4 text-center border border-primary bg-primary-subtle vh-100 sticky-top overflow-auto" data-liveform-container>
+  <div class="col-4 text-center border border-primary bg-primary-subtle sticky-top overflow-auto" style="height: 85vh" data-liveform-container>
     <h3>Prévisualisation</h3>
     <?php include('qrcode_show.html.php'); ?>
   </div>
