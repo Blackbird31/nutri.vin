@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="submit" class="btn btn-primary">Créer le vin</button>
       </form>
   </div>
-  <div class="col-4 text-center border border-primary bg-primary-subtle vh-100 sticky-top" data-liveform-container>
+  <div class="col-4 text-center border border-primary bg-primary-subtle vh-100 sticky-top overflow-auto" data-liveform-container>
     <h3>Prévisualisation</h3>
     <?php include('qrcode_show.html.php'); ?>
   </div>
@@ -366,6 +366,8 @@ const liveform = (function () {
             return false;
         }
         toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+
+        _template.scrollTop = toUpdate.previousElementSibling.offsetTop
     }
 
     return {
