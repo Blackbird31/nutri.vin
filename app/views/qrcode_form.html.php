@@ -367,7 +367,7 @@ const liveform = (function () {
         }
         toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
 
-        _template.scrollTop = toUpdate.previousElementSibling.offsetTop
+        _template.scrollTop = toUpdate.closest('div').offsetTop
     }
 
     return {
