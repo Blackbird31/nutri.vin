@@ -37,6 +37,7 @@
 
         <h3 class="mt-4 mb-4">Informations complémentaires</h3>
 
+        <div class="d-flex col-sm-10 justify-content-between" >
         <div class="mb-3 col-sm-3">
             <label form="alcool_degre" class="col-form-label">Degré d'alcool</label>
               <div class="input-group">
@@ -57,6 +58,7 @@
           <label form="millesime" class="col-form-label">Millesime</label>
             <input type="text" class="form-control text-sm-end" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millesime"/>
           </div>
+        </div>
 
         <h3 class="mt-4 mb-4">Photos de l'étiquette</h3>
 
@@ -74,43 +76,70 @@
             </div>
         </div>
 
-      <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
-        <div class="form-floating mb-3 col-sm-10">
+        <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
+        <?php if ($qrcode->ingredients): ?>
+          <div class="form-floating mb-3 col-sm-10 collapse" id="textAreaIngredients" >
+        <?php else: ?>
+          <div class="form-floating mb-3 col-sm-10" id="textAreaIngredients" >
+        <?php endif; ?>
             <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
             <label form="ingredients" class="form-label">Ingredients</label>
             <!-- <div id="ingredients_help" class="form-text">ingredients</div> -->
-        </div>
+          </div>
 
-        <div class="container col-sm-10 m-0 p-0" >
-        <table class="table table-bordered col-sm-10">
-        <caption class="caption-top">Tableau des ingrédients</caption>
-            <thead class="table-dark text-center" >
-              <tr>
-                <th class="col-4" scope="col">Ingredient</th>
-                <th class="col-4" scope="col">Type</th>
-                <th class="col-1" scope="col">Bio</th>
-                <th class="col-1" scope="col">All.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-center" >
-                <th scope="row"></th>
-                <th></th>
+        <?php if ($qrcode->ingredients): ?>
+          <p>
+            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#textAreaIngredients" aria-expanded="false" aria-controls="textAreaIngredients">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+              </svg>
+            </button>
+          </p>
+        <?php endif; ?>
 
-                <th>
-                  <input class="form-check-input" type="checkbox" id="checkboxBio" value="" aria-label="case à cocher pour ingrédient bio">
-                </th>
-                <th>
-                <input class="form-check-input" type="checkbox" id="checkboxAllergene" value="" aria-label="case à cocher pour ingrédient allergène">
-                </th>
-              </tr>
-            </tbody>
-        </table>
-        <figcaption class="figure-caption" >All. = Allergène</caption>
+        <?php if ($qrcode->ingredients): ?>
+          <div class="container col-sm-10 m-0 p-0" >
+            <table class="table table-bordered col-sm-10">
+              <caption class="caption-top">Tableau des ingrédients</caption>
+                  <thead class="table-dark text-center" >
+                    <tr>
+                      <th class="col-4" scope="col">Ingredient</th>
+                      <th class="col-4" scope="col">Type</th>
+                      <th class="col-1" scope="col">Bio</th>
+                      <th class="col-1" scope="col">All.</th>
+                    </tr>
+                  </thead>
+                  <?php $x = 0; foreach($qrcode->getListeIngredients() as $ingredient): $x++ ?>
+                  <tbody>
+                      <tr class="text-center" >
+                        <th scope="row"> <?php echo htmlspecialchars($ingredient); ?></th>
 
-        </div>
+                        <th>
+                          <select name="detailIngredient" id="detailsIngredientSelect">
+                            <?php foreach(QRCode::getFullListeIngredients() as $detailIngredient):?>
+                              <option value="<?php echo htmlspecialchars($detailIngredient); ?>"><?php echo htmlspecialchars($detailIngredient); ?>
+                            <?php endforeach; ?>
+                              </option>
 
-        <!-- <?php if ($qrcode->ingredients): ?>
+                          </select>
+                        </th>
+
+                        <th>
+                          <input class="form-check-input" type="checkbox" id="checkboxBio" value="" aria-label="case à cocher pour ingrédient bio">
+                        </th>
+                        <th>
+                        <input class="form-check-input" type="checkbox" id="checkboxAllergene" value="" aria-label="case à cocher pour ingrédient allergène">
+                        </th>
+                      </tr>
+                  </tbody>
+                  <?php endforeach; ?>
+
+            </table>
+            <figcaption class="figure-caption" >All. = Allergène</caption>
+          </div>
+        <?php endif; ?>
+
+         <?php if ($qrcode->ingredients): ?>
         <p id="ingredientSelects">
             <?php $x = 0; foreach($qrcode->getListeIngredients() as $i): $x++?>
                 <select name="ingredients_<?php echo $x; ?>">
