@@ -2,7 +2,7 @@
 
 <div class="row justify-content-end">
   <div class="col-8">
-      <form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write" enctype="multipart/form-data">
+      <form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
       <?php endif; ?>
@@ -343,7 +343,42 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="submit" class="btn btn-primary">Créer le vin</button>
       </form>
   </div>
-  <div class="col-4 text-center border border-primary bg-primary-subtle">
-    <h3>Présentation</div>
+  <div class="col-4 text-center border border-primary bg-primary-subtle vh-100 sticky-top" data-liveform-container>
+    <h3>Prévisualisation</h3>
+    <?php include('qrcode_show.html.php'); ?>
   </div>
 </div>
+
+<script>
+const liveform = (function () {
+    const _template = document.querySelector("[data-liveform-container]")
+    const classe   = 'form.live-form'
+
+    if (_template === null) {
+        console.error('Pas de template')
+        return false
+    }
+
+    function update(el) {
+        const toUpdate = _template.querySelector("[data-liveform-name='"+el.name+"']")
+        if (toUpdate === null) {
+            console.error("Pas d'élément liveform avec l'attribut : "+el.name)
+            return false;
+        }
+        toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+    }
+
+    return {
+        classe: classe,
+        update: update
+    }
+})();
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('change', function (e) {
+        if (e.target.closest(liveform.classe)) {
+            liveform.update(e.target)
+        }
+    })
+})
+</script>
