@@ -1,2 +1,7 @@
 nutrivin.sqlite
 web/uploads/
+
+# fichiers vim
+*~
+.*.swp
+tags
