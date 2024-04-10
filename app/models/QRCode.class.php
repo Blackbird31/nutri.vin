@@ -2,7 +2,9 @@
 
 require_once('MapperTable.class.php');
 
-class QRCode extends MapperTable {
+class QRCode extends MapperTable
+{
+    const Formats = ['svg', 'eps'];
 
 	function save() {
 		if (!isset($this->authorization_key) || $this->authorization_key) {
@@ -124,4 +126,8 @@ class QRCode extends MapperTable {
 		return $e->find(array('user_id=?',$userid));
 	}
 
+    public function export($format, $url)
+    {
+        $data = $url;
+    }
 }

@@ -101,4 +101,30 @@ class CtrlNutriVin {
         $f3->set('qrcode', $qrcode);
         echo View::instance()->render('layout.html.php');
     }
+
+    public function export(Base $f3)
+    {
+        $format = $f3->get('PARAMS.format');
+        $qrcode = $f3->get('PARAMS.qrcodeid');
+
+        $qrcode = QRCode::findById($qrcode);
+
+        if ($qrcode === null) {
+            $f3->error(404, "QRCode non trouvé");
+            exit;
+        }
+
+        if (in_array($format, QRCode::Formats) === false) {
+            $f3->error(415, "Le format demandé n'est pas supporté ($format). Formats supportés : ".implode(', ', QRCode::Formats));
+            exit;
+        }
+
+        if ($format === 'eps') {
+            header('Content-type: application/postscript');
+            header('Content-Disposition: filename="'.$qrcode->id.'.eps"');
+        }
+
+        $url = $f3->get('SCHEME').'://'.$f3->get('HOST').($f3->get('PORT') ? ':'.$f3->get('PORT') : '').$f3->build('/@qrcodeid');
+        echo $qrcode->export($format, $url);
+    }
 }

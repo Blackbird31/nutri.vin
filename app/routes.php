@@ -9,4 +9,5 @@ $f3->route('GET /qrcode/@userid/edit/@id', 'CtrlNutriVin->qrcodeEdit');
 $f3->route('GET /qrcode/@userid/edit/@id/img/@index/delete', 'CtrlNutriVin->qrcodeDeleteImage');
 $f3->route('GET /qrcode/@userid/list', 'CtrlNutriVin->qrcodeList');
 $f3->route('GET /qrcode', 'CtrlNutriVin->qrcodeAuthentication');
-$f3->route('GET /@qrcodeid', 'CtrlNutriVin->qrcodeView');
+$f3->route('GET @qrview: /@qrcodeid', 'CtrlNutriVin->qrcodeView');
+$f3->route('GET @qrcodeexport: /@qrcodeid/@format', 'CtrlNutriVin->export');
