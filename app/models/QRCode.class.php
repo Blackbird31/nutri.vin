@@ -66,7 +66,7 @@ class QRCode extends MapperTable {
  	}
 
 	function getListeIngredients() {
-		return preg_split('/ *, */', $this->ingredients);
+		return preg_split('/[,\n\r]+/', $this->ingredients);
 	}
 
 	static function getFullListeIngredients() {
