@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <td>
                     <div class="col-6 offset-6">
                     <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" onChange="$('#nutritionnel_energie_kcal').val(parseInt($('#nutritionnel_energie_kj').val()/4.184))" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
                       <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
                     </div>
                   </div>
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <td>
                     <div class="col-6 offset-6">
                     <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" onChange="$('#nutritionnel_energie_kj').val(parseInt($('#nutritionnel_energie_kcal').val()*4.184))" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
+                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
                       <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
                     </div>
                   </div>
@@ -398,7 +398,21 @@ const liveform = (function () {
 })();
 
 document.addEventListener('DOMContentLoaded', function () {
+    const ne_kcal = document.querySelector('#nutritionnel_energie_kcal')
+    const ne_j    = document.querySelector('#nutritionnel_energie_kj')
+    const conversion = 4.184
+
     document.addEventListener('change', function (e) {
+        if (e.target.id.includes('nutritionnel_energie')) {
+            const updated  = e.target
+            const toUpdate = updated.id.includes('kcal') ? ne_j : ne_kcal;
+
+            toUpdate.value = updated.id.includes('kcal') ? updated.value * conversion : updated.value / conversion;
+            toUpdate.value = parseInt(toUpdate.value)
+            liveform.update(toUpdate)
+            e.stopPropagation()
+        }
+
         if (e.target.closest(liveform.classe)) {
             liveform.update(e.target)
         }
