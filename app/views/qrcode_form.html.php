@@ -82,8 +82,11 @@
         <?php else: ?>
           <div class="form-floating mb-3 col-sm-10" id="textAreaIngredients" >
         <?php endif; ?>
-            <textarea type="text" class="form-control" id="ingredients" name="ingredients" style="height: 100px"><?php echo $qrcode->ingredients; ?></textarea>
-            <label form="ingredients" class="form-label">Ingredients</label>
+            <select id="ingredientsBox" name="ingredients[]" multiple="multiple" class="form-select form-select-lg" data-placeholder="Liste des ingrédients">
+              <?php foreach(QRCode::getFullListeIngredients() as $i):?>
+                <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
+              <?php endforeach; ?>
+            </select>
             <!-- <div id="ingredients_help" class="form-text">ingredients</div> -->
           </div>
 
