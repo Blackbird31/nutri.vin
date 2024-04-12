@@ -1,5 +1,7 @@
 <?php
 
+use app\exporters\Exporter;
+
 class CtrlNutriVin {
     function home(Base $f3) {
         echo View::instance()->render('layout_home.html.php');
@@ -114,17 +116,10 @@ class CtrlNutriVin {
             exit;
         }
 
-        if (in_array($format, QRCode::Formats) === false) {
-            $f3->error(415, "Le format demandé n'est pas supporté ($format). Formats supportés : ".implode(', ', QRCode::Formats));
-            exit;
-        }
+        $data = $f3->get('SCHEME').'://'.$f3->get('HOST').($f3->get('PORT') ? ':'.$f3->get('PORT') : '').$f3->build('/@qrcodeid');
 
-        if ($format === 'eps') {
-            header('Content-type: application/postscript');
-            header('Content-Disposition: filename="'.$qrcode->id.'.eps"');
-        }
-
-        $url = $f3->get('SCHEME').'://'.$f3->get('HOST').($f3->get('PORT') ? ':'.$f3->get('PORT') : '').$f3->build('/@qrcodeid');
-        echo $qrcode->export($format, $url);
+        $e = new Exporter($format);
+        $e->addLogo(__DIR__.'/../../web/images/logo.svg');
+        echo $e->render($data);
     }
 }
