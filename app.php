@@ -2,6 +2,7 @@
 
 $f3 = require(__DIR__.'/vendor/fatfree-core/base.php');
 
+require __DIR__.'/vendor/autoload.php';
 
 if(getenv("DEBUG")) {
     $f3->set('DEBUG', getenv("DEBUG"));
