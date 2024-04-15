@@ -2,11 +2,12 @@
 
 namespace app\exporters;
 
+use app\exporters\QRCodeSVG;
+use app\exporters\QRCodeSVGOptions;
 use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Common\EccLevel;
-use chillerlan\QRCode\Output\QRImagick;
-use chillerlan\QRCode\Output\QREps;
+use chillerlan\QRCode\Output\QROutputInterface;
+use chillerlan\QRCode\Output\QRMarkupSVG;
 
 class Exporter
 {
@@ -17,7 +18,7 @@ class Exporter
     public function __construct($format)
     {
         $this->format = $format;
-        $this->configuration = new QROptions;
+        $this->configuration = new QRCodeSVGOptions;
 
         if (in_array($this->format, self::formats) === false) {
             http_response_code(415);
@@ -29,19 +30,26 @@ class Exporter
 
     public function loadConfiguration()
     {
-        $this->configuration->outputInterface = QRImagick::class;
+        $this->configuration->outputInterface = QRMarkupSVG::class;
         $this->configuration->eccLevel = EccLevel::H;
-        $this->configuration->imagickFormat = $this->format;
         $this->configuration->outputBase64 = false;
+        $this->configuration->connectPaths = true;
+        $this->configuration->addQuietzone = true;
 
         // load config file / post value / database ?
     }
 
     public function addLogo($logo)
     {
-        $this->configuration->addLogoSpace = true;
+        $this->configuration->outputType = QROutputInterface::CUSTOM;
+        $this->configuration->outputInterface = QRCodeSVG::class;
+        $this->configuration->addLogoSpace = false;
         $this->configuration->logoSpaceWidth = 8;
         $this->configuration->logoSpaceHeight = 8;
+        $this->configuration->svgLogo = $logo;
+        $this->configuration->svgLogoScale = 0.25;
+        $this->configuration->svgLogoCssClass = 'light';
+        $this->configuration->drawLightModules = false;
     }
 
     public function render($data)

@@ -119,7 +119,7 @@ class CtrlNutriVin {
         $data = $f3->get('urlbase').$f3->build('/@qrcodeid');
 
         $e = new Exporter($format);
-        $e->addLogo(__DIR__.'/../../web/images/logo.svg');
+        $e->addLogo(__DIR__.'/../../web/images/php.svg');
         echo $e->render($data);
     }
 }
