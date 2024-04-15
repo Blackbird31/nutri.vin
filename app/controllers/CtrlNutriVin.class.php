@@ -116,7 +116,7 @@ class CtrlNutriVin {
             exit;
         }
 
-        $data = $f3->get('SCHEME').'://'.$f3->get('HOST').($f3->get('PORT') ? ':'.$f3->get('PORT') : '').$f3->build('/@qrcodeid');
+        $data = $f3->get('urlbase').$f3->build('/@qrcodeid');
 
         $e = new Exporter($format);
         $e->addLogo(__DIR__.'/../../web/images/logo.svg');
