@@ -8,6 +8,7 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\Common\EccLevel;
 use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\Output\QRMarkupSVG;
+use chillerlan\QRCode\Output\QREps;
 
 class Exporter
 {
@@ -57,11 +58,17 @@ class Exporter
         if ($this->format === 'eps') {
             header('Content-type: application/postscript');
             header('Content-Disposition: filename="qrcode.eps"');
+
+            $this->configuration->outputInterface = QREps::class;
+
+            var_dump($this->configuration);exit;
+            $out = (new QRCode($this->configuration))->render($data);
+            $out = str_replace(',', '.', $out);
         } elseif ($this->format === 'svg') {
             header('Content-type: image/svg+xml');
-        }
 
-        $out = (new QRCode($this->configuration))->render($data);
+            $out = (new QRCode($this->configuration))->render($data);
+        }
 
         if(extension_loaded('zlib')){
             header('Vary: Accept-Encoding');
