@@ -61,7 +61,6 @@ class Exporter
 
             $this->configuration->outputInterface = QREps::class;
 
-            var_dump($this->configuration);exit;
             $out = (new QRCode($this->configuration))->render($data);
             $out = str_replace(',', '.', $out);
         } elseif ($this->format === 'svg') {
