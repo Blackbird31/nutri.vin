@@ -39,14 +39,25 @@ class Exporter
         $this->configuration->outputBase64 = false;
         $this->configuration->connectPaths = true;
         $this->configuration->addQuietzone = true;
+        $this->configuration->svgUseFillAttribute = true;
+        $this->configuration->drawLightModules = false;
 
         // load config file / post value / database ?
         if (count($this->options)) {
             if (isset($this->options['color'])) {
                 $this->configuration->moduleValues = [
-                    QRMatrix::M_DATA_DARK => $this->options['color'],
+                    QRMatrix::M_DATA_DARK => $this->convertColor($this->options['color']),
                 ];
             }
+        }
+    }
+
+    private function convertColor($color)
+    {
+        if ($this->format === 'svg') return $color;
+
+        if (strpos($color, '#') === 0) {
+            return sscanf($color, "#%02x%02x%02x");
         }
     }
 
@@ -60,8 +71,6 @@ class Exporter
         $this->configuration->svgLogo = $logo;
         $this->configuration->svgLogoScale = 0.25;
         $this->configuration->svgLogoCssClass = 'dark';
-        $this->configuration->drawLightModules = false;
-        $this->configuration->svgUseFillAttribute = true;
     }
 
     public function render($data)
