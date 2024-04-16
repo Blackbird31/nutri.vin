@@ -44,7 +44,7 @@ class Exporter
     {
         $this->configuration->outputType = QROutputInterface::CUSTOM;
         $this->configuration->outputInterface = QRCodeSVG::class;
-        $this->configuration->addLogoSpace = false;
+        $this->configuration->addLogoSpace = true;
         $this->configuration->logoSpaceWidth = 8;
         $this->configuration->logoSpaceHeight = 8;
         $this->configuration->svgLogo = $logo;
