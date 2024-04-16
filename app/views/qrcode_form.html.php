@@ -79,141 +79,51 @@
         </div>
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
-        <?php if ($qrcode->ingredients): ?>
-          <div class="form-floating mb-3 col-sm-10 collapse" id="textAreaIngredients" >
-        <?php else: ?>
-          <div class="form-floating mb-3 col-sm-10" id="textAreaIngredients" >
-        <?php endif; ?>
-            <select id="ingredientsBox" name="ingredients[]" multiple="multiple" class="form-select form-select-lg" data-placeholder="Liste des ingrédients">
-              <?php foreach(QRCode::getFullListeIngredients() as $i):?>
-                <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
-              <?php endforeach; ?>
-            </select>
-            <!-- <div id="ingredients_help" class="form-text">ingredients</div> -->
-          </div>
 
-        <?php if ($qrcode->ingredients): ?>
-          <p>
-            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#textAreaIngredients" aria-expanded="false" aria-controls="textAreaIngredients">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
-              </svg>
-            </button>
-          </p>
-        <?php endif; ?>
+        <div class="mb-3 col-sm-10">
+          <input type="hidden" class="form-control" name="ingredients" id="ingredients" value="<?php echo $qrcode->ingredients ?>" />
+        </div>
 
-        <?php if ($qrcode->ingredients): ?>
-          <div class="container col-sm-10 m-0 p-0" >
-            <table class="table table-bordered col-sm-10">
-              <caption class="caption-top">Tableau des ingrédients</caption>
-                  <thead class="table-dark text-center" >
-                    <tr>
-                      <th class="col-4" scope="col">Ingredient</th>
-                      <th class="col-4" scope="col">Type</th>
-                      <th class="col-1" scope="col">Bio</th>
-                      <th class="col-1" scope="col">All.</th>
-                    </tr>
-                  </thead>
-                  <?php $x = 0; foreach($qrcode->getListeIngredients() as $ingredient): $x++ ?>
-                  <tbody>
-                      <tr class="text-center" >
-                        <th scope="row"> <?php echo htmlspecialchars($ingredient); ?></th>
-
-                        <th>
-                          <select name="detailIngredient" id="detailsIngredientSelect">
-                            <?php foreach(QRCode::getFullListeIngredients() as $detailIngredient):?>
-                              <option value="<?php echo htmlspecialchars($detailIngredient); ?>"><?php echo htmlspecialchars($detailIngredient); ?>
-                            <?php endforeach; ?>
-                              </option>
-
-                          </select>
-                        </th>
-
-                        <th>
-                          <input class="form-check-input" type="checkbox" id="checkboxBio" value="" aria-label="case à cocher pour ingrédient bio">
-                        </th>
-                        <th>
-                        <input class="form-check-input" type="checkbox" id="checkboxAllergene" value="" aria-label="case à cocher pour ingrédient allergène">
-                        </th>
-                      </tr>
-                  </tbody>
-                  <?php endforeach; ?>
-
-            </table>
-            <figcaption class="figure-caption" >All. = Allergène</caption>
-          </div>
-        <?php endif; ?>
-
-         <?php if ($qrcode->ingredients): ?>
-        <p id="ingredientSelects">
-            <?php $x = 0; foreach($qrcode->getListeIngredients() as $i): $x++?>
-                <select name="ingredients_<?php echo $x; ?>">
-                    <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
-                    <option value="<?php echo htmlspecialchars($i); ?> (bio)"><?php echo htmlspecialchars($i); ?> (bio)</option>
-                </select>
-            <?php endforeach; ?>
-            <?php echo ',' . '&nbsp'; ?>
-            <select id="newIngredientSelect" name="ingredients_<?php echo $x++; ?>" class="ingredientSelect">
-                <option></option>
-                <?php foreach(QRCode::getFullListeIngredients() as $i):?>
-                    <option value="<?php echo htmlspecialchars($i); ?>"><?php echo htmlspecialchars($i); ?></option>
-                <?php endforeach; ?>
-            </select>
-            <?php echo ',' . '&nbsp'; ?>
-        </p>
-        <?php endif; ?>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    function addNewSelect() {
-        var prevSelect = document.querySelector('.ingredientSelect');
-        if (prevSelect) {
-            prevSelect.removeEventListener('change', selectChangeHandler);
-        }
-
-        var newSelect = document.createElement('select');
-        newSelect.name = 'ingredients_' + document.querySelectorAll('select[name^="ingredients_"]').length;
-        newSelect.classList.add('ingredientSelect');
-
-        var defaultOption = document.createElement('option');
-        newSelect.appendChild(defaultOption);
-
-        <?php foreach(QRCode::getFullListeIngredients() as $i): ?>
-            var option = document.createElement('option');
-            option.value = '<?php echo htmlspecialchars($i); ?>';
-            option.textContent = '<?php echo htmlspecialchars($i); ?>';
-            newSelect.appendChild(option);
-        <?php endforeach; ?>
-
-        document.getElementById('ingredientSelects').appendChild(newSelect);
-
-        newSelect.addEventListener('change', selectChangeHandler);
-
-        var newComma = document.createElement('span');
-        newComma.textContent = ",";
-        newComma.classList.add('pe-2');
-        document.getElementById('ingredientSelects').appendChild(newComma);
-    }
-
-    function selectChangeHandler() {
-        var selectedValue = this.value;
-        if (selectedValue) {
-            addNewSelect();
-        }
-    }
-
-    var initialSelect = document.querySelector('.ingredientSelect');
-    initialSelect.addEventListener('change', selectChangeHandler);
-});
-</script>
+        <div class="container col-sm-10 m-0 p-0" >
+        <table id="table_ingredients" class="table table-bordered col-sm-10 table-striped">
+              <thead class="text-center">
+                <tr>
+                  <th class="col-4" scope="col">Ingredients</th>
+                  <th class="col-1" scope="col">AB</th>
+                  <th class="col-1" scope="col">Allergène</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td class="text-center text-muted" colspan="3">Aucun ingrédient</td>
+                </tr>
+              </tbody>
+        </table>
+        <template id="ingredient_row">
+            <tr>
+                <td class="ingredient_libelle" scope="row"></td>
+                <td class="ingredient_ab text-center">
+                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                </td>
+                <td class="ingredient_allergene text-center">
+                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                </td>
+            </tr>
+        </template>
+        <div class="input-group">
+            <input form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Example text with button addon" aria-describedby="btn_add_ingredient">
+            <button form="form_add_ingredients" class="btn btn-outline-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+        </div>
+        <div class="form-text">
+          Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
+        </div>
+        </div>
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
         <div class="form-floating mb-3 col-sm-10">
           <table class="table table-striped">
             <tbody>
-
-
               <tr>
                 <td class="align-middle">Énergie (kJ)</td>
                   <td>
@@ -347,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <?php endif; ?>
         <button type="submit" class="btn btn-primary">Créer le vin</button>
       </form>
+      <form id="form_add_ingredients"></form>
   </div>
   <div class="col-4 text-center border border-primary bg-primary-subtle sticky-top overflow-auto" style="height: 85vh" data-liveform-container>
     <h3>Prévisualisation</h3>
@@ -415,9 +326,72 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation()
         }
 
+        if (e.target.closest('#table_ingredients')) {
+            ingredientsTableToText();
+        }
         if (e.target.closest(liveform.classe)) {
             liveform.update(e.target)
         }
     })
 })
+
+function ingredientsTextToTable() {
+    const ingredientsText = document.getElementById('ingredients').value
+    const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
+    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
+    ingredientsTbody.innerHTML = "";
+    for(let ingredient of ingredients) {
+        const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
+        templateClone.querySelector('td.ingredient_libelle').innerText = ingredient.replace(/[_\*]/g, '');
+        if(ingredient.match(/\*$/)) {
+            templateClone.querySelector('td.ingredient_ab input').checked = true
+        }
+        if(ingredient.match(/^_[^_]*_\*?$/)) {
+            templateClone.querySelector('td.ingredient_allergene input').checked = true
+        }
+        ingredientsTbody.appendChild(templateClone);
+    }
+}
+
+function ingredientsTableToText() {
+    let ingredientsText = '';
+    document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
+        if(ingredientsText) {
+            ingredientsText += ', '
+        }
+        let ingredient = item.querySelector('td.ingredient_libelle').innerText;
+        if(item.querySelector('td.ingredient_allergene input').checked) {
+            ingredient = '_'+ingredient+'_'
+        }
+        if(item.querySelector('td.ingredient_ab input').checked) {
+            ingredient += '*'
+        }
+        ingredientsText += ingredient;
+    })
+    document.getElementById('ingredients').value = ingredientsText;
+    liveform.update(document.getElementById('ingredients'));
+}
+
+document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input_ingredients = document.querySelector('#ingredients');
+    const text_add_ingredient = document.querySelector('#text_add_ingredient');
+
+    text_add_ingredient.focus();
+    if(!text_add_ingredient.value) {
+        return;
+    }
+
+    if(input_ingredients.value) {
+        input_ingredients.value += ', '
+    }
+
+    input_ingredients.value += text_add_ingredient.value;
+    text_add_ingredient.value = "";
+    ingredientsTextToTable();
+    liveform.update(document.getElementById('ingredients'));
+});
+
+ingredientsTextToTable();
+
 </script>
