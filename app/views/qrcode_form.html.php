@@ -29,35 +29,37 @@
            <label form="appellation" class="form-label">Appellation</label>
        </div>
 
-       <div class="form-floating mb-3 col-sm-10">
-           <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Couleur"/>
-           <label form="couleur" class="form-label">Couleur</label>
+       <div class="form-floating mb-3 col-sm-2">
+           <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millésime"/>
+           <label form="millesime" class="form-label">Millésime</label>
        </div>
 
 
         <h3 class="mt-4 mb-4">Informations complémentaires</h3>
 
-        <div class="d-flex col-sm-10 justify-content-between" >
+        <div class="d-flex col-sm-10 justify-content-between">
+
         <div class="mb-3 col-sm-3">
-            <label form="alcool_degre" class="col-form-label">Degré d'alcool</label>
+          <label form="couleur" class="col-form-label">Couleur</label>
+            <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
+        </div>
+
+        <div class="mb-3 col-sm-3">
+            <label form="alcool_degre" class="col-form-label">Volume d'alcool</label>
               <div class="input-group">
-                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Alcool"/>
+                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Dégré d'alcool"/>
                 <span class="input-group-text" id="basic-addon2">%</span>
               </div>
         </div>
 
         <div class="mb-3 col-sm-3">
-            <label form="quantite" class="col-form-label">Centilisation</label>
+            <label form="quantite" class="col-form-label">Contenance</label>
             <div class="input-group">
                 <input type="text" class="form-control text-sm-end" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
                 <span class="input-group-text" id="basic-addon2">cl</span>
             </div>
         </div>
 
-        <div class="mb-3 col-sm-3">
-          <label form="millesime" class="col-form-label">Millesime</label>
-            <input type="text" class="form-control text-sm-end" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millesime"/>
-          </div>
         </div>
 
         <h3 class="mt-4 mb-4">Photos de l'étiquette</h3>
