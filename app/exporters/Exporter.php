@@ -15,10 +15,12 @@ class Exporter
     const formats = ['svg', 'eps'];
     private $format;
     private $configuration;
+    private $options;
 
-    public function __construct($format)
+    public function __construct($format, $options = [])
     {
         $this->format = $format;
+        $this->options = $options;
         $this->configuration = new QRCodeSVGOptions;
 
         if (in_array($this->format, self::formats) === false) {

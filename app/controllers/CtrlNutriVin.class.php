@@ -116,10 +116,18 @@ class CtrlNutriVin {
             exit;
         }
 
+        $config = $f3->get('config');
+        $options = isset($config['qrcode']) ? $config['qrcode'] : [];
+        $logo = isset($options['logo']) ? $options['logo'] : false;
+
         $data = $f3->get('urlbase').$f3->build('/@qrcodeid');
 
-        $e = new Exporter($format);
-        $e->addLogo(__DIR__.'/../../web/images/php.svg');
+        $e = new Exporter($format, $options);
+
+        if ($logo) {
+            $e->addLogo($logo);
+        }
+
         echo $e->render($data);
     }
 }
