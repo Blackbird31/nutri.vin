@@ -6,6 +6,7 @@ use app\exporters\QRCodeSVG;
 use app\exporters\QRCodeSVGOptions;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\Common\EccLevel;
+use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\Output\QRMarkupSVG;
 use chillerlan\QRCode\Output\QREps;
@@ -40,6 +41,13 @@ class Exporter
         $this->configuration->addQuietzone = true;
 
         // load config file / post value / database ?
+        if (count($this->options)) {
+            if (isset($this->options['color'])) {
+                $this->configuration->moduleValues = [
+                    QRMatrix::M_DATA_DARK => $this->options['color'],
+                ];
+            }
+        }
     }
 
     public function addLogo($logo)
@@ -51,8 +59,9 @@ class Exporter
         $this->configuration->logoSpaceHeight = 8;
         $this->configuration->svgLogo = $logo;
         $this->configuration->svgLogoScale = 0.25;
-        $this->configuration->svgLogoCssClass = 'light';
+        $this->configuration->svgLogoCssClass = 'dark';
         $this->configuration->drawLightModules = false;
+        $this->configuration->svgUseFillAttribute = true;
     }
 
     public function render($data)
