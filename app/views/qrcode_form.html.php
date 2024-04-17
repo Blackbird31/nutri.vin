@@ -85,8 +85,9 @@
         </div>
 
         <div class="container col-sm-10 m-0 p-0" >
-        <table id="table_ingredients" class="table table-bordered col-sm-10 table-striped">
-              <thead class="text-center">
+        <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
+        <table id="table_ingredients" class="table col-sm-10 table-striped">
+              <thead>
                 <tr>
                   <th class="col-4" scope="col">Ingredients</th>
                   <th class="col-1" scope="col">AB</th>
@@ -338,8 +339,18 @@ document.addEventListener('DOMContentLoaded', function () {
 function ingredientsTextToTable() {
     const ingredientsText = document.getElementById('ingredients').value
     const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
-    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
     ingredientsTbody.innerHTML = "";
+    if(!ingredientsText) {
+        document.querySelector('table#table_ingredients').classList.add('d-none');
+        document.querySelector('#message_ingredients_vide').classList.remove('d-none');
+        message_ingredients_vide
+        return;
+    }
+
+    document.querySelector('#message_ingredients_vide').classList.add('d-none');
+    document.querySelector('table#table_ingredients').classList.remove('d-none');
+
+    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
     for(let ingredient of ingredients) {
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         templateClone.querySelector('td.ingredient_libelle').innerText = ingredient.replace(/[_\*]/g, '');
