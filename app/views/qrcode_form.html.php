@@ -84,7 +84,7 @@
           <input type="hidden" class="form-control" name="ingredients" id="ingredients" value="<?php echo $qrcode->ingredients ?>" />
         </div>
 
-        <div class="container col-sm-10 m-0 p-0" >
+        <div class="container col-sm-10 m-0 p-0" data-liveform-ignore>
         <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
         <table id="table_ingredients" class="table col-sm-10 table-striped">
               <thead>
@@ -279,6 +279,10 @@ const liveform = (function () {
 
     function update(el) {
         const toUpdate = _template.querySelector("[data-liveform-name='"+el.name+"']")
+        if (el.closest('[data-liveform-ignore]')) {
+            return false;
+        }
+
         if (toUpdate === null) {
             console.error("Pas d'élément liveform avec l'attribut : "+el.name)
             return false;
