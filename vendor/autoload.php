@@ -12,7 +12,8 @@
 $psr4 = [
     "app\\" => "../app/",
     "chillerlan\\QRCode\\" => "php-qrcode/src",
-    "chillerlan\\Settings\\" => "php-settings-container/src"
+    "chillerlan\\Settings\\" => "php-settings-container/src",
+    "FPDF\\" => "FPDF"
 ];
 
 function parsePrefix($class, $psr4) {
