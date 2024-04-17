@@ -112,7 +112,12 @@
             </tr>
         </template>
         <div class="input-group">
-            <input form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Example text with button addon" aria-describedby="btn_add_ingredient">
+            <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Example text with button addon" aria-describedby="btn_add_ingredient">
+            <datalist id="ingredients_list">
+                <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
+                <option value="<?php echo $ingredient ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
             <button form="form_add_ingredients" class="btn btn-outline-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
         </div>
         <div class="form-text">
