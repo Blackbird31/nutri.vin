@@ -69,10 +69,10 @@ class Exporter
 
     public function addLogo($logo)
     {
-        $this->configuration->setLogo($logo);
         $this->configuration->addLogoSpace = true;
         $this->configuration->logoSpaceWidth = 8;
         $this->configuration->logoSpaceHeight = 8;
+        $this->configuration->setLogo($logo);
     }
 
     public function render($data)
