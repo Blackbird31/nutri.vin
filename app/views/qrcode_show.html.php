@@ -1,4 +1,5 @@
-<div class="p-3 py-4 bg-white text-center">
+
+<div class="p-3 py-4 bg-white text-center liveform_anchor">
     <div class="bg-white border rounded rounded-bottom-0 shadow-sm">
         <img class="mt-3 bg-white border-bottom" style="height: 200px;"
             data-liveform-name="etiquette" data-liveform-template="{{%s}}"
@@ -25,7 +26,7 @@
     </div>
 </div>
 
-<div class="p-3 bg-light-subtle border-top">
+<div class="p-3 bg-light-subtle border-top liveform_anchor">
     <div class="card text-bg-light mt-2 mb-4 shadow-sm">
         <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
         <table class="table table-sm table-striped-columns mb-0">
@@ -51,7 +52,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card text-bg-secondary mt-4 mb-3 shadow-sm">
+    <div class="card text-bg-secondary mt-4 mb-3 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-card-list float-start"></i> Ingrédients</div>
         <div class="card-body text-dark bg-white">
             <p data-liveform-name="ingredients" data-liveform-template='{{%s}}'
@@ -64,7 +65,7 @@
             </small>
         </div>
     </div>
-    <div class="card text-bg-primary mt-4 mb-2 shadow-sm">
+    <div class="card text-bg-primary mt-4 mb-2 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i> Informations nutritionnelles</div>
         <table class="table table-sm table-striped-columns mb-0">
             <thead>
