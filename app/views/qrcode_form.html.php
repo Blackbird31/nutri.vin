@@ -89,9 +89,9 @@
         <table id="table_ingredients" class="table col-sm-10 table-striped">
               <thead>
                 <tr>
-                  <th class="col-4" scope="col">Ingredients</th>
-                  <th class="col-1" scope="col">AB</th>
-                  <th class="col-1" scope="col">Allergène</th>
+                  <th class="col-4" scope="col"></th>
+                  <th class="col-1 text-center" scope="col">AB</th>
+                  <th class="col-1 text-center" scope="col">Allergène</th>
                 </tr>
               </thead>
               <tbody>
