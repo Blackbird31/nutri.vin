@@ -94,11 +94,7 @@
                   <th class="col-1 text-center" scope="col">Allergène</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                    <td class="text-center text-muted" colspan="3">Aucun ingrédient</td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
         </table>
         <template id="ingredient_row">
             <tr>
