@@ -5,6 +5,7 @@ namespace app\exporters;
 use app\exporters\QRCodeSVG;
 use app\exporters\Options\QRCodeSVGOptions;
 use app\exporters\Options\QRCodeEPSOptions;
+use app\exporters\Options\QRCodePDFOptions;
 use chillerlan\QRCode\{QRCode, QROptions};
 use chillerlan\QRCode\Common\EccLevel;
 use chillerlan\QRCode\Data\QRMatrix;
@@ -14,7 +15,7 @@ use chillerlan\QRCode\Output\QREps;
 
 class Exporter
 {
-    const formats = ['svg', 'eps'];
+    const formats = ['svg', 'eps', 'pdf'];
     private $format;
     private $configuration;
     private $options;
@@ -22,6 +23,7 @@ class Exporter
     private $qroptions = [
         'svg' => QRCodeSVGOptions::class,
         'eps' => QRCodeEPSOptions::class,
+        'pdf' => QRCodePDFOptions::class,
     ];
 
     public function __construct($format, $options = [])
