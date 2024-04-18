@@ -261,10 +261,13 @@
       </form>
       <form id="form_add_ingredients"></form>
   </div>
-  <div class="col-4 text-center border border-primary bg-primary-subtle sticky-top overflow-auto" style="height: 85vh" data-liveform-container>
-    <h3>Prévisualisation</h3>
-    <?php include('qrcode_show.html.php'); ?>
-  </div>
+  <div class="col-4 align-middle position-relative">
+    <div class="border border-dark pt-5 pb-5 ps-1 pe-1 border-0 bg-dark rounded-5 shadow-sm position-fixed">
+        <div class="overflow-auto shadow-sm" style="height: 75vh; width: 400px;" data-liveform-container>
+          <?php include('qrcode_show.html.php'); ?>
+        </div>
+        </div>
+    </div>
 </div>
 
 <script>
