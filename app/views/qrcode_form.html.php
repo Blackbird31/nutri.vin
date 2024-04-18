@@ -8,7 +8,7 @@
       <?php endif; ?>
 
 
-      <h3 class="mt-4 mb-4">Information commerciale</h3>
+      <h3 class="mt-4 mb-4">Identité du commercialisant</h3>
 
       <div class="form-floating mb-3 col-sm-10">
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
