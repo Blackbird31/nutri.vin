@@ -49,6 +49,12 @@
                         data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
                     ><?php echo $qrcode->alcool_degre ?>% vol</td>
                 </tr>
+                <tr>
+                    <td class="text-start">N° de lot</td>
+                    <td class="text-end"
+                        data-liveform-name="lot" data-liveform-template='{{%s}}'>
+                            <?php echo $qrcode->lot ?></td>
+                </tr>
             </tbody>
         </table>
     </div>

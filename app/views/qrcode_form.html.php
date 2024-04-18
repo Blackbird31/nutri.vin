@@ -62,6 +62,12 @@
 
         </div>
 
+        <div class="form-floating mb-3 col-sm-10">
+            <input type="text" class="form-control" id="lot" name="lot" value="<?php echo $qrcode->lot; ?>" placeholder="identifiant du lot"/>
+            <label form="lot" class="col-form-label">Numéro Lot</label>
+        </div>
+
+
         <h3 class="mt-4 mb-4">Photos de l'étiquette</h3>
 
         <div class="mb-3">
