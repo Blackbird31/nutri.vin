@@ -29,7 +29,9 @@ class QRCode extends MapperTable
 		"nutritionnel_glucides" => 1, "nutritionnel_sucres" => 1,
 		"nutritionnel_proteines" => 1,
 		"nutritionnel_sel" => 1, "nutritionnel_sodium" => 1,
-		"etiquette" => 1,
+		"image_bouteille" => 1,
+		"image_etiquette" => 1,
+		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1
      );
@@ -65,7 +67,10 @@ class QRCode extends MapperTable
 		 $fields['nutritionnel_sel'] = 'FLOAT';
 		 $fields['nutritionnel_sodium'] = 'FLOAT';
 
- 		 $fields['etiquette'] = 'BLOB';
+		 $fields['image_bouteille'] = 'BLOB';
+		 $fields['image_etiquette'] = 'BLOB';
+		 $fields['image_contreetiquette'] = 'BLOB';
+
  		 $fields['autres_infos'] = 'TEXT';
 
 		 $fields['authorization_key'] = 'VARCHAR(100)';

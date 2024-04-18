@@ -2,8 +2,18 @@
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
     <div class="bg-white border rounded rounded-bottom-0 shadow-sm">
         <img class="mt-3 bg-white border-bottom" style="height: 200px;"
-            data-liveform-name="etiquette" data-liveform-template="{{%s}}"
-            src="<?php echo $qrcode->etiquette ?>" >
+            data-liveform-name="image_bouteille" data-liveform-template="{{%s}}"
+            src="<?php echo $qrcode->image_bouteille ?>" >
+    </div>
+    <div class="bg-white border rounded rounded-bottom-0 shadow-sm" style="display: none;">
+        <img class="mt-3 bg-white border-bottom" style="height: 200px;"
+            data-liveform-name="image_etiquette" data-liveform-template="{{%s}}"
+            src="<?php echo $qrcode->image_etiquette ?>" >
+    </div>
+    <div class="bg-white border rounded rounded-bottom-0 shadow-sm" style="display: none;">
+        <img class="mt-3 bg-white border-bottom" style="height: 200px;"
+            data-liveform-name="image_contreetiquette" data-liveform-template="{{%s}}"
+            src="<?php echo $qrcode->image_contreetiquette ?>" >
     </div>
     <div class="bg-light-subtle border border-top-0 rounded rounded-top-0 pt-3 shadow-sm">
         <p data-liveform-name="domaine_nom" data-liveform-template='{{%s}}'
