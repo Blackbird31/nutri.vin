@@ -267,12 +267,16 @@
           </table>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-secondary mt-2">Retour à la liste</a>
-            <?php if ($qrcode->exists('authorization_key')): ?>
-            <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
-            <?php endif; ?>
-            <button type="submit" class="btn btn-primary"><?php if ($creation): ?>Créer<?php else: ?>Modifier<?php endif;?> le vin</button>
+        <div class="row mt-5">
+            <div class="col-6">
+                <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+            </div>
+            <div class="col-4 text-end">
+                <?php if ($qrcode->exists('authorization_key')): ?>
+                <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
+                <?php endif; ?>
+                <button type="submit" class="btn btn-primary"><?php if ($creation): ?>Créer<?php else: ?>Modifier<?php endif;?> le vin</button>
+            </div>
         </div>
       </form>
       <form id="form_add_ingredients"></form>
