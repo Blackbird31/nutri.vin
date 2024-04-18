@@ -36,3 +36,7 @@
   </tbody>
 
 </table>
+
+<div class="text-end">
+    <a href="<?php echo $urlbase.''; ?>/qrcode/<?php echo $userid; ?>/create" class="btn btn-primary">Créer un nouveau QRCode</a>
+</div>
