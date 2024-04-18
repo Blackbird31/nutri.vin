@@ -2,7 +2,7 @@
 
 $config = [
     'qrcode' => [
-        'color' => "#0e2244",
+        'color' => "#000000",
         'logo'  => __DIR__.'/../web/images/ivso.svg'
     ]
 ];

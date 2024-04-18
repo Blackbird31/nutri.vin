@@ -44,7 +44,7 @@ class rsvgconvert
             return $input;
         }
 
-        $proc = proc_open([self::command, '-', '-f', $format], [
+        $proc = proc_open([self::command, '-f', $format], [
             0 => ['pipe', 'r'],
             1 => ['pipe', 'w'],
             2 => ['pipe', 'w']
