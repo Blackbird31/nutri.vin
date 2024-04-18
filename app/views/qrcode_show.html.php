@@ -1,4 +1,3 @@
-
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
     <div class="bg-white border rounded rounded-bottom-0 shadow-sm">
         <img class="mt-3 bg-white border-bottom" style="height: 200px;"

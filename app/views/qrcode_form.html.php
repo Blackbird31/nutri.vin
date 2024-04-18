@@ -51,7 +51,7 @@
             <label form="alcool_degre" class="col-sm-6">Volume d'alcool : </label>
              <div class="col-sm-6">
               <div class="input-group">
-                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Dégré d'alcool"/>
+                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Degré d'alcool"/>
                 <span class="input-group-text" id="basic-addon2">%</span>
               </div>
           </div>
@@ -306,17 +306,27 @@
             </div>
         </div>
 
-        <?php if ($qrcode->exists('authorization_key')): ?>
-        <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
-        <?php endif; ?>
-        <button type="submit" class="btn btn-primary">Créer le vin</button>
+        <div class="row mt-5">
+            <div class="col-6">
+                <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+            </div>
+            <div class="col-4 text-end">
+                <?php if ($qrcode->exists('authorization_key')): ?>
+                <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
+                <?php endif; ?>
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+        </div>
       </form>
       <form id="form_add_ingredients"></form>
   </div>
-  <div class="col-4 text-center border border-primary bg-primary-subtle sticky-top overflow-auto" style="height: 85vh" data-liveform-container>
-    <h3>Prévisualisation</h3>
-    <?php include('qrcode_show.html.php'); ?>
-  </div>
+  <div class="col-4 position-relative">
+    <div class="border border-dark pt-5 pb-5 ps-1 pe-1 border-0 bg-dark rounded-5 shadow-sm position-fixed">
+        <div class="overflow-auto shadow-sm" style="height: 70vh; width: 400px;" data-liveform-container>
+          <?php include('qrcode_show.html.php'); ?>
+        </div>
+        </div>
+    </div>
 </div>
 
 <script>
