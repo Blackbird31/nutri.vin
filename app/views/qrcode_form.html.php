@@ -74,53 +74,6 @@
             <label form="lot" class="col-form-label">Numéro Lot</label>
         </div>
 
-
-        <h3 class="mt-4 mb-4" id="photos">Photos</h3>
-
-        <div class="mb-3">
-            <div class="col-sm-10 row">
-                <div class="col-sm-4">
-                    <center>
-                        Bouteille<br/>
-                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_bouteille, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <center>
-                        Etiquette<br/>
-                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_etiquette, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <center>
-                        Contre-étiquette<br/>
-                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_contreetiquette, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
         <div class="mb-3 col-sm-10">
@@ -295,6 +248,52 @@
 
             </tbody>
           </table>
+        </div>
+
+        <h3 class="mt-4 mb-4" id="photos">Photos</h3>
+
+        <div class="mb-3">
+            <div class="col-sm-10 row">
+                <div class="col-sm-4">
+                    <center>
+                        Bouteille<br/>
+                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_bouteille, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <center>
+                        Etiquette<br/>
+                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_etiquette, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <center>
+                        Contre-étiquette<br/>
+                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_contreetiquette, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
