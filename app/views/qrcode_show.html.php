@@ -1,4 +1,4 @@
-
+    <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-secondary mb-2">Retour à la liste</a>
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
     <div class="bg-white border rounded rounded-bottom-0 shadow-sm">
         <img class="mt-3 bg-white border-bottom" style="height: 200px;"
@@ -17,6 +17,11 @@
             >
                 <?php echo $qrcode->appellation ?>
             </small>
+            <small class="fw-light text-muted"
+                data-liveform-name="couleur" data-liveform-template='{{%s}}'
+            >
+                <?php echo $qrcode->couleur ?>
+            </small>
         </p>
         <p class="fs-4"
            data-liveform-name="millesime" data-liveform-template='{{%s}}'
@@ -32,10 +37,10 @@
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
                 <tr>
-                    <td class="text-start">Couleur</td>
+                    <td class="text-start">Volume d'alcool</td>
                     <td class="text-end"
-                        data-liveform-name="couleur" data-liveform-template='{{%s}}'>
-                            <?php echo $qrcode->couleur ?></td>
+                        data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
+                    ><?php echo $qrcode->alcool_degre ?>% vol</td>
                 </tr>
                 <tr>
                     <td class="text-start">Contenance</td>
@@ -44,10 +49,10 @@
                             <?php echo $qrcode->centilisation ?> cl</td>
                 </tr>
                 <tr>
-                    <td class="text-start">Volume d'alcool</td>
+                    <td class="text-start">N° de lot</td>
                     <td class="text-end"
-                        data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
-                    ><?php echo $qrcode->alcool_degre ?>% vol</td>
+                        data-liveform-name="lot" data-liveform-template='{{%s}}'>
+                            <?php echo $qrcode->lot ?></td>
                 </tr>
             </tbody>
         </table>
@@ -150,5 +155,5 @@
             </tbody>
         </table>
     </div>
-
+    <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-secondary mt-2">Retour à la liste</a>
 </div>
