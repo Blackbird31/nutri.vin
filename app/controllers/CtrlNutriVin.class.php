@@ -103,7 +103,7 @@ class CtrlNutriVin {
 
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
-        echo View::instance()->render('layout.html.php');
+        echo View::instance()->render('layout_public.html.php');
     }
 
     public function export(Base $f3)
