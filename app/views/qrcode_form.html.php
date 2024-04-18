@@ -267,6 +267,15 @@
           </table>
         </div>
 
+        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
+
+        <div class="mb-3 col-sm-10">
+            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
+            <div class="form-text">
+              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
+            </div>
+        </div>
+
         <?php if ($qrcode->exists('authorization_key')): ?>
         <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
         <?php endif; ?>

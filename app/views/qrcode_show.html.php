@@ -156,4 +156,14 @@
         </table>
     </div>
 
+    <div class="card text-bg-Light mt-4 mb-2 shadow-sm liveform_anchor">
+        <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i>Autres informations</div>
+        <p class="pt-2"
+           data-liveform-name="autres_infos" data-liveform-template='{{%s}}'
+        >
+            <?php echo $qrcode->autres_infos ?>
+        </p>
+
+    </div>
+
 </div>
