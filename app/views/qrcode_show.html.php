@@ -17,6 +17,11 @@
             >
                 <?php echo $qrcode->appellation ?>
             </small>
+            <small class="fw-light text-muted"
+                data-liveform-name="couleur" data-liveform-template='{{%s}}'
+            >
+                <?php echo $qrcode->couleur ?>
+            </small>
         </p>
         <p class="fs-4"
            data-liveform-name="millesime" data-liveform-template='{{%s}}'
@@ -31,12 +36,6 @@
         <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
-                <tr>
-                    <td class="text-start">Couleur</td>
-                    <td class="text-end"
-                        data-liveform-name="couleur" data-liveform-template='{{%s}}'>
-                            <?php echo $qrcode->couleur ?></td>
-                </tr>
                 <tr>
                     <td class="text-start">Contenance</td>
                     <td class="text-end"
