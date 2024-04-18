@@ -11,8 +11,8 @@
     <link href="<?php echo $urlbase; ?>/css/nutrivin.css" rel="stylesheet" />
   </head>
   <body>
-    <nav class="navbar start-50">
-      <img src="/images/logo.svg" alt="Bootstrap" width="64" height="64">
+    <nav class="navbar">
+      <img src="/images/logo.svg" class="mx-auto d-block" alt="Logo nutrivin" width="64" height="64">
     </nav>
 
     <div class="container-sm p-3">
