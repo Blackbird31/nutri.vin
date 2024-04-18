@@ -39,7 +39,7 @@ class CtrlNutriVin {
             }
             $qrcode->save();
             $qrcode = QRCode::findById($qrcode->id);
-            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id, false);
+            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/list', false);
         }
         return $f3->reroute('/qrcode', false);
     }
