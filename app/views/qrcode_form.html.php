@@ -275,7 +275,7 @@
                 <?php if ($qrcode->exists('authorization_key')): ?>
                 <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
                 <?php endif; ?>
-                <button type="submit" class="btn btn-primary"><?php if ($creation): ?>Créer<?php else: ?>Modifier<?php endif;?> le vin</button>
+                <button type="submit" class="btn btn-primary">Valider</button>
             </div>
         </div>
       </form>
