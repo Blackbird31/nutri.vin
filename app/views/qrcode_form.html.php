@@ -51,7 +51,7 @@
             <label form="alcool_degre" class="col-sm-6">Volume d'alcool : </label>
              <div class="col-sm-6">
               <div class="input-group">
-                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Dégré d'alcool"/>
+                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Degré d'alcool"/>
                 <span class="input-group-text" id="basic-addon2">%</span>
               </div>
           </div>
