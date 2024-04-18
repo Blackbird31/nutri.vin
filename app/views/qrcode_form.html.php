@@ -267,7 +267,8 @@
           </table>
         </div>
 
-        <div class="text-end">
+        <div class="d-flex justify-content-between">
+            <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-secondary mt-2">Retour à la liste</a>
             <?php if ($qrcode->exists('authorization_key')): ?>
             <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
             <?php endif; ?>
