@@ -21,7 +21,7 @@
 
       <div class="form-floating mb-3 col-sm-10">
            <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
-           <label for="cuvee_nom">Nom de la cuvee</label>
+           <label for="cuvee_nom">Nom de la cuvée</label>
        </div>
 
        <div class="form-floating mb-3 col-sm-10">
@@ -379,8 +379,8 @@ const liveform = (function () {
         } else {
             toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
         }
-
-        _template.scrollTop = toUpdate.closest('.liveform_anchor').offsetTop
+        const blockAnchor = toUpdate.closest('.liveform_anchor')
+        _template.scrollTop = blockAnchor.offsetTop - ((_template.offsetHeight - blockAnchor.offsetHeight) / 2)
     }
 
     return {
