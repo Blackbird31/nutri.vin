@@ -11,6 +11,10 @@ class QRCode extends MapperTable
 		if (!$this->id) {
 			$this->id = self::generateId();
 		}
+		$this->date_version = date('c');
+		if (!$this->date_creation) {
+		    $this->date_creation = $this->date_version;
+		}
 		return parent::save();
 	}
 
@@ -62,6 +66,9 @@ class QRCode extends MapperTable
  		 $fields['etiquette'] = 'BLOB';
 
 		 $fields['authorization_key'] = 'VARCHAR(100)';
+		 $fields['date_creation'] = 'VARCHAR(26)';
+		 $fields['date_version'] = 'VARCHAR(26)';
+
 		 return $fields;
  	}
 
