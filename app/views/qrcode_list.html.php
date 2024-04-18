@@ -26,7 +26,7 @@
         <td class="">
             <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/edit/'.$qr->id ?>" style="color: black;">
                 <i class="bi bi-pencil-fill"></i></a>
-            <a class="p-1" href="" style="color: black;">
+            <a class="p-1" href="<?php echo $urlbase.'/'.$qr->id ?>" style="color: black;">
                 <i class="bi bi-eye-fill"></i></a>
             <a class="p-1" href="<?php echo $urlbase.'/'.$qr->id.'/svg' ?>" style="color: black;">
                 <i class="bi bi-qr-code"></i></a>
