@@ -94,7 +94,7 @@
         </table>
         <template id="ingredient_row">
             <tr>
-                <td class="ingredient_libelle" scope="row"></td>
+                <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
                 <td class="ingredient_ab text-center">
                     <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
                 </td>
@@ -404,6 +404,21 @@ document.addEventListener('DOMContentLoaded', function () {
             liveform.update(e.target)
         }
     })
+
+    document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
+        const row = e.target.closest('tr');
+        e.dataTransfer.addElement(row);
+        e.dataTransfer.setData('indexOf', Array.from(document.querySelector('#table_ingredients tbody').children).indexOf(row))
+    });
+
+    document.querySelector('#table_ingredients').addEventListener('dragend', function (e) {
+        console.log(e);
+        console.log(e.dataTransfer.getData('indexOf'));
+        const rowOriginal = Array.from(document.querySelector('#table_ingredients tbody').children)[e.dataTransfer.getData('indexOf')];
+
+        document.querySelector('#table_ingredients tbody').appendChild(rowOriginal);
+        //rowOriginal.remove();
+    });
 })
 
 function ingredientsTextToTable() {
@@ -423,7 +438,7 @@ function ingredientsTextToTable() {
     let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
     for(let ingredient of ingredients) {
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
-        templateClone.querySelector('td.ingredient_libelle').innerText = ingredient.replace(/[_\*]/g, '');
+        templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
             templateClone.querySelector('td.ingredient_ab input').checked = true
         }
@@ -440,7 +455,7 @@ function ingredientsTableToText() {
         if(ingredientsText) {
             ingredientsText += ', '
         }
-        let ingredient = item.querySelector('td.ingredient_libelle').innerText;
+        let ingredient = item.querySelector('td.ingredient_libelle input').value;
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
