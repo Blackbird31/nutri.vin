@@ -63,7 +63,6 @@ class CtrlNutriVin {
 
         $f3->set('qrcode', $qrcode);
         $f3->set('content','qrcode_form.html.php');
-        $f3->set('creation', true);
         echo View::instance()->render('layout.html.php');
     }
 
@@ -75,7 +74,6 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
         $f3->set('content','qrcode_form.html.php');
-        $f3->set('creation', false);
         echo View::instance()->render('layout.html.php');
     }
 
