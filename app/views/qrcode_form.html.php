@@ -47,19 +47,23 @@
 
         <div class="d-flex col-sm-10 justify-content-between">
 
-        <div class="mb-3 col-sm-3">
-            <label form="alcool_degre" class="col-form-label">Volume d'alcool : </label>
+        <div class="mb-3 col-sm-6 row">
+            <label form="alcool_degre" class="col-sm-6">Volume d'alcool : </label>
+             <div class="col-sm-6">
               <div class="input-group">
                 <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Dégré d'alcool"/>
                 <span class="input-group-text" id="basic-addon2">%</span>
               </div>
+          </div>
         </div>
 
-        <div class="mb-3 col-sm-3">
-            <label form="quantite" class="col-form-label">Contenance</label>
+        <div class="mb-3 col-sm-6 row">
+            <label form="quantite" class="col-sm-6">Contenance :</label>
+            <div class="col-sm-6">
             <div class="input-group">
                 <input type="text" class="form-control text-sm-end" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
                 <span class="input-group-text" id="basic-addon2">cl</span>
+            </div>
             </div>
         </div>
 

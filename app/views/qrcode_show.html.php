@@ -37,16 +37,16 @@
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
                 <tr>
-                    <td class="text-start">Contenance</td>
-                    <td class="text-end"
-                        data-liveform-name="centilisation" data-liveform-template='{{%s}} cl'>
-                            <?php echo $qrcode->centilisation ?> cl</td>
-                </tr>
-                <tr>
                     <td class="text-start">Volume d'alcool</td>
                     <td class="text-end"
                         data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
                     ><?php echo $qrcode->alcool_degre ?>% vol</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Contenance</td>
+                    <td class="text-end"
+                        data-liveform-name="centilisation" data-liveform-template='{{%s}} cl'>
+                            <?php echo $qrcode->centilisation ?> cl</td>
                 </tr>
                 <tr>
                     <td class="text-start">N° de lot</td>
