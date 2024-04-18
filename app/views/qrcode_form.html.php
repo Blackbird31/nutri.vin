@@ -31,12 +31,12 @@
 
        <div class="d-flex col-sm-10 justify-content-between">
 
-       <div class="form-floating mb-3 col-sm-5">
+       <div class="form-floating col-sm-5">
            <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millésime"/>
            <label form="millesime">Millésime</label>
        </div>
 
-       <div class="form-floating mb-3 col-sm-6">
+       <div class="form-floating col-sm-6">
            <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
            <label form="couleur">Couleur</label>
        </div>
@@ -83,7 +83,7 @@
 
         <div class="container col-sm-10 m-0 p-0" data-liveform-ignore>
         <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-        <table id="table_ingredients" class="table col-sm-10 table-striped">
+        <table id="table_ingredients" class="table col-sm-10 table-striped" style="margin-top: -2.5rem">
               <thead>
                 <tr>
                   <th class="col-4" scope="col"></th>
