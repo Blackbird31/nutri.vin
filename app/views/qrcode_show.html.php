@@ -35,7 +35,7 @@
                     <td class="text-start">Couleur</td>
                     <td class="text-end"
                         data-liveform-name="couleur" data-liveform-template='{{%s}}'>
-                            <?php echo $qrcode->couleur ?> cl</td>
+                            <?php echo $qrcode->couleur ?></td>
                 </tr>
                 <tr>
                     <td class="text-start">Contenance</td>
