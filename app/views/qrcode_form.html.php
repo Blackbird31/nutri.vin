@@ -75,19 +75,49 @@
         </div>
 
 
-        <h3 class="mt-4 mb-4">Photos de l'étiquette</h3>
+        <h3 class="mt-4 mb-4" id="photos">Photos</h3>
 
         <div class="mb-3">
-            <div class="col-sm-10">
-<?php if ($qrcode->etiquette) : ?>
+            <div class="col-sm-10 row">
                 <div class="col-sm-4">
-                <img src="<?php echo $qrcode->etiquette ?>" class="img-thumbnail"/><br/>
-                <center><a href="./<?php echo $qrcode->id; ?>/img/0/delete">(suppr)</a></center>
+                    <center>
+                        Bouteille<br/>
+                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_bouteille, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
+                    </div>
                 </div>
-<?php else:?>
-              <label for="etiquette" class="form-label">Fichier étiquette</label>
-              <input type="file" class="form-control" id="etiquette" name="etiquette" value="<?php echo $qrcode->etiquette; ?>" placeholder="Étiquette"/>
-<?php endif; ?>
+                <div class="col-sm-4">
+                    <center>
+                        Etiquette<br/>
+                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_etiquette, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <center>
+                        Contre-étiquette<br/>
+                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
+                        <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>Editer</a>
+                        <span style="<?php if (strpos($qrcode->image_contreetiquette, 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                        </span>
+                    </center>
+                    <div style="display: none;">
+                        <input type="file" class="form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -267,6 +297,15 @@
           </table>
         </div>
 
+        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
+
+        <div class="mb-3 col-sm-10">
+            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
+            <div class="form-text">
+              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
+            </div>
+        </div>
+
         <div class="row mt-5">
             <div class="col-6">
                 <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
@@ -324,6 +363,7 @@ const liveform = (function () {
             const reader = new FileReader();
             reader.addEventListener('load', event => {
                 toUpdate.src = event.target.result;
+                document.getElementById(el.dataset.imageorigin).src = event.target.result;
             });
             reader.readAsDataURL(file);
         } else {

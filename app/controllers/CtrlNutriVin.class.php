@@ -34,8 +34,10 @@ class CtrlNutriVin {
             if (!$qrcode->user_id) {
                 $qrcode->user_id = $f3->get('PARAMS.userid');
             }
-            if(isset($_FILES['etiquette']) && in_array($_FILES['etiquette']['type'], array('image/jpeg', 'image/png'))) {
-                $qrcode->etiquette = 'data:'.$_FILES['etiquette']['type'].';base64,'.base64_encode(file_get_contents($_FILES['etiquette']['tmp_name']));
+            foreach(['image_bouteille', 'image_etiquette', 'image_contreetiquette'] as $img) {
+                if(isset($_FILES[$img]) && in_array($_FILES[$img]['type'], array('image/jpeg', 'image/png'))) {
+                    $qrcode->{$img} = 'data:'.$_FILES[$img]['type'].';base64,'.base64_encode(file_get_contents($_FILES[$img]['tmp_name']));
+                }
             }
             $qrcode->save();
             $qrcode = QRCode::findById($qrcode->id);
@@ -49,9 +51,22 @@ class CtrlNutriVin {
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
-        $qrcode->etiquette = null;
+        $images = ['image_bouteille', 'image_etiquette', 'image_contreetiquette'];
+        $qrcode->{$images[intval($f3->get('PARAMS.index'))]} = null;
         $qrcode->save();
-        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id, false);
+        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id."#photos", false);
+    }
+
+    function initDefaultOnQRCode(& $qrcode){
+        if (!$qrcode->image_bouteille) {
+            $qrcode->image_bouteille = '/images/default_bouteille.jpg';
+        }
+        if (!$qrcode->image_etiquette) {
+            $qrcode->image_etiquette = '/images/default_etiquette.jpg';
+        }
+        if (!$qrcode->image_contreetiquette) {
+            $qrcode->image_contreetiquette = '/images/default_contreetiquette.jpg';
+        }
     }
 
     function qrcodeCreate(Base $f3) {
@@ -60,6 +75,8 @@ class CtrlNutriVin {
             return $f3->reroute('/admin/setup', false);
         }
         $qrcode->user_id = $f3->get('PARAMS.userid');
+
+        $this->initDefaultOnQRCode($qrcode);
 
         $f3->set('qrcode', $qrcode);
         $f3->set('content','qrcode_form.html.php');
@@ -72,6 +89,9 @@ class CtrlNutriVin {
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
+
+        $this->initDefaultOnQRCode($qrcode);
+
         $f3->set('qrcode', $qrcode);
         $f3->set('content','qrcode_form.html.php');
         echo View::instance()->render('layout.html.php');
@@ -98,6 +118,8 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
+
+        $this->initDefaultOnQRCode($qrcode);
 
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
