@@ -19,6 +19,7 @@ class QRCodeEPSOptions extends QROptions
 
     public function setLogo($logo)
     {
+        /* Pas de possibilité de mettre un logo pour l'instant */
     }
 
     public function setResponseHeaders($moreHeaders = [])
