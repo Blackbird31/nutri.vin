@@ -24,14 +24,13 @@
         <td><?php echo $qr->centilisation; ?> cl</td>
         <td><?php echo $qr->millesime; ?></td>
         <td class="">
-          <div class="dropdown">
-            <span class="bi bi-gear-fill" type="button" data-bs-toggle="dropdown" aria-expanded="false"></span>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/edit/'.$qr->id ?>" class="dropdown-item">Editer</a></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </div>
+            <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/edit/'.$qr->id ?>" style="color: black;">
+                <i class="bi bi-pencil-fill"></i></a>
+            <a class="p-1" href="" style="color: black;">
+                <i class="bi bi-eye-fill"></i></a>
+            <a class="p-1" href="<?php echo $urlbase.'/'.$qr->id.'/svg' ?>" style="color: black;">
+                <i class="bi bi-qr-code"></i></a>
+            </span>
         </td>
       </tr>
     <?php endforeach; ?>
