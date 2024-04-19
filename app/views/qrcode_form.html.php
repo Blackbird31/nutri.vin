@@ -21,57 +21,58 @@
 
       <div class="form-floating mb-3 col-sm-10">
            <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
-           <label for="cuvee_nom">Nom de la cuvee</label>
+           <label for="cuvee_nom">Nom de la cuvée</label>
        </div>
 
        <div class="form-floating mb-3 col-sm-10">
            <input type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
-           <label form="appellation" class="form-label">Appellation</label>
+           <label form="appellation">Appellation</label>
        </div>
 
        <div class="d-flex col-sm-10 justify-content-between">
 
-       <div class="form-floating mb-3 col-sm-5">
+       <div class="form-floating col-sm-5">
            <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millésime"/>
-           <label form="millesime" class="form-label">Millésime</label>
+           <label form="millesime">Millésime</label>
        </div>
 
-       <div class="form-floating mb-3 col-sm-6">
+       <div class="form-floating col-sm-6">
            <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
-           <label form="couleur" class="col-form-label">Couleur</label>
+           <label form="couleur">Couleur</label>
        </div>
 
        </div>
 
         <h3 class="mt-4 mb-4">Informations complémentaires</h3>
-
         <div class="d-flex col-sm-10 justify-content-between">
-
-        <div class="mb-3 col-sm-6 row">
-            <label form="alcool_degre" class="col-sm-6">Volume d'alcool : </label>
-             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control text-sm-end" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Degré d'alcool"/>
-                <span class="input-group-text" id="basic-addon2">%</span>
-              </div>
-          </div>
-        </div>
-
-        <div class="mb-3 col-sm-6 row">
-            <label form="quantite" class="col-sm-6">Contenance :</label>
-            <div class="col-sm-6">
-            <div class="input-group">
-                <input type="text" class="form-control text-sm-end" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Centilisation"/>
-                <span class="input-group-text" id="basic-addon2">cl</span>
+            <div class="col-sm-3">
+                <div class="input-group mb-3">
+                  <div class="form-floating">
+                      <input type="text" class="form-control text-end" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
+                      <label form="alcool_degre">Volume d'alcool</label>
+                  </div>
+                  <span class="input-group-text">%</span>
+                </div>
             </div>
+
+            <div class="col-sm-3">
+                <div class="input-group mb-3">
+                  <div class="form-floating">
+                      <input type="text" class="form-control text-end" id="centilisation" name="centilisation" placeholder="Contenance">
+                      <label form="centilisation">Contenance</label>
+                  </div>
+                  <span class="input-group-text">cl</span>
+                </div>
             </div>
-        </div>
 
-        </div>
-
-        <div class="form-floating mb-3 col-sm-10">
-            <input type="text" class="form-control" id="lot" name="lot" value="<?php echo $qrcode->lot; ?>" placeholder="identifiant du lot"/>
-            <label form="lot" class="col-form-label">Numéro Lot</label>
+            <div class="col-sm-4">
+                <div class="input-group mb-3">
+                  <div class="form-floating">
+                      <input type="text" class="form-control" id="lot" name="lot" placeholder="Numéro de lot">
+                      <label form="lot">Numéro de lot</label>
+                  </div>
+                </div>
+            </div>
         </div>
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
@@ -82,7 +83,7 @@
 
         <div class="container col-sm-10 m-0 p-0" data-liveform-ignore>
         <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-        <table id="table_ingredients" class="table col-sm-10 table-striped">
+        <table id="table_ingredients" class="table col-sm-10 table-striped" style="margin-top: -2.5rem">
               <thead>
                 <tr>
                   <th class="col-4" scope="col"></th>
@@ -104,13 +105,20 @@
             </tr>
         </template>
         <div class="input-group">
-            <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Example text with button addon" aria-describedby="btn_add_ingredient">
+            <div class="col-sm-12">
+                <div class="input-group">
+                  <div class="form-floating">
+                      <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
+                      <label form="lot">Ingrédient(s)</label>
+                  </div>
+                  <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+                </div>
+            </div>
             <datalist id="ingredients_list">
                 <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
                 <option value="<?php echo $ingredient ?>"></option>
                 <?php endforeach; ?>
             </datalist>
-            <button form="form_add_ingredients" class="btn btn-outline-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
         </div>
         <div class="form-text">
           Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
@@ -371,8 +379,8 @@ const liveform = (function () {
         } else {
             toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
         }
-
-        _template.scrollTop = toUpdate.closest('.liveform_anchor').offsetTop
+        const blockAnchor = toUpdate.closest('.liveform_anchor')
+        _template.scrollTop = blockAnchor.offsetTop - ((_template.offsetHeight - blockAnchor.offsetHeight) / 2)
     }
 
     return {

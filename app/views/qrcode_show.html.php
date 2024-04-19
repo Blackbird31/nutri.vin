@@ -40,8 +40,8 @@
     </div>
 </div>
 
-<div class="p-3 bg-light-subtle border-top liveform_anchor">
-    <div class="card text-bg-light mt-2 mb-4 shadow-sm">
+<div class="p-3 bg-light-subtle border-top ">
+    <div class="card text-bg-light mt-2 mb-4 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
