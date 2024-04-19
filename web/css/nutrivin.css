@@ -1,9 +1,3 @@
-:root {
-    --bs-primary-rgb: 39, 119, 103;
-    --bs-primary: #277767;
-    --bs-primary-bg-subtle: #85baa8;
-}
-
 body {
   padding-bottom: 40px;
 }

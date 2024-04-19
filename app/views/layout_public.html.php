@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container-sm text-center" style="max-width: 540px;">
-        <a href="/"><img class="mt-4" src="/images/logo.svg" height="100px"></a>
+        <?php include($THEME.'header_public.php'); ?>
         <?php include($content); ?>
     </div>
   </body>
