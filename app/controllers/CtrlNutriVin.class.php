@@ -98,6 +98,10 @@ class CtrlNutriVin {
     }
 
     function qrcodeAuthentication(Base $f3) {
+        $qrcode = new QRCode();
+        if (!$qrcode->tableExists()) {
+            return $f3->reroute('/admin/setup', false);
+        }
         return $f3->reroute('/qrcode/userid/list', false);
     }
 
