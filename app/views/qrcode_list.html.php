@@ -3,26 +3,28 @@
 <h3 class="mt-4 ">Liste des QR code</h3>
 
 <table class="table table-bordered table-striped text-center">
-
   <thead>
     <tr>
-      <th>Nom commercial</th>
-      <th>Appellation</th>
-      <th>Cuvée</th>
-      <th>Conditionnement (en cl)</th>
-      <th>Millésime</th>
-      <th>Actions</th>
+      <th class="col-4">Nom commercial</th>
+      <th class="col-6">Vin</th>
+      <th class="col-2">Actions</th>
     </tr>
   </thead>
-
+<?php if ( ! count($qrlist) ): ?>
+  <tbody>
+      <tr><td colspan=3><center><i>Vous n'avez pas encore créé de QRCode</i></center></td></tr>
+  </tbody>
+<?php else: ?>
   <tbody>
     <?php foreach($qrlist as $qr): ?>
       <tr>
         <td><?php echo $qr->domaine_nom; ?></td>
-        <td><?php echo $qr->appellation; ?></td>
-        <td><?php echo $qr->cuvee_nom; ?></td>
-        <td><?php echo $qr->centilisation; ?> cl</td>
-        <td><?php echo $qr->millesime; ?></td>
+        <td>
+            <?php echo $qr->cuvee_nom; ?>
+            <?php echo $qr->appellation; ?> <?php echo $qr->couleur; ?>
+            <?php echo $qr->millesime; ?> -
+            <?php echo $qr->centilisation; ?> cl
+        </td>
         <td class="">
             <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/edit/'.$qr->id ?>" style="color: black;">
                 <i class="bi bi-pencil-fill"></i></a>
@@ -34,7 +36,7 @@
       </tr>
     <?php endforeach; ?>
   </tbody>
-
+<?php endif; ?>
 </table>
 
 <div class="text-end">

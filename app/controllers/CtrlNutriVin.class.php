@@ -98,7 +98,7 @@ class CtrlNutriVin {
     }
 
     function qrcodeAuthentication(Base $f3) {
-        return $f3->reroute('/qrcode/userid/create', false);
+        return $f3->reroute('/qrcode/userid/list', false);
     }
 
     function qrcodeList(Base $f3) {
