@@ -5,3 +5,4 @@ web/uploads/
 *~
 .*.swp
 tags
+db/
