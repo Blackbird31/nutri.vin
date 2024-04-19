@@ -130,6 +130,11 @@ class CtrlNutriVin {
         echo View::instance()->render('layout_public.html.php');
     }
 
+    public function qrcodeParametrage(Base $f3) {
+        $f3->set('content', 'qrcode_parametrage.html.php');
+        echo View::instance()->render('layout.html.php');
+    }
+
     public function export(Base $f3)
     {
         $format = $f3->get('PARAMS.format');

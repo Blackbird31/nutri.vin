@@ -9,6 +9,7 @@ if(getenv("DEBUG")) {
 }
 $f3->set('ROOT', __DIR__);
 $f3->set('UI', $f3->get('ROOT')."/app/views/");
+$f3->set('THEME', $f3->get('ROOT')."/themes/ivso/");
 
 $port = $f3->get('PORT');
 $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
