@@ -14,7 +14,7 @@
     <div class="container-sm p-3"  style="max-width: 768px;">
       <div class="mt-5 text-center">
         <img class="mb-3" src="https://www.vignobles-sudouest.fr/wp-content/uploads/2019/12/IVSO-Logo-V.png" height="275px" />
-        <h1 class="text-primary"><strong><?php echo $urlbase ?></strong></h1><p class="fs-3 mt-5 text-muted">Plateforme <strong>open source</strong> et communautaire de <strong>QR Code</strong> pour la déclaration <strong>nutritionnelle</strong> de vos <strong>vins</strong>
+        <h1 class="text-primary"><strong><?php echo $_SERVER['HTTP_HOST'] ?></strong></h1><p class="fs-3 mt-5 text-muted">Plateforme <strong>open source</strong> et communautaire de <strong>QR Code</strong> pour la déclaration <strong>nutritionnelle</strong> de vos <strong>vins</strong>
         </p>
         <p class="fs-3 mt-5 text-primary">
             Ouverture le 1er juin 2024
