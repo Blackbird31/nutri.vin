@@ -77,6 +77,8 @@ class QRCode extends MapperTable
 		 $fields['date_creation'] = 'VARCHAR(26)';
 		 $fields['date_version'] = 'VARCHAR(26)';
 
+         $fields['logo'] = 'BOOL';
+
 		 return $fields;
  	}
 

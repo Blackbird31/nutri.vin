@@ -132,6 +132,7 @@ class CtrlNutriVin {
 
     public function qrcodeParametrage(Base $f3) {
         $qrcode = $f3->get('PARAMS.qrcodeid');
+
         $qrcode = QRCode::findById($qrcode);
         if ($qrcode === null) {
             $f3->error(404, "QRCode non trouvé");
@@ -139,6 +140,11 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
+        $logo = $f3->get('POST.logo') === 'true';
+
+        $f3->set('logo', $logo);
+        $qrcode->logo = $logo;
+        $qrcode->save();
 
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
@@ -164,7 +170,7 @@ class CtrlNutriVin {
 
         $e = Exporter::renderer($format, $options);
 
-        if ($logo) {
+        if ($qrcode->logo) {
             $e->addLogo($logo);
         }
 
