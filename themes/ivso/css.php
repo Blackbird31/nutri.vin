@@ -15,4 +15,12 @@
         --bs-btn-hover-border-color: #3e5a8a;
         --bs-btn-active-border-color: #6681af;
     }
+
+    body {
+        background-color: #efefef;
+    }
+
+    #main_container {
+        background-color: white;
+    }
 </style>

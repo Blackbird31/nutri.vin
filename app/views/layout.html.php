@@ -13,7 +13,7 @@
   <body>
     <?php include($THEME.'header.php'); ?>
 
-    <div class="container-sm p-3">
+    <div id="main_container" class="container-sm my-4 p-3">
         <?php include($content); ?>
     </div>
   </body>
