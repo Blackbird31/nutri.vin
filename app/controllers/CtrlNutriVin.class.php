@@ -47,7 +47,7 @@ class CtrlNutriVin {
     }
 
     function qrcodeDeleteImage(Base $f3) {
-        $qrcode = QRCode::findById($f3->get('PARAMS.id'));
+        $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
@@ -85,7 +85,7 @@ class CtrlNutriVin {
 
 
     function qrcodeEdit(Base $f3) {
-        $qrcode = QRCode::findById($f3->get('PARAMS.id'));
+        $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
