@@ -1,5 +1,5 @@
 <?php if ($iframe): ?>
-    <div class="border border-light-subtle border-4 py-5 px-2 bg-light rounded-5 shadow-sm bg-gradient">
+    <div class="border border-light-subtle border-4 py-5 px-2 bg-light rounded-5 shadow-sm bg-gradient position-relative">
 <?php else:?>
     <div class="border border-light-subtle border-4 py-5 px-2 bg-light rounded-5 shadow-sm bg-gradient position-fixed" style="margin-top: -2.5rem;">
 <?php endif; ?>
