@@ -70,7 +70,7 @@
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
+                      <input type="text" class="form-control text-end input-float" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
                       <label form="alcool_degre">Volume d'alcool</label>
                   </div>
                   <span class="input-group-text">%</span>
@@ -80,7 +80,7 @@
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end" id="centilisation" name="centilisation" placeholder="Contenance">
+                      <input type="text" class="form-control text-end input-float" id="centilisation" name="centilisation" placeholder="Contenance">
                       <label form="centilisation">Contenance</label>
                   </div>
                   <span class="input-group-text">cl</span>
