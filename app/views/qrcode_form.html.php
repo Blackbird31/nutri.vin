@@ -99,52 +99,62 @@
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
-        <div class="mb-3 col-sm-10">
-          <input type="hidden" class="form-control" name="ingredients" id="ingredients" value="<?php echo $qrcode->ingredients ?>" />
-        </div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="ingredients_tableau_tab" data-bs-toggle="tab" data-bs-target="#ingredients_tableau" type="button" role="tab" aria-controls="ingredients_tableau" aria-selected="true">Liste</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="ingredients_texte_tab" data-bs-toggle="tab" data-bs-target="#ingredients_texte" type="button" role="tab" aria-controls="ingredients_texte" aria-selected="false">Texte</button>
+          </li>
+        </ul>
 
-        <div class="container col-sm-10 m-0 p-0" data-liveform-ignore>
-        <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-        <table id="table_ingredients" class="table col-sm-10 table-striped" style="margin-top: -2.5rem">
-              <thead>
+        <div class="tab-content py-4">
+          <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+            <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
+            <table id="table_ingredients" class="table col-sm-10 table-striped">
+                  <thead>
+                    <tr>
+                      <th class="col-4" scope="col"></th>
+                      <th class="col-1 text-center" scope="col">AB</th>
+                      <th class="col-1 text-center" scope="col">Allergène</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+            </table>
+            <template id="ingredient_row">
                 <tr>
-                  <th class="col-4" scope="col"></th>
-                  <th class="col-1 text-center" scope="col">AB</th>
-                  <th class="col-1 text-center" scope="col">Allergène</th>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
+                    <td class="ingredient_ab text-center align-middle">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                    </td>
+                    <td class="ingredient_allergene text-center align-middle">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                    </td>
                 </tr>
-              </thead>
-              <tbody></tbody>
-        </table>
-        <template id="ingredient_row">
-            <tr>
-                <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
-                <td class="ingredient_ab text-center">
-                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
-                </td>
-                <td class="ingredient_allergene text-center">
-                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
-                </td>
-            </tr>
-        </template>
-        <div class="input-group">
-            <div class="col-sm-12">
-                <div class="input-group">
-                  <div class="form-floating">
-                      <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
-                      <label form="lot">Ingrédient(s)</label>
-                  </div>
-                  <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+            </template>
+            <div class="input-group">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                      <div class="form-floating">
+                          <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
+                          <label form="lot">Ingrédient(s)</label>
+                      </div>
+                      <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+                    </div>
                 </div>
+                <datalist id="ingredients_list">
+                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
+                    <option value="<?php echo $ingredient ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
             </div>
-            <datalist id="ingredients_list">
-                <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
-                <option value="<?php echo $ingredient ?>"></option>
-                <?php endforeach; ?>
-            </datalist>
-        </div>
-        <div class="form-text">
-          Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
-        </div>
+            <div class="form-text">
+              Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
+            </div>
+          </div>
+          <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+              <textarea class="form-control" rows="8" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
+          </div>
         </div>
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
