@@ -412,7 +412,8 @@ const liveform = (function () {
             });
             reader.readAsDataURL(file);
         } else {
-            toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+            let ingredientsListe = (el.value).replace(/_(.*?)_/g, "<strong>$1</strong>");
+            toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', ingredientsListe)
         }
         const blockAnchor = toUpdate.closest('.liveform_anchor')
         _template.scrollTop = blockAnchor.offsetTop - ((_template.offsetHeight - blockAnchor.offsetHeight) / 2)
