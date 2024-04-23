@@ -111,7 +111,7 @@
         <div class="tab-content py-4">
           <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-            <table id="table_ingredients" class="table col-sm-10 table-striped">
+            <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
                     <tr>
                       <th class="col-4" scope="col"></th>
@@ -160,7 +160,7 @@
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
         <div class="form-floating mb-3 col-sm-10">
-          <table class="table table-striped">
+          <table class="table table-sm table-striped">
             <tbody>
               <tr>
                 <td class="align-middle">Énergie (kJ)</td>
