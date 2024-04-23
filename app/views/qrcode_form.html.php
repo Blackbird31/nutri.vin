@@ -449,6 +449,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    document.querySelector('.input-float').addEventListener('change', function() {
+        let valeur = this.value;
+        valeur = valeur.replace(/,/g, '.');
+        valeur = parseFloat(valeur).toFixed(2);
+        this.value = valeur;
+    });
+
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
         const row = e.target.closest('tr');
         e.dataTransfer.addElement(row);
