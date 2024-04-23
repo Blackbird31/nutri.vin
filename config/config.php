@@ -41,6 +41,15 @@ $config = [
       'IGP Lavilledieu',
       'IGP Thézac-Perricard'
     ],
+    'couleurs' => [
+      'Blanc',
+      'Blanc doux',
+      'Blanc moelleux',
+      'Blanc sec',
+      'Rosé',
+      'Rouge',
+      'Surmûris Blanc',
+    ],
     'qrcode' => [
         'color' => "#000000",
         'logo'  => __DIR__.'/../web/images/ivso.svg'

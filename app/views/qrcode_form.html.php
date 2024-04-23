@@ -48,7 +48,18 @@
        </div>
 
        <div class="form-floating col-sm-6">
-           <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
+           <input list="couleurs_liste" type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
+            <datalist id="couleurs_liste">
+            <?php
+              if (isset($config['couleurs'])):
+                foreach ($config['couleurs'] as $couleur):
+            ?>
+              <option value="<?php echo $couleur ?>"></option>
+            <?php
+                endforeach;
+              endif;
+            ?>
+            </datalist>
            <label form="couleur">Couleur</label>
        </div>
 
