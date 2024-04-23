@@ -140,14 +140,15 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
-        $logo = $f3->get('POST.logo') === 'true';
-
-        $f3->set('logo', $logo);
-        $qrcode->logo = $logo;
-        $qrcode->save();
-
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
+    }
+
+    public function qrcodeDisplay(Base $f3) {
+        $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
+        $qrcode->logo = (bool)$f3->get('POST.logo');
+        $qrcode->save();
+        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id, false);
     }
 
     public function export(Base $f3)
