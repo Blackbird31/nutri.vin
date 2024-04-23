@@ -115,7 +115,7 @@
                   <thead>
                     <tr>
                       <th class="col-4" scope="col"></th>
-                      <th class="col-1 text-center" scope="col">AB</th>
+                      <th class="col-1 text-center" scope="col">Bio</th>
                       <th class="col-1 text-center" scope="col">Allergène</th>
                     </tr>
                   </thead>
