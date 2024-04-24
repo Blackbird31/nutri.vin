@@ -1,19 +1,13 @@
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
-    <div class="bg-white border rounded rounded-bottom-0 shadow-sm">
-        <img class="mt-3 bg-white border-bottom" style="height: 200px;"
+
+    <div id="carrousel" class="bg-white border rounded rounded-bottom-0 shadow-sm d-flex justify-content-center">
+        <img id="slide" class="mt-3 bg-white border-bottom" style="height: 200px;"
             data-liveform-name="image_bouteille" data-liveform-template="{{%s}}"
             src="<?php echo $qrcode->image_bouteille ?>" >
+        <div class="position-absolute top-50 start-0" id="precedent" onClick="changeSlide(-1)"><</div>
+        <div class="position-absolute top-50 start-90" id="suivant" onClick="changeSlide(1)">></div>
     </div>
-    <div class="bg-white border rounded rounded-bottom-0 shadow-sm" style="display: none;">
-        <img class="mt-3 bg-white border-bottom" style="height: 200px;"
-            data-liveform-name="image_etiquette" data-liveform-template="{{%s}}"
-            src="<?php echo $qrcode->image_etiquette ?>" >
-    </div>
-    <div class="bg-white border rounded rounded-bottom-0 shadow-sm" style="display: none;">
-        <img class="mt-3 bg-white border-bottom" style="height: 200px;"
-            data-liveform-name="image_contreetiquette" data-liveform-template="{{%s}}"
-            src="<?php echo $qrcode->image_contreetiquette ?>" >
-    </div>
+
     <div class="bg-light-subtle border border-top-0 rounded rounded-top-0 pt-3 shadow-sm">
         <p data-liveform-name="domaine_nom" data-liveform-template='{{%s}}'
            class="fs-4"><?php echo $qrcode->domaine_nom ?></p>
@@ -176,3 +170,21 @@
     </div>
 
 </div>
+
+<script>
+    const slide = ["<?php echo $qrcode->image_bouteille; ?>", "<?php echo $qrcode->image_etiquette; ?>", "<?php echo $qrcode->image_contreetiquette; ?>"];
+
+    let numero = 0;
+
+    function changeSlide(sens) {
+        numero += sens;
+        if (numero < 0) {
+            numero = slide.length - 1;
+        }
+        if (numero > slide.length - 1) {
+            numero = 0;
+        }
+        document.getElementById("slide").src = slide[numero];
+    }
+
+</script>
