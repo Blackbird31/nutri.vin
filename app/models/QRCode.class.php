@@ -6,7 +6,7 @@ class QRCode extends MapperTable
 {
 	function save() {
 		if (!isset($this->authorization_key) || $this->authorization_key) {
-			$this->authorization_key = sha1(implode(',',$this->values()).rand());
+			$this->authorization_key = sha1(implode(',',$this->toArray()).rand());
 		}
 		if (!$this->id) {
 			$this->id = self::generateId();
