@@ -75,6 +75,7 @@ class CtrlNutriVin {
             return $f3->reroute('/admin/setup', false);
         }
         $qrcode->user_id = $f3->get('PARAMS.userid');
+        $qrcode->copyFrom('GET');
 
         $this->initDefaultOnQRCode($qrcode);
 
