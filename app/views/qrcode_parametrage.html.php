@@ -13,20 +13,34 @@
         </div>
         <form id="logoForm" method="POST" action="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id; ?>" enctype="multipart/form-data">
             <input type="checkbox" class="btn-check" id="btncheck1" name="logo" autocomplete="off" value="1" <?php if($qrcode->logo):?>checked<?php endif; ?>>
-            <label class="btn btn-outline-primary" for="btncheck1">Logo IVSO <?php if($qrcode->logo):?>activé<?php else:?>désactivé<?php endif; ?></label>
-        </form>
+            <div class="d-flex justify-content-center">
+                <label class="btn btn-outline-primary mt-5" for="btncheck1">Logo IVSO <?php if($qrcode->logo):?>activé<?php else:?>désactivé<?php endif; ?></label>
+            </div>
+            </form>
+            <div class="row position-absolute top-100 start-40">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-download"></i> Formats de téléchargement
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" target="_blank" href="<?php echo $urlbase.'/'.$qrcode->id.'/pdf'; ?>">PDF</a></li>
+                        <li><a class="dropdown-item" target="_blank" href="<?php echo $urlbase.'/'.$qrcode->id.'/svg'; ?>">SVG</a></li>
+                        <li><a class="dropdown-item" href="<?php echo $urlbase.'/'.$qrcode->id.'/eps'; ?>">EPS</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <?php $iframe = true; ?>
+            <?php include('_phone.html.php') ?>
+        </div>
     </div>
-    <div class="col-4">
-        <?php $iframe = true; ?>
-        <?php include('_phone.html.php') ?>
-    </div>
-</div>
 
-<script>
+    <script>
     var checkbox = document.getElementById('btncheck1');
 
     checkbox.addEventListener('click', function() {
-            document.querySelector('input[name="logo"]').value = this.checked ? 1 : 0;
-            document.getElementById('logoForm').submit();
+        document.querySelector('input[name="logo"]').value = this.checked ? 1 : 0;
+        document.getElementById('logoForm').submit();
     });
 </script>
