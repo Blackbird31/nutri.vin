@@ -34,8 +34,10 @@
                 <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/parametrage/'.$qr->id ?>" style="color: black;">
                     <i class="bi bi-qr-code"></i></a>
                 </div>
-                <div class="position-absolute top-50 end-0 translate-middle-y pe-2">
-                    <i class="bi bi-copy"></i>
+                <div class="position-absolute top-50 end-0 translate-middle-y">
+                    <form id="duplicateForm" method="get" action="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/duplicate'; ?>" enctype="multipart/form-data">
+                        <button type="submit" id="duplicateButton" class="btn" name="qrcodeid" value="<?php echo $qr->id; ?>"><i class="bi bi-copy"></i></button>
+                    </form>
                 </div>
         </td>
       </tr>
