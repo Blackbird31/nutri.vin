@@ -7,10 +7,10 @@ class MapperTable extends DB\SQL\Mapper {
         parent::__construct(DBManager::getDB(), $table_name);
 	}
 
-	function values() {
+	function toArray() {
 		$v = [];
 		foreach($this->fields() as $f) {
-			$v[] = $this->get($f);
+			$v[$f] = $this->get($f);
 		}
 		return $v;
 	}
@@ -71,5 +71,9 @@ class MapperTable extends DB\SQL\Mapper {
 			return false;
 		}
 	}
+
+    public function __debug() {
+        return $this->toArray();
+    }
 
 }
