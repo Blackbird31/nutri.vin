@@ -158,6 +158,9 @@ class CtrlNutriVin {
         return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id, false);
     }
 
+    public function qrcodeMultiExport(Base $f3) {
+    }
+
     public function export(Base $f3)
     {
         $format = $f3->get('PARAMS.format');
