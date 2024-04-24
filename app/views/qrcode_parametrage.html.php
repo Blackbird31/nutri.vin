@@ -1,4 +1,11 @@
-<h1 class="text-center mb-4">Paramétrage de votre QR code</h1>
+<div class="row">
+    <div class="col-2">
+        <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+    </div>
+    <div class="col-8">
+        <h1 class="text-center mb-4">Paramétrage de votre QR code</h1>
+    </div>
+</div>
 <div class="row justify-content-end">
     <div class="col-8 mt-5">
         <div class="d-flex justify-content-center">
