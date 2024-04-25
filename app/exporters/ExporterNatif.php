@@ -24,15 +24,8 @@ class ExporterNatif
 
     public function getQRCodeContent($qrCodeData, $format, $logo = false) {
         $configuration = new $this->qroptions[$format];
-        $configuration->eccLevel = EccLevel::H;
-        $configuration->outputBase64 = false;
-        $configuration->connectPaths = true;
-        $configuration->addQuietzone = true;
-        $configuration->svgUseFillAttribute = true;
+
         if($logo) {
-            $configuration->addLogoSpace = true;
-            $configuration->logoSpaceWidth = 8;
-            $configuration->logoSpaceHeight = 8;
             $configuration->setLogo($logo);
         }
 

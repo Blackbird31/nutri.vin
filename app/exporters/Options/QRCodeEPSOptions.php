@@ -6,7 +6,7 @@ use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QROutputInterface;
 
-class QRCodeEPSOptions extends QRCodeSVGOptions
+class QRCodeEPSOptions extends QRCodeGeneralOptions
 {
     protected string $outputType = QROutputInterface::EPS;
 

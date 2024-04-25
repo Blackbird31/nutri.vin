@@ -6,7 +6,7 @@ use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QROutputInterface;
 
-class QRCodePDFOptions extends QRCodeSVGOptions
+class QRCodePDFOptions extends QRCodeGeneralOptions
 {
     protected string $outputType = QROutputInterface::FPDF;
     protected string $fpdfMeasureUnit = 'mm';
