@@ -300,7 +300,7 @@
                         <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>
                           <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/>
                           <br/>
-                          Editer
+                          <?php if (strpos($qrcode->image_bouteille, 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                         </a>
                         <span style="<?php if (strpos($qrcode->image_bouteille, 'data:') === false) { echo 'display: none;'; }?>">
                             - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
@@ -316,7 +316,7 @@
                         <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>
                           <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/>
                           <br/>
-                          Editer
+                          <?php if (strpos($qrcode->image_etiquette, 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                         </a>
                         <span style="<?php if (strpos($qrcode->image_etiquette, 'data:') === false) { echo 'display: none;'; }?>">
                             - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
@@ -332,7 +332,7 @@
                         <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>
                           <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/>
                           <br/>
-                          Editer
+                          <?php if (strpos($qrcode->image_contreetiquette, 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                         </a>
                         <span style="<?php if (strpos($qrcode->image_contreetiquette, 'data:') === false) { echo 'display: none;'; }?>">
                             - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
