@@ -161,10 +161,6 @@ class CtrlNutriVin {
     public function qrcodeMultiExport(Base $f3) {
     }
 
-    public function export(Base $f3)
-    {
-        $format = $f3->get('PARAMS.format');
-        $qrcode = $f3->get('PARAMS.qrcodeid');
 
         $qrcode = QRCode::findById($qrcode);
 
@@ -179,12 +175,17 @@ class CtrlNutriVin {
 
         $data = $f3->get('urlbase').$f3->build('/@qrcodeid');
 
-        $e = Exporter::renderer($format, $options);
+    public function export(Base $f3)
+    {
+        $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
 
-        if ($qrcode->logo) {
-            $e->addLogo($logo);
+        if ($qrcode === null) {
+            $f3->error(404, "QRCode non trouvé");
+            exit;
         }
 
-        echo $e->render($data);
+        Exporter::getInstance()->setResponseHeaders($f3->get('PARAMS.format'));
+
+        echo $qrcode->getQRCodeContent($f3->get('PARAMS.format'), $f3->get('urlbase'), $f3->get('config')['qrcode']);
     }
 }

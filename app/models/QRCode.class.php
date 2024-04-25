@@ -1,6 +1,7 @@
 <?php
 
 require_once('MapperTable.class.php');
+use app\exporters\Exporter;
 
 class QRCode extends MapperTable
 {
@@ -293,7 +294,9 @@ class QRCode extends MapperTable
 		return $e->find(array('user_id=?',$userid));
 	}
 
-    public function export($format, $url)
-    {
+	public function getQRCodeContent($format, $urlbase, $config) {
+
+        return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->id, $format, ($this->logo) ? $config['logo'] : false);
     }
+
 }

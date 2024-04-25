@@ -34,30 +34,19 @@ class QRCodeSVGOptions extends QROptions
         $this->svgLogoScale = max(0.05, min(0.3, $svgLogoScale));
     }
 
-    public function setColors($color)
-    {
-        $this->moduleValues = [
-            QRMatrix::M_DATA_DARK => $color,
-        ];
-    }
-
     public function setLogo($logo)
     {
         $this->outputType = QROutputInterface::CUSTOM;
-        $this->outputInterface = QRCodeSVG::class;
+        $this->outputInterface = QRMarkupSVGLogo::class;
 
         $this->svgLogo = $logo;
         $this->svgLogoScale = 0.25;
         $this->svgLogoCssClass = 'dark';
     }
 
-    public function setResponseHeaders($moreHeaders = [])
+    public static function setResponseHeaders()
     {
         header('Content-type: image/svg+xml');
-
-        foreach ($moreHeaders as $header => $value) {
-            header($header.': '.$value);
-        }
     }
 
     public function postProcess($output)

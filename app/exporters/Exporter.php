@@ -8,20 +8,20 @@ use app\exporters\utils\rsvgconvert;
 
 class Exporter
 {
-    const formats = ['svg', 'eps', 'pdf'];
-    private $renderer;
+    protected static $instance = null;
 
-    public static function renderer($format, $options = [])
+    public static function getInstance()
     {
-        if (in_array($format, self::formats) === false) {
-            http_response_code(415);
-            die("Le format demandé n'est pas supporté ($format). Formats supportés : ".implode(', ', self::formats));
+        if(!is_null(self::$instance)) {
+            return self::$instance;
         }
 
-        $rsvg = new rsvgconvert();
+        if(rsvgconvert::commandExists()) {
+            self::$instance = new ExporterRSVG();
+        } else {
+            self::$instance = new ExporterNatif();
+        }
 
-        return ($rsvg->exists() === false)
-                ? new QRCodeNatif($format, $options)
-                : new QRCodeRSVG($format, $options, $rsvg);
+        return self::$instance;
     }
 }
