@@ -21,7 +21,10 @@
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
           <label for="domaine_nom">Nom du Domaine</label>
       </div>
-
+      <div class="form-floating mb-3 col-sm-10">
+          <input type="text" class="form-control" id="adresse_domaine" name="adresse_domaine" placeholder="L'adresse de mon domaine" value="<?php echo $qrcode->adresse_domaine ;?>"/>
+          <label for="adresse_domaine">Adresse du Domaine</label>
+      </div>
 
       <h3 class="mt-4 mb-4">Information relative au vin</h3>
 
