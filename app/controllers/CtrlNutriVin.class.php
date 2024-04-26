@@ -116,7 +116,7 @@ class CtrlNutriVin {
     }
 
     public function qrcodeDuplicate(Base $f3) {
-        $qrcode = QRCode::findById($f3->get('GET.qrcodeid'));
+        $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $fields = $qrcode->toArray();
         return $f3->reroute('/qrcode/'.$qrcode->user_id.'/create?'.http_build_query($fields), false);
     }
