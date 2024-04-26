@@ -1,10 +1,10 @@
 <?php
 
-namespace app\exporters;
+namespace app\exporters\Options;
 
 use chillerlan\QRCode\Output\QRMarkupSVG;
 
-class QRCodeSVG extends QRMarkupSVG
+class QRMarkupSVGLogo extends QRMarkupSVG
 {
     protected function paths(): string
     {

@@ -5,14 +5,8 @@ namespace app\exporters\utils;
 class rsvgconvert
 {
     const command = 'rsvg-convert';
-    protected $hasRSVGConvert = false;
 
-    public function __construct()
-    {
-        $this->hasRSVGConvert = $this->check();
-    }
-
-    private function check()
+    public static function commandExists()
     {
         $process = proc_open("command -v ".self::command, [
             0 => ["pipe", "r"], //STDIN
@@ -33,17 +27,8 @@ class rsvgconvert
         return false;
     }
 
-    public function exists()
+    public static function convert($input, $format)
     {
-        return $this->hasRSVGConvert;
-    }
-
-    public function convert($input, $format)
-    {
-        if ($this->exists() === false) {
-            return $input;
-        }
-
         $proc = proc_open([self::command, '-f', $format], [
             0 => ['pipe', 'r'],
             1 => ['pipe', 'w'],

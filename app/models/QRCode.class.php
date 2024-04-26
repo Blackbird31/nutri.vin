@@ -1,6 +1,7 @@
 <?php
 
 require_once('MapperTable.class.php');
+use app\exporters\Exporter;
 
 class QRCode extends MapperTable
 {
@@ -19,7 +20,7 @@ class QRCode extends MapperTable
 	}
 
 	static $copy_field_filter =  array(
-		"domaine_nom" => 1,
+		"domaine_nom" => 1, "adresse_domaine" => 1,
 		"cuvee_nom" => 1, "appellation" => 1,
 		"couleur" => 1,  "millesime" => 1,
 		"alcool_degre" => 1, "centilisation" => 1, "lot" => 1,
@@ -42,7 +43,8 @@ class QRCode extends MapperTable
 		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
 
-		 $fields['domaine_nom'] = 'VARCHAR(255)';
+         $fields['domaine_nom'] = 'VARCHAR(255)';
+		 $fields['adresse_domaine'] = 'VARCHAR(255)';
 
 		 $fields['appellation'] = 'VARCHAR(255)';
 		 $fields['couleur'] = 'VARCHAR(255)';
@@ -293,7 +295,9 @@ class QRCode extends MapperTable
 		return $e->find(array('user_id=?',$userid));
 	}
 
-    public function export($format, $url)
-    {
+	public function getQRCodeContent($format, $urlbase, $config) {
+
+        return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->id, $format, ($this->logo) ? $config['logo'] : false);
     }
+
 }
