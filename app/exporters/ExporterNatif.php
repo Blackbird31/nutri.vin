@@ -7,7 +7,6 @@ use app\exporters\Options\QRCodeEPSOptions;
 use app\exporters\Options\QRCodePDFOptions;
 
 use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\Common\EccLevel;
 
 class ExporterNatif
 {

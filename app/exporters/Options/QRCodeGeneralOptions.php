@@ -7,8 +7,9 @@ use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\QRCodeException;
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QROutputInterface;
+use chillerlan\QRCode\Common\EccLevel;
 
-abstract class QRCodeSVGOptions extends QROptions
+abstract class QRCodeGeneralOptions extends QROptions
 {
     protected string $svgLogo;
     protected float $svgLogoScale = 0.20;

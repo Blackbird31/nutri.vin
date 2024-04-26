@@ -159,21 +159,45 @@ class CtrlNutriVin {
     }
 
     public function qrcodeMultiExport(Base $f3) {
-    }
-
-
-        $qrcode = QRCode::findById($qrcode);
-
-        if ($qrcode === null) {
-            $f3->error(404, "QRCode non trouvé");
-            exit;
-        }
-
+        $qrcodes = $f3->get('GET.qrcodes');
+        $formats = ['svg', 'pdf', 'eps'];
         $config = $f3->get('config');
         $options = isset($config['qrcode']) ? $config['qrcode'] : [];
-        $logo = isset($options['logo']) ? $options['logo'] : false;
+        $userid = null;
 
-        $data = $f3->get('urlbase').$f3->build('/@qrcodeid');
+
+        foreach ($qrcodes as $qr) {
+            $qr = QRCode::findById($qr);
+            if ($qr === null) {
+                $f3->error(404, "QRCode non trouvé");
+                exit;
+            }
+
+            if ($qr->user_id != $f3->get('PARAMS.userid')) {
+                throw new Exception('not allowed');
+            }
+            $userid = $qr->user_id;
+
+            foreach ($formats as $format) {
+                $files[$format][$qr->id] = $qr->getQRCodeContent($format, $f3->get('urlbase'), $options);
+            }
+        }
+
+        $name = tempnam(sys_get_temp_dir(), "qrcodes");
+        $zip = new ZipArchive;
+        if ($zip->open($name, ZipArchive::OVERWRITE) === TRUE) {
+                foreach ($files as $format => $id) {
+                    foreach ($id as $id => $content) {
+                        $zip->addFromString($format.'/'.$id, $content);
+                    }
+                }
+                $zip->close();
+            }
+
+        header('Content-type: application/zip');
+        header('Content-disposition: attachment; filename=qrcodes_'.$userid.'.zip');
+        readfile($name);
+    }
 
     public function export(Base $f3)
     {
