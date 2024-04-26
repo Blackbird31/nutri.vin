@@ -1,3 +1,10 @@
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Visualisation de votre QR Code</li>
+  </ol>
+</nav>
+
 <div class="row">
     <div class="col-2">
         <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
