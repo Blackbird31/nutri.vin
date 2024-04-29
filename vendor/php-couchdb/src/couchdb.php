@@ -69,6 +69,38 @@ class CouchDB {
 		return $this->query('GET', $url);
 	}
 
+	public function storeAttachment($doc, $file, $contentType = 'application/octet-stream', $filename = null) {
+		if (!is_object($doc)) {
+			throw new InvalidArgumentException ("Document should be an object");
+		}
+		if(!$doc->_id) {
+			throw new InvalidArgumentException ("Document should have an ID");
+		}
+		if (!is_file($file)) {
+			throw new InvalidArgumentException ("File $file does not exist");
+		}
+		$url  = '/'.urlencode($this->db).'/'.urlencode($doc->_id).'/';
+		$url .= empty($filename) ? basename($file) : $filename;
+		if ($doc->_rev) {
+			$url.='?rev='.$doc->_rev;
+		}
+		return $this->query('PUT', $url, [], $file);
+	}
+
+	public function deleteAttachment ($doc, $attachmentName) {
+		if ( !is_object($doc)) {
+			throw new InvalidArgumentException ("Document should be an object");
+		}
+		if (!$doc->_id) {
+      throw new InvalidArgumentException ("Document should have an ID");
+		}
+		if (!$attachmentName) {
+			throw new InvalidArgumentException ("Attachment name not set");
+		}
+		$url  = '/'.urlencode($this->db).'/'.urlencode($doc->_id).'/'.urlencode($attachmentName);
+		return $this->query('DELETE', $url, ['rev' => $doc->_rev]);
+	}
+
 	public function query($method, $url, $parameters = [], $data = null) {
 		$data = $this->basicQuery($method, $url, $parameters, $data);
 		$response = self::parseResponse($data);
