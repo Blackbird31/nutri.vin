@@ -22,6 +22,10 @@ class CouchDB {
 		return $this->options;
 	}
 
+	public function getDb() {
+		return $this->db;
+	}
+
 	public function __construct ($dsn, $db, $options = []) {
 		if (!function_exists('curl_init')) {
 			throw new \Exception('cURL must be enabled');
@@ -29,6 +33,22 @@ class CouchDB {
 		$this->dsn = $dsn;
 		$this->db = $db;
 		$this->options = $options;
+	}
+
+	public function getDbs() {
+		return $this->query('GET', '/_all_dbs');
+	}
+
+	public function createDb() {
+		return $this->query('PUT', '/'.urlencode($this->db));
+	}
+
+	public function deleteDb() {
+		return $this->query('DELETE', '/'.urlencode($this->db));
+	}
+
+	public function getDbInfos() {
+		return $this->query('GET', '/'.urlencode($this->db);
 	}
 
 	public function saveDoc($doc) {
