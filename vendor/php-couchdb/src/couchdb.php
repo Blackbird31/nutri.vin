@@ -127,15 +127,23 @@ class CouchDB {
 				CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Accept: application/json, text/html, text/plain, */*']
     ];
 		if ($data) {
-			if ($method == 'COPY') {
-				$options[CURLOPT_HTTPHEADER][] = json_encode($data);
+			if (is_file($data)) {
+				$fstream = fopen($data,'r');
+				$options[CURLOPT_INFILE] = $fstream;
+				$options[CURLOPT_INFILESIZE] = filesize($data);
 			} else {
-				$options[CURLOPT_POSTFIELDS] = json_encode($data);
+				if ($method == 'COPY') {
+					$options[CURLOPT_HTTPHEADER][] = json_encode($data);
+				} else {
+					$options[CURLOPT_POSTFIELDS] = json_encode($data);
+				}
 			}
 		}
-		var_dump($data, $options);
 		curl_setopt_array($http, $options);
 		$response = curl_exec($http);
+		if (isset($fstream)) {
+			fclose($fstream);
+		}
 		curl_close($http);
 		return $response;
 	}
