@@ -2,7 +2,7 @@
 
 namespace DB;
 
-class CouchDB {
+class Couch {
 
 	const HTTP_METHODS_ALLOWED = ['GET','POST','PUT','DELETE','COPY'];
 
@@ -48,7 +48,7 @@ class CouchDB {
 	}
 
 	public function getDbInfos() {
-		return $this->query('GET', '/'.urlencode($this->db);
+		return $this->query('GET', '/'.urlencode($this->db));
 	}
 
 	public function saveDoc($doc) {
@@ -127,7 +127,7 @@ class CouchDB {
 				CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Accept: application/json, text/html, text/plain, */*']
     ];
 		if ($data) {
-			if (is_file($data)) {
+			if (!is_object($data) && is_file($data)) {
 				$fstream = fopen($data,'r');
 				$options[CURLOPT_INFILE] = $fstream;
 				$options[CURLOPT_INFILESIZE] = filesize($data);
