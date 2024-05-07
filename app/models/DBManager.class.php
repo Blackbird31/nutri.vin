@@ -8,7 +8,8 @@ class DBManager {
     static function getDB() {
         return self::$db;
     }
-    static function createDB($pdo, $user = null, $pass = null) {
+    static function createDB($pdo, $db = null, $user = null, $pass = null) {
+        //self::setDB(new DB\Couch($pdo, $db));
         self::setDB(new DB\SQL($pdo, $user, $pass));
     }
 }
