@@ -1,6 +1,8 @@
 <?php
 
-class MapperTable extends DB\SQL\Mapper {
+abstract class MapperTable extends DB\SQL\Mapper {
+
+	public static function getFieldsAndType() { return []; }
 
 	function __construct() {
 		$table_name = strtolower(get_called_class());
