@@ -75,8 +75,8 @@ class Mapper extends \DB\Cursor {
 		if (isset($this->trigger['beforeinsert']) && \Base::instance()->call($this->trigger['beforeinsert'], [$this, ['_id' => $this->document['_id']]]) === false) {
 			return $this->document;
 		}
-		$this->db->saveDoc($this->document);
-		$pkey = ['_id' => $result->getinsertedid()];
+		$result = $this->db->saveDoc($this->document);
+		$pkey = ['_id' => $result->id];
 		if (isset($this->trigger['afterinsert'])) {
 			\Base::instance()->call($this->trigger['afterinsert'], [$this, $pkey]);
 		}
