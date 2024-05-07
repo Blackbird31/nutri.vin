@@ -55,7 +55,13 @@ class Mapper extends \DB\Cursor {
 	}
 
 	function select($fields=NULL,$filter=NULL,array $options=NULL,$ttl=0) {
-		//a implementer
+		if($filter && isset($filter[0]) && isset($filter[1]) && strpos($filter[0], '_id') === 0) {
+			return [$this->db->getDoc($filter[1])];
+		}
+		if($filter && isset($filter['_id'])) {
+			return [$this->db->getDoc($filter['_id'])];
+		}
+		trigger_error('select function can only query on _id field', E_USER_ERROR);
 	}
 
 	function count($filter = null, array $options = null, $ttl = 0) {
