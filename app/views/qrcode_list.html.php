@@ -19,7 +19,7 @@
             <th class="col-2">Actions</th>
         </tr>
     </thead>
-    <?php if ( ! count($qrlist) ): ?>
+    <?php if (!$qrlist): ?>
         <tbody>
             <tr><td colspan=3><center><i>Vous n'avez pas encore créé de QRCode</i></center></td></tr>
         </tbody>
