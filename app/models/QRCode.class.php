@@ -1,63 +1,55 @@
 <?php
 
-require_once('MapperTable.class.php');
+require_once('MapperDoc.class.php');
 use app\exporters\Exporter;
 
-class QRCode extends MapperTable
-{
-	function save() {
-		if (!isset($this->authorization_key) || $this->authorization_key) {
-			$this->authorization_key = sha1(implode(',',$this->toArray()).rand());
-		}
-		if (!$this->id) {
-			$this->id = self::generateId();
-		}
-		$this->date_version = date('c');
-		if (!$this->date_creation) {
-		    $this->date_creation = $this->date_version;
-		}
-		return parent::save();
-	}
+class QRCode extends MapperDoc {
 
-	static $copy_field_filter =  array(
-		"domaine_nom" => 1, "adresse_domaine" => 1,
-		"cuvee_nom" => 1, "appellation" => 1,
-		"couleur" => 1,  "millesime" => 1,
-		"alcool_degre" => 1, "centilisation" => 1, "lot" => 1,
+	public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
+	                 				'AZERTYUIOPQSDFGHJKLMWXCVBN'.
+					 				 				'0123456789';
+
+	public static $copy_field_filter = [
+		"domaine_nom" => 1,
+		"adresse_domaine" => 1,
+		"cuvee_nom" => 1,
+		"appellation" => 1,
+		"couleur" => 1,
+		"millesime" => 1,
+		"alcool_degre" => 1,
+		"centilisation" => 1,
+		"lot" => 1,
 		"ingredients" => 1,
-		"nutritionnel_energie_kj" => 1, "nutritionnel_energie_kcal" => 1,
-		"nutritionnel_graisses" => 1, "nutritionnel_acides_gras" => 1,
-		"nutritionnel_glucides" => 1, "nutritionnel_sucres" => 1,
+		"nutritionnel_energie_kj" => 1,
+		"nutritionnel_energie_kcal" => 1,
+		"nutritionnel_graisses" => 1,
+		"nutritionnel_acides_gras" => 1,
+		"nutritionnel_glucides" => 1,
+		"nutritionnel_sucres" => 1,
 		"nutritionnel_proteines" => 1,
-		"nutritionnel_sel" => 1, "nutritionnel_sodium" => 1,
+		"nutritionnel_sel" => 1,
+		"nutritionnel_sodium" => 1,
 		"image_bouteille" => 1,
 		"image_etiquette" => 1,
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1
-     );
+  ];
 
-	 static function getFieldsAndType() {
+	 public static function getFieldsAndType() {
 		 $fields = parent::getFieldsAndType();
-
 		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
-
-         $fields['domaine_nom'] = 'VARCHAR(255)';
+     $fields['domaine_nom'] = 'VARCHAR(255)';
 		 $fields['adresse_domaine'] = 'VARCHAR(255)';
-
 		 $fields['appellation'] = 'VARCHAR(255)';
 		 $fields['couleur'] = 'VARCHAR(255)';
 		 $fields['cuvee_nom'] = 'VARCHAR(255)';
-
 		 $fields['alcool_degre'] = 'FLOAT';
 		 $fields['centilisation'] = 'FLOAT';
-
 		 $fields['millesime'] = 'VARCHAR(255)';
 		 $fields['lot'] = 'VARCHAR(255)';
-
  		 $fields['ingredients'] = 'TEXT';
-
 		 $fields['nutritionnel_energie_kj'] = 'FLOAT';
 		 $fields['nutritionnel_energie_kcal'] = 'FLOAT';
 		 $fields['nutritionnel_graisses'] = 'FLOAT';
@@ -68,28 +60,19 @@ class QRCode extends MapperTable
 		 $fields['nutritionnel_proteines'] = 'FLOAT';
 		 $fields['nutritionnel_sel'] = 'FLOAT';
 		 $fields['nutritionnel_sodium'] = 'FLOAT';
-
 		 $fields['image_bouteille'] = 'BLOB';
 		 $fields['image_etiquette'] = 'BLOB';
 		 $fields['image_contreetiquette'] = 'BLOB';
-
  		 $fields['autres_infos'] = 'TEXT';
-
 		 $fields['authorization_key'] = 'VARCHAR(100)';
 		 $fields['date_creation'] = 'VARCHAR(26)';
 		 $fields['date_version'] = 'VARCHAR(26)';
-
-         $fields['logo'] = 'BOOL';
-
+     $fields['logo'] = 'BOOL';
 		 return $fields;
  	}
 
-	function getListeIngredients() {
-		return preg_split('/[,\n\r]+/', $this->ingredients);
-	}
-
-    static function getFullListeIngredients() {
-        return array(
+  public static function getFullListeIngredients() {
+        return [
             "Raisins",
             "Moût de raisin concentré",
             "Liqueur de tirage et liqueur d'expédition",
@@ -263,19 +246,34 @@ class QRCode extends MapperTable
             "E516",
             "Carbonate de potassium",
             "E501",
-        );
-    }
+        ];
+  }
 
-	static function insertExample($a = null) {
+	public function getListeIngredients() {
+		return preg_split('/[,\n\r]+/', $this->ingredients);
+	}
+
+	public static function insertExample($a = null) {
 		$qr = new QRCode();
 		$qr->save();
 		return $qr;
 	}
 
-	static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
-	                 'AZERTYUIOPQSDFGHJKLMWXCVBN'.
-					 '0123456789';
-	static function generateId() {
+	public function save() {
+		if (!isset($this->authorization_key) || $this->authorization_key) {
+			$this->authorization_key = sha1(implode(',',$this->toArray()).rand());
+		}
+		if (!$this->getId()) {
+			$this->setId(self::generateId());
+		}
+		$this->date_version = date('c');
+		if (!$this->date_creation) {
+			$this->date_creation = $this->date_version;
+		}
+		return parent::save();
+	}
+
+	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
 			$id = '10';
 			for($i = strlen($id) ; $i < 8 ; $i++) {
@@ -289,15 +287,13 @@ class QRCode extends MapperTable
 		throw new Exception('no free id found');
 	}
 
-	static function findByUserid($userid) {
+	public static function findByUserid($userid) {
 		$class = get_called_class();
 		$e = new $class();
 		return $e->find(array('user_id=?',$userid));
 	}
 
 	public function getQRCodeContent($format, $urlbase, $config) {
-
-        return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->id, $format, ($this->logo) ? $config['logo'] : false);
-    }
-
+      return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->getId(), $format, ($this->logo) ? $config['logo'] : false);
+  }
 }
