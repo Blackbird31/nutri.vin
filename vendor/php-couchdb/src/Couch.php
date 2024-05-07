@@ -69,7 +69,15 @@ class Couch {
 			throw new \InvalidArgumentException ("Document ID is empty");
 		}
 		$url = '/'.urlencode($this->db).'/'.urlencode($id);
-		return $this->query('GET', $url);
+		try {
+			return $this->query('GET', $url);
+		} catch (\Exception $e) {
+			$response = self::parseResponse($e->getMessage());
+			if ($response['status_code'] == '404') {
+				return null;
+			}
+			throw $e;
+		}
 	}
 
 	public function storeAttachment($doc, $file, $contentType = 'application/octet-stream', $filename = null) {
