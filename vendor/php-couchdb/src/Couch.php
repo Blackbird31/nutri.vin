@@ -54,6 +54,9 @@ class Couch {
 	public function saveDoc($doc) {
       $method = 'POST';
       $url = '/' . urlencode($this->db);
+			if (is_array($doc)) {
+				$doc = json_decode(json_encode($doc));
+			}
       if (isset($doc->rev)) {
           $method = 'PUT';
           $url.= '/' . urlencode($doc->_id);
