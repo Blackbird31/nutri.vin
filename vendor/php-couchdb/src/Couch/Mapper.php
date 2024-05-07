@@ -7,6 +7,7 @@ class Mapper extends \DB\Cursor {
 	protected $db;
 	protected $fields;
 	protected $document = [];
+	protected $props = [];
 
 	function __construct(\DB\Couch $db) {
 		$this->db = $db;
@@ -21,12 +22,15 @@ class Mapper extends \DB\Cursor {
 	}
 
 	function set($key, $val) {
+		$this->props[$key] = $val;
 		return $this->document[$key] = $val;
 	}
 
 	function &get($key) {
 		if ($this->exists($key)) {
 			return $this->document[$key];
+		} elseif (array_key_exists($key, $this->props)) {
+			return $this->props[$key];
 		}
 		user_error(sprintf(self::E_Field, $key), E_USER_ERROR);
 	}
