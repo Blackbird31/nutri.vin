@@ -9,6 +9,14 @@ abstract class MapperTable extends DB\SQL\Mapper {
         parent::__construct(DBManager::getDB(), $table_name);
 	}
 
+	public function getId() {
+		return $this->get('id');
+	}
+
+	public function setId($id) {
+		$this->set('id', $id);
+	}
+
 	function toArray() {
 		$v = [];
 		foreach($this->fields() as $f) {
