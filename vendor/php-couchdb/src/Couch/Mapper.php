@@ -119,4 +119,9 @@ class Mapper extends \DB\Cursor {
 		return new \ArrayIterator($this->cast());
 	}
 
+	function __call($func,$args) {
+		$callable = (array_key_exists($func,$this->props) ? $this->props[$func] : $this->$func);
+		return $callable ? call_user_func_array($callable,$args) : null;
+	}
+
 }
