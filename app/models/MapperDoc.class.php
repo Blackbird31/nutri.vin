@@ -29,4 +29,18 @@ abstract class MapperDoc extends DB\Couch\Mapper {
 		}
 	}
 
+	public function tableExists() {
+		return true;
+	}
+
+	public static function findById($id) {
+		$class = get_called_class();
+		$e = new $class();
+		$e->load(['_id=?',$id]);
+		if (!$e->getId()) {
+			return null;
+		}
+		return $e;
+	}
+
 }
