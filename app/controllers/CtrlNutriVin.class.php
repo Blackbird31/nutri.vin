@@ -41,7 +41,7 @@ class CtrlNutriVin {
             }
             $qrcode->save();
             $qrcode = QRCode::findById($qrcode->id);
-            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id, false);
+            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId(), false);
         }
         return $f3->reroute('/qrcode', false);
     }
@@ -54,7 +54,7 @@ class CtrlNutriVin {
         $images = ['image_bouteille', 'image_etiquette', 'image_contreetiquette'];
         $qrcode->{$images[intval($f3->get('PARAMS.index'))]} = null;
         $qrcode->save();
-        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->id."#photos", false);
+        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->getId()."#photos", false);
     }
 
     function initDefaultOnQRCode(& $qrcode){
@@ -155,7 +155,7 @@ class CtrlNutriVin {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $qrcode->logo = (bool)$f3->get('POST.logo');
         $qrcode->save();
-        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id, false);
+        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId(), false);
     }
 
     public function qrcodeMultiExport(Base $f3) {
@@ -179,7 +179,7 @@ class CtrlNutriVin {
             $userid = $qr->user_id;
 
             foreach ($formats as $format) {
-                $files[$format][$qr->id] = $qr->getQRCodeContent($format, $f3->get('urlbase'), $options);
+                $files[$format][$qr->getId()] = $qr->getQRCodeContent($format, $f3->get('urlbase'), $options);
             }
         }
 
