@@ -1,13 +1,13 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
   <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
+      <li class="breadcrumb-item"><a href="/qrcode/<?php echo $qrcode->user_id ?>/list">Liste de vos QR Codes</a></li>
       <li class="breadcrumb-item active" aria-current="page">Visualisation de votre QR Code</li>
   </ol>
 </nav>
 
 <div class="row">
     <div class="col-2">
-        <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
     </div>
     <div class="col-8">
         <h1 class="text-center mb-4">Paramétrage de votre QR code</h1>
@@ -16,9 +16,9 @@
 <div class="row justify-content-end">
     <div class="col-8 mt-5">
         <div class="d-flex justify-content-center">
-            <img src="<?php echo $urlbase.'/'.$qrcode->id.'/svg'; ?>" class="img-thumbnail" style="height: 350px; width: 350px;">
+            <img src="/<?php echo $qrcode->id ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
         </div>
-        <form id="logoForm" method="POST" action="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->id; ?>" enctype="multipart/form-data">
+        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->id ?>" enctype="multipart/form-data">
             <input type="checkbox" class="btn-check" id="btncheck1" name="logo" autocomplete="off" value="1" <?php if($qrcode->logo):?>checked<?php endif; ?>>
             <div class="d-flex justify-content-center">
                 <label class="btn btn-outline-primary mt-5" for="btncheck1">Logo IVSO <?php if($qrcode->logo):?>activé<?php else:?>désactivé<?php endif; ?></label>
@@ -30,9 +30,9 @@
                         <i class="bi bi-download"></i> Formats de téléchargement
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" target="_blank" href="<?php echo $urlbase.'/'.$qrcode->id.'/pdf'; ?>">PDF</a></li>
-                        <li><a class="dropdown-item" target="_blank" href="<?php echo $urlbase.'/'.$qrcode->id.'/svg'; ?>">SVG</a></li>
-                        <li><a class="dropdown-item" href="<?php echo $urlbase.'/'.$qrcode->id.'/eps'; ?>">EPS</a></li>
+                        <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf">PDF</a></li>
+                        <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
+                        <li><a class="dropdown-item" href="/<?php echo $qrcode->id ?>/eps">EPS</a></li>
                     </ul>
                 </div>
             </div>

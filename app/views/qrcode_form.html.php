@@ -9,7 +9,7 @@
 
 <div class="row justify-content-end">
   <div class="col-8">
-      <form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write" enctype="multipart/form-data" class="live-form">
+      <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
       <?php endif; ?>
@@ -366,7 +366,7 @@
 
         <div class="row mt-5">
             <div class="col-6">
-                <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
             </div>
             <div class="col-4 text-end">
                 <?php if ($qrcode->exists('authorization_key')): ?>

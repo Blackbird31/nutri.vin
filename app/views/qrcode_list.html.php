@@ -7,7 +7,7 @@
 <h2 class="text-center"><?php echo $userid;?> QR Codes</h2>
 
 <h3 class="mt-4 ">Liste des QR code</h3>
-<form id="multiExportForm" method="GET" action="<?php echo $urlbase.'/qrcode/'.$userid.'/multiexport'; ?>" enctype="multipart/form-data">
+<form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
     <button type="submit" id="multiExportBtn" class="btn btn-primary mb-2" disabled>Télécharger la sélection</button>
 </form>
 <table id="list_qr" class="table table-bordered table-striped text-center">
@@ -39,13 +39,13 @@
                     </td>
                     <td class="position-relative">
                         <div class="position-absolute top-50 start-50 translate-middle">
-                            <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/edit/'.$qr->id ?>" style="color: black;">
+                            <a class="p-1" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>" style="color: black;">
                                 <i class="bi bi-pencil-fill"></i></a>
-                                    <a class="p-1" href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/parametrage/'.$qr->id ?>" style="color: black;">
+                                    <a class="p-1" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>" style="color: black;">
                                         <i class="bi bi-qr-code"></i></a>
                                     </div>
                                     <div class="position-absolute top-50 end-0 translate-middle-y">
-                                        <a href="<?php echo $urlbase.'/qrcode/'.$qr->user_id.'/duplicate/'.$qr->id; ?>" class="btn"><i class="bi bi-copy"></i></a>
+                                        <a href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->id ?>" class="btn"><i class="bi bi-copy"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -55,7 +55,7 @@
             </table>
 
             <div class="text-end">
-                <a href="<?php echo $urlbase.''; ?>/qrcode/<?php echo $userid; ?>/create" class="btn btn-primary">Créer un nouveau QRCode</a>
+                <a href="/qrcode/<?php echo $userid ?>/create" class="btn btn-primary">Créer un nouveau QRCode</a>
             </div>
 
             <script>
