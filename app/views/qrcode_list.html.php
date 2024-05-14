@@ -21,7 +21,7 @@
     </thead>
     <?php if (!$qrlist): ?>
         <tbody>
-            <tr><td colspan=3><center><i>Vous n'avez pas encore créé de QRCode</i></center></td></tr>
+            <tr><td colspan=4><center><i>Vous n'avez pas encore créé de QRCode</i></center></td></tr>
         </tbody>
     <?php else: ?>
         <tbody>
