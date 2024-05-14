@@ -302,55 +302,40 @@
 
         <h3 class="mt-4 mb-4" id="photos">Photos</h3>
 
-        <div class="mb-3">
+        <div class="mb-3 imgs-list">
             <div class="col-sm-10 row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
-                        Bouteille<br/>
-                        <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>
-                          <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/>
-                          <br/>
-                          <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </a>
+                        Bouteille
+                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-preview img-thumbnail"/>
+                        <a href="#"><?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></a>
                         <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                            - <a href="/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
                         Etiquette<br/>
-                        <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>
-                          <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/>
-                          <br/>
-                          <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </a>
+                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-preview img-thumbnail"/>
+                        <span class="img_selector"><?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></span>
                         <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                            - <a href="/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
                         Contre-étiquette<br/>
-                        <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>
-                          <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/>
-                          <br/>
-                          <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </a>
+                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-preview img-thumbnail"/>
+                        <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                         <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                            - <a href="/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
@@ -456,6 +441,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (e.target.closest(liveform.classe)) {
             liveform.update(e.target)
+        }
+    })
+
+    document.querySelector('.imgs-list').addEventListener('click', function (e) {
+        let el = e.target
+        while ((el = el.parentNode) && el !== document) {
+            if (el.classList.contains('img_selector')) {
+                e.stopPropagation()
+                const img = el.querySelector('img')
+                document.querySelector("input[type=file]#"+img.id.replace('img_', '')).click()
+
+                return false
+            }
         }
     })
 

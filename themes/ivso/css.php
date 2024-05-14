@@ -53,4 +53,10 @@
     #carrousel:hover #suivant {
         opacity: 1;
     }
+
+    .img-preview {
+        display: block;
+        height: 200px;
+        cursor: pointer;
+    }
 </style>
