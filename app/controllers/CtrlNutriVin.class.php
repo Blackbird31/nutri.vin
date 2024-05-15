@@ -23,6 +23,7 @@ class CtrlNutriVin {
             if ($f3->exists('POST.id')) {
                 $qrcode = QRCode::findById($f3->get('POST.id'));
             } else {
+                // ?? Ce code sert ??
                 $qrcode = new QRCode($f3->get('DB'));
             }
 

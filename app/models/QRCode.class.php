@@ -1,13 +1,14 @@
 <?php
 
-require_once('MapperDoc.class.php');
 use app\exporters\Exporter;
 
-class QRCode extends MapperDoc {
+require_once('Mapper.php');
 
-	public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
-	                 				'AZERTYUIOPQSDFGHJKLMWXCVBN'.
-					 				 				'0123456789';
+class QRCode extends Mapper
+{
+    public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
+                            'AZERTYUIOPQSDFGHJKLMWXCVBN'.
+                            '0123456789';
 
 	public static $copy_field_filter = [
 		"domaine_nom" => 1,
@@ -37,10 +38,9 @@ class QRCode extends MapperDoc {
   ];
 
 	 public static function getFieldsAndType() {
-		 $fields = parent::getFieldsAndType();
 		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
-     $fields['domaine_nom'] = 'VARCHAR(255)';
+         $fields['domaine_nom'] = 'VARCHAR(255)';
 		 $fields['adresse_domaine'] = 'VARCHAR(255)';
 		 $fields['appellation'] = 'VARCHAR(255)';
 		 $fields['couleur'] = 'VARCHAR(255)';
@@ -67,7 +67,7 @@ class QRCode extends MapperDoc {
 		 $fields['authorization_key'] = 'VARCHAR(100)';
 		 $fields['date_creation'] = 'VARCHAR(26)';
 		 $fields['date_version'] = 'VARCHAR(26)';
-     $fields['logo'] = 'BOOL';
+         $fields['logo'] = 'BOOL';
 		 return $fields;
  	}
 
@@ -264,7 +264,8 @@ class QRCode extends MapperDoc {
 		if (!$this->date_creation) {
 			$this->date_creation = $this->date_version;
 		}
-		return parent::save();
+
+		return $this->mapper->save();
 	}
 
 	public static function generateId() {
@@ -279,12 +280,6 @@ class QRCode extends MapperDoc {
 			}
 		}
 		throw new Exception('no free id found');
-	}
-
-	public static function findByUserid($userid) {
-		$class = get_called_class();
-		$e = new $class();
-		return $e->find(array('user_id=?',$userid));
 	}
 
 	public function getQRCodeContent($format, $urlbase, $config) {
