@@ -253,12 +253,6 @@ class QRCode extends MapperDoc {
 		return preg_split('/[,\n\r]+/', $this->ingredients);
 	}
 
-	public static function insertExample($a = null) {
-		$qr = new QRCode();
-		$qr->save();
-		return $qr;
-	}
-
 	public function save() {
 		if (!isset($this->authorization_key) || $this->authorization_key) {
 			$this->authorization_key = sha1(implode(',',$this->toArray()).rand());
