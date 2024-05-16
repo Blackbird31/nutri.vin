@@ -1,6 +1,7 @@
 <?php
 
 use app\exporters\Exporter;
+use Web\Geo;
 
 class CtrlNutriVin {
     function home(Base $f3) {
@@ -129,8 +130,10 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
-        
-        $qrcode->addVisite(['date' => date('Y-m-d H:i:s')]);
+        $geo = Geo::instance();
+        $location = $geo->location();
+        unset($location['request'], $location['delay'], $location['credit']);
+        $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
         $qrcode->save();
 
         $this->initDefaultOnQRCode($qrcode);
