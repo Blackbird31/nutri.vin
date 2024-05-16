@@ -372,7 +372,7 @@
       </form>
       <form id="form_add_ingredients"></form>
   </div>
-  <div class="col-4 position-relative">
+  <div class="col-4">
     <?php $iframe=false; ?>
     <?php include('_phone.html.php') ?>
     </div>
