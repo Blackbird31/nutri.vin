@@ -141,7 +141,7 @@
                             <div class="input-group-text">
                                 <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                             </div>
-                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie fonctionnelle">
+                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
                         </div>
                     </td>
                     <td class="ingredient_ab text-center align-middle">
@@ -548,6 +548,10 @@ document.addEventListener('DOMContentLoaded', function () {
             ingredientsTableToText();
         }
 
+        if (e.target.id == 'ingredients') {
+            ingredientsTextToTable();
+        }
+
         if (e.target.type === 'file') {
             const container = e.target.closest('.img_selector')
             container.querySelector('.img-add').classList.add('d-none')
@@ -602,23 +606,28 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function ingredientsTextToTable() {
-    const ingredientsText = document.getElementById('ingredients').value
+    let ingredientsText = document.getElementById('ingredients').value
     const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
     ingredientsTbody.innerHTML = "";
     if(!ingredientsText) {
         document.querySelector('table#table_ingredients').classList.add('d-none');
         document.querySelector('#message_ingredients_vide').classList.remove('d-none');
-        message_ingredients_vide
         return;
     }
 
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
+    ingredientsText = ingredientsText.replace(/;/g, ',;');
+
     let ingredients = ingredientsText.split(/[ ]*,[ ]*(?![^()]*\))/);
     let additif = null
 
     for(let ingredient of ingredients) {
+        if(ingredient.match(/^;/)) {
+            additif = null
+            ingredient = ingredient.replace(/^;[ ]*/, '')
+        }
         if(ingredient.match(/\:/)) {
             additif = ingredient.split(/[ ]*:[ ]*/)[0]
             ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
@@ -649,13 +658,14 @@ function ingredientsTableToText() {
         if (!ingredient) {
             return;
         }
-        if(ingredientsText) {
-            ingredientsText += ', '
-        }
-
         let newAdditif = null;
         if(item.querySelector('input.checkbox_additif').checked) {
             newAdditif = item.querySelector('input.input_additif').value
+        }
+        if(currentAdditif && newAdditif != currentAdditif) {
+            ingredientsText += '; '
+        } else if(ingredientsText) {
+            ingredientsText += ', '
         }
         if(newAdditif == currentAdditif) {
             newAdditif = null;
