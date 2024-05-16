@@ -119,16 +119,20 @@ class CtrlNutriVin {
             return $f3->reroute('/admin/setup', false);
         }
         if (!$f3->exists('SESSION.userid')) {
-            $config = $f3->get('config');
-            if (isset($_SERVER['PHP_AUTH_USER']) && !$f3->exists('SESSION.userid') && !$f3->exists('SESSION.authtype')) {
-                $f3->set('SESSION.userid', $_SERVER['PHP_AUTH_USER']);
-                $f3->set('SESSION.username', $_SERVER['PHP_AUTH_USER']);
-                $f3->set('SESSION.authtype', 'http');
+            if ($f3->exists('SESSION.authtype')) {
+                return $f3->reroute('/disconnect');
             }
+            $config = $f3->get('config');
             if (isset($config['http_auth']) && $config['http_auth']) {
+                if (isset($_SERVER['PHP_AUTH_USER'])) {
+                    $f3->set('SESSION.userid', $_SERVER['PHP_AUTH_USER']);
+                    $f3->set('SESSION.username', $_SERVER['PHP_AUTH_USER']);
+                    $f3->set('SESSION.authtype', 'http');
+                    return $f3->reroute('/qrcode');
+                }
                 header('WWW-Authenticate: Basic realm="My Realm"');
                 header('HTTP/1.0 401 Unauthorized');
-                die ("Not authorized");
+                die ("Not authorized qrcodeAuthentication");
             }
             if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
                 return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/connect/viticonnect');
@@ -197,7 +201,18 @@ class CtrlNutriVin {
             $f3->clear('SESSION.authtype');
             $config = $f3->get('config');
             return $f3->reroute($config['viticonnect_baseurl'].'/logout?service='.$f3->get('urlbase').'/');
+        } elseif ($f3->get('SESSION.authtype') == 'http') {
+            if ($f3->exists('SESSION.disconnection')) {
+                $f3->clear('SESSION.authtype');
+                $f3->clear('SESSION.disconnection');
+                return $f3->reroute('/qrcode');
+            }
+            $f3->set('SESSION.disconnection', true);
+            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('HTTP/1.0 401 Unauthorized');
+            die ("Not authorized qrcodeAuthentication");
         }
+        $f3->clear('SESSION.authtype');
         return $f3->reroute('/');
     }
 
