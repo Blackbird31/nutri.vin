@@ -9,10 +9,10 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/qrcode/userid/list">Mes QRCodes</a>
+        <a class="nav-link active" aria-current="page" href="/qrcode">Mes QRCodes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Déconnexion</a>
+        <a class="nav-link" href="<?php echo $urlbase; ?>/disconnect">Déconnexion</a>
       </li>
     </ul>
   </div>
