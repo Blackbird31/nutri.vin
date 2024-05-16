@@ -121,7 +121,7 @@ class CtrlNutriVin {
         }
         if (!$f3->exists('SESSION.userid')) {
             if ($f3->exists('SESSION.authtype')) {
-                return $f3->reroute('/disconnect');
+                return $f3->reroute('/logout');
             }
             $config = $f3->get('config');
             if (isset($config['http_auth']) && $config['http_auth']) {
@@ -139,7 +139,7 @@ class CtrlNutriVin {
                 $config['viticonnect_baseurl'] = 'https://viticonnect.net/cas';
             }
             if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
-                return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/connect/viticonnect');
+                return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/login/viticonnect');
             }
             if (in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost'])) {
                 if (!isset($config['default_user'])) {
@@ -164,7 +164,7 @@ class CtrlNutriVin {
         if (!isset($config['viticonnect_baseurl']) || !$config['viticonnect_baseurl']) {
             return $f3->reroute('/');
         }
-        $validate = file_get_contents($config['viticonnect_baseurl'].'/serviceValidate?service='.$f3->get('urlbase').'/connect/viticonnect&ticket='.$ticket);
+        $validate = file_get_contents($config['viticonnect_baseurl'].'/serviceValidate?service='.$f3->get('urlbase').'/login/viticonnect&ticket='.$ticket);
         if ($validate) {
             if(strpos($validate, 'INVALID_TICKET') !== false) {
                 return $f3->reroute('/qrcode');

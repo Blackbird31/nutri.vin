@@ -12,7 +12,7 @@
         <a class="nav-link active" aria-current="page" href="/qrcode">Mes QRCodes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo $urlbase; ?>/disconnect">Déconnexion</a>
+        <a class="nav-link" href="<?php echo $urlbase; ?>/logout">Déconnexion</a>
       </li>
     </ul>
   </div>
