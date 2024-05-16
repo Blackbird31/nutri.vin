@@ -124,21 +124,31 @@
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
                     <tr>
-                      <th class="col-4 ps-5" scope="col">Additif</th>
-                      <th class="col-1 text-center" scope="col">Bio</th>
-                      <th class="col-1 text-center" scope="col">Allergène</th>
+                      <th class="" scope="col"></th>
+                      <th class="text-center" scope="col">Additif</th>
+                      <th class="text-center" scope="col">Bio</th>
+                      <th class="text-center" scope="col">Allergène</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value=""></div><input type="text" class="form-control input_additif d-none" placeholder="Catégorie d'additif" list="categories_additif_list"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_additif text-center align-middle">
+                        <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                        <div class="input-group d-none">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                            </div>
+                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie fonctionnelle">
+                        </div>
+                    </td>
                     <td class="ingredient_ab text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
                     </td>
                     <td class="ingredient_allergene text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
                     </td>
                 </tr>
             </template>
@@ -538,11 +548,10 @@ function ingredientsTextToTable() {
         }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         if(additif) {
-            templateClone.querySelector('.checkbox_additif').checked = true
-            templateClone.querySelector('.input_additif').classList.remove('d-none')
+            templateClone.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = true;})
+            templateClone.querySelector('td.ingredient_additif .input-group').classList.remove('d-none');
+            templateClone.querySelector('td.ingredient_additif > input[type=checkbox]').classList.add('d-none');
             templateClone.querySelector('.input_additif').value = additif
-        } else {
-
         }
         templateClone.querySelector('td.ingredient_libelle input.input_ingredient').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
@@ -564,8 +573,8 @@ function ingredientsTableToText() {
         }
 
         let newAdditif = null;
-        if(item.querySelector('td.ingredient_libelle input.checkbox_additif').checked) {
-            newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+        if(item.querySelector('input.checkbox_additif').checked) {
+            newAdditif = item.querySelector('input.input_additif').value
         }
         if(newAdditif == currentAdditif) {
             newAdditif = null;
@@ -589,7 +598,10 @@ function ingredientsTableToText() {
 
 document.querySelector('table#table_ingredients').addEventListener('change', function(e) {
     if(e.target.classList.contains('checkbox_additif')) {
-        e.target.closest('tr').querySelector('.input_additif').classList.toggle("d-none", !e.target.checked);
+        e.target.closest('tr').querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
+        e.target.closest('tr').querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
+        e.target.closest('tr').querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
+        e.target.closest('tr').querySelector('.ingredient_additif .input_additif').focus();
     }
 });
 
