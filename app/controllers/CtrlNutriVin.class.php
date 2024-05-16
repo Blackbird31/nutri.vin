@@ -20,7 +20,7 @@ class CtrlNutriVin {
 
     private function authenticatedUserOnly(Base $f3) {
         if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
-             ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid'))
+             ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
         {
             die('Unauthorized');
         }
