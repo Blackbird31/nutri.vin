@@ -6,35 +6,18 @@ use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QROutputInterface;
 
-class QRCodeEPSOptions extends QROptions
+class QRCodeEPSOptions extends QRCodeGeneralOptions
 {
     protected string $outputType = QROutputInterface::EPS;
 
-    public function setColors($color)
+    public static function setResponseHeaders($moreHeaders = [])
     {
-        $this->moduleValues = [
-            QRMatrix::M_DATA_DARK => $color,
-        ];
+        header('Content-type: application/postscript');
+        header('Content-Disposition: filename="qrcode.eps"');
     }
 
     public function setLogo($logo)
     {
-        /* Pas de possibilité de mettre un logo pour l'instant */
-    }
-
-    public function setResponseHeaders($moreHeaders = [])
-    {
-        header('Content-type: application/postscript');
-        header('Content-Disposition: filename="qrcode.eps"');
-
-        foreach ($moreHeaders as $header => $value) {
-            header($header.': '.$value);
-        }
-    }
-
-    public function postProcess($output)
-    {
-        return str_replace(',', '.', $output);
+        // Not working with this format
     }
 }
-

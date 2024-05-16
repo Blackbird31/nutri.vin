@@ -13,7 +13,8 @@ $psr4 = [
     "app\\" => "../app/",
     "chillerlan\\QRCode\\" => "php-qrcode/src",
     "chillerlan\\Settings\\" => "php-settings-container/src",
-    "FPDF\\" => "FPDF"
+    "FPDF\\" => "FPDF",
+    "DB\\" => "php-couchdb/src"
 ];
 
 function parsePrefix($class, $psr4) {
@@ -38,7 +39,7 @@ spl_autoload_register(function ($class) use ($psr4) {
     $prefix = parsePrefix($prefix, $psr4);
 
     if ($prefix === false) { return; }
- 
+
     $baseDirectory = $psr4[$prefix];
     $path = fqcnToPath($class, $prefix);
 

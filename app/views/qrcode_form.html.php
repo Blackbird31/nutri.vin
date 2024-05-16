@@ -1,8 +1,15 @@
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Création de votre QR Code</li>
+  </ol>
+</nav>
+
 <h2>Création d'un vin</h2>
 
 <div class="row justify-content-end">
   <div class="col-8">
-      <form method="POST" action="<?php echo $urlbase; ?>/qrcode/<?php echo $qrcode->user_id; ?>/write" enctype="multipart/form-data" class="live-form">
+      <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
       <?php endif; ?>
@@ -14,7 +21,10 @@
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
           <label for="domaine_nom">Nom du Domaine</label>
       </div>
-
+      <div class="form-floating mb-3 col-sm-10">
+          <input type="text" class="form-control" id="adresse_domaine" name="adresse_domaine" placeholder="L'adresse de mon domaine" value="<?php echo $qrcode->adresse_domaine ;?>"/>
+          <label for="adresse_domaine">Adresse du Domaine</label>
+      </div>
 
       <h3 class="mt-4 mb-4">Information relative au vin</h3>
 
@@ -25,8 +35,19 @@
        </div>
 
        <div class="form-floating mb-3 col-sm-10">
-           <input type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
-           <label form="appellation">Appellation</label>
+           <input list="appellations_liste" type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
+            <datalist id="appellations_liste">
+            <?php
+              if (isset($config['appellations'])):
+                foreach ($config['appellations'] as $appellation):
+            ?>
+              <option value="<?php echo $appellation ?>"></option>
+            <?php
+                endforeach;
+              endif;
+            ?>
+            </datalist>
+            <label form="appellation">Appellation</label>
        </div>
 
        <div class="d-flex col-sm-10 justify-content-between">
@@ -37,7 +58,18 @@
        </div>
 
        <div class="form-floating col-sm-6">
-           <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
+           <input list="couleurs_liste" type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $qrcode->couleur; ?>" placeholder="Rouge, Blanc, Rosé, ...."/>
+            <datalist id="couleurs_liste">
+            <?php
+              if (isset($config['couleurs'])):
+                foreach ($config['couleurs'] as $couleur):
+            ?>
+              <option value="<?php echo $couleur ?>"></option>
+            <?php
+                endforeach;
+              endif;
+            ?>
+            </datalist>
            <label form="couleur">Couleur</label>
        </div>
 
@@ -48,7 +80,7 @@
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
+                      <input type="text" class="form-control text-end input-float" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
                       <label form="alcool_degre">Volume d'alcool</label>
                   </div>
                   <span class="input-group-text">%</span>
@@ -58,7 +90,7 @@
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end" id="centilisation" name="centilisation" placeholder="Contenance">
+                      <input type="text" class="form-control text-end input-float" id="centilisation" name="centilisation" placeholder="Contenance">
                       <label form="centilisation">Contenance</label>
                   </div>
                   <span class="input-group-text">cl</span>
@@ -77,58 +109,68 @@
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
-        <div class="mb-3 col-sm-10">
-          <input type="hidden" class="form-control" name="ingredients" id="ingredients" value="<?php echo $qrcode->ingredients ?>" />
-        </div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="ingredients_tableau_tab" data-bs-toggle="tab" data-bs-target="#ingredients_tableau" type="button" role="tab" aria-controls="ingredients_tableau" aria-selected="true">Liste</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="ingredients_texte_tab" data-bs-toggle="tab" data-bs-target="#ingredients_texte" type="button" role="tab" aria-controls="ingredients_texte" aria-selected="false">Texte</button>
+          </li>
+        </ul>
 
-        <div class="container col-sm-10 m-0 p-0" data-liveform-ignore>
-        <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-        <table id="table_ingredients" class="table col-sm-10 table-striped" style="margin-top: -2.5rem">
-              <thead>
+        <div class="tab-content py-4">
+          <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+            <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
+            <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
+                  <thead>
+                    <tr>
+                      <th class="col-4" scope="col"></th>
+                      <th class="col-1 text-center" scope="col">Bio</th>
+                      <th class="col-1 text-center" scope="col">Allergène</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+            </table>
+            <template id="ingredient_row">
                 <tr>
-                  <th class="col-4" scope="col"></th>
-                  <th class="col-1 text-center" scope="col">AB</th>
-                  <th class="col-1 text-center" scope="col">Allergène</th>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
+                    <td class="ingredient_ab text-center align-middle">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                    </td>
+                    <td class="ingredient_allergene text-center align-middle">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                    </td>
                 </tr>
-              </thead>
-              <tbody></tbody>
-        </table>
-        <template id="ingredient_row">
-            <tr>
-                <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
-                <td class="ingredient_ab text-center">
-                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
-                </td>
-                <td class="ingredient_allergene text-center">
-                    <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
-                </td>
-            </tr>
-        </template>
-        <div class="input-group">
-            <div class="col-sm-12">
-                <div class="input-group">
-                  <div class="form-floating">
-                      <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
-                      <label form="lot">Ingrédient(s)</label>
-                  </div>
-                  <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+            </template>
+            <div class="input-group">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                      <div class="form-floating">
+                          <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
+                          <label form="lot">Ingrédient(s)</label>
+                      </div>
+                      <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+                    </div>
                 </div>
+                <datalist id="ingredients_list">
+                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
+                    <option value="<?php echo $ingredient ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
             </div>
-            <datalist id="ingredients_list">
-                <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
-                <option value="<?php echo $ingredient ?>"></option>
-                <?php endforeach; ?>
-            </datalist>
-        </div>
-        <div class="form-text">
-          Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
-        </div>
+            <div class="form-text">
+              Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
+            </div>
+          </div>
+          <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+              <textarea class="form-control" rows="8" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
+          </div>
         </div>
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
         <div class="form-floating mb-3 col-sm-10">
-          <table class="table table-striped">
+          <table class="table table-sm table-striped">
             <tbody>
               <tr>
                 <td class="align-middle">Énergie (kJ)</td>
@@ -260,46 +302,40 @@
 
         <h3 class="mt-4 mb-4" id="photos">Photos</h3>
 
-        <div class="mb-3">
+        <div class="mb-3 imgs-list">
             <div class="col-sm-10 row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
-                        Bouteille<br/>
-                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_bouteille").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_bouteille, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                        Bouteille
+                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-preview img-thumbnail"/>
+                        <a href="#"><?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></a>
+                        <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
                         Etiquette<br/>
-                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_etiquette").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_etiquette, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-preview img-thumbnail"/>
+                        <span class="img_selector"><?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></span>
+                        <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 img_selector">
                     <center>
                         Contre-étiquette<br/>
-                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-thumbnail" style="height: 200px;"/><br/>
-                        <a href="#" onClick='document.getElementById("image_contreetiquette").click(); return false;'>Editer</a>
-                        <span style="<?php if (strpos($qrcode->image_contreetiquette, 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="./<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-preview img-thumbnail"/>
+                        <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                        <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                         </span>
                     </center>
-                    <div style="display: none;">
-                        <input type="file" class="form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
-                    </div>
+                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
@@ -315,7 +351,7 @@
 
         <div class="row mt-5">
             <div class="col-6">
-                <a href="<?php echo $urlbase.'/qrcode/'.$qrcode->user_id .'/list'; ?>" class="btn btn-light">Retour à la liste</a>
+                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
             </div>
             <div class="col-4 text-end">
                 <?php if ($qrcode->exists('authorization_key')): ?>
@@ -328,14 +364,8 @@
       <form id="form_add_ingredients"></form>
   </div>
   <div class="col-4 position-relative">
-    <div class="border border-light-subtle border-4 py-5 px-2 bg-light rounded-5 shadow-sm bg-gradient position-fixed" style="margin-top: -2.5rem;">
-        <div class="rounded-5 border border-2 bg-white border-light-subtle position-absolute top-0 start-50 translate-middle-x" style="width: 100px; height: 20px; margin-top: 15px;"></div>
-        <div class="rounded-5 border border-2 bg-white border-light-subtle position-absolute top-0 end-0 mt-3 me-5" style="width: 20px; height: 20px;"></div>
-        <div class="border border-light-subtle overflow-auto" style="height: 70vh; width: 400px;" data-liveform-container>
-          <?php include('qrcode_show.html.php'); ?>
-        </div>
-        <div class="rounded-3 border border-2 bg-white border-light-subtle position-absolute bottom-0 start-50 translate-middle-x mb-1" style="width: 40px; height: 40px;"></div>
-    </div>
+    <?php $iframe=false; ?>
+    <?php include('_phone.html.php') ?>
     </div>
 </div>
 
@@ -377,7 +407,8 @@ const liveform = (function () {
             });
             reader.readAsDataURL(file);
         } else {
-            toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', el.value)
+            let ingredientsListe = (el.value).replace(/_(.*?)_/g, "<strong>$1</strong>");
+            toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', ingredientsListe)
         }
         const blockAnchor = toUpdate.closest('.liveform_anchor')
         _template.scrollTop = blockAnchor.offsetTop - ((_template.offsetHeight - blockAnchor.offsetHeight) / 2)
@@ -413,6 +444,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    document.querySelector('.imgs-list').addEventListener('click', function (e) {
+        let el = e.target
+        while ((el = el.parentNode) && el !== document) {
+            if (el.classList.contains('img_selector')) {
+                e.stopPropagation()
+                const img = el.querySelector('img')
+                document.querySelector("input[type=file]#"+img.id.replace('img_', '')).click()
+
+                return false
+            }
+        }
+    })
+
+    document.querySelector('.input-float').addEventListener('change', function() {
+        let valeur = this.value;
+        valeur = valeur.replace(/,/g, '.');
+        valeur = parseFloat(valeur).toFixed(2);
+        this.value = valeur;
+    });
+
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
         const row = e.target.closest('tr');
         e.dataTransfer.addElement(row);
@@ -443,7 +494,7 @@ function ingredientsTextToTable() {
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
-    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
+    let ingredients = ingredientsText.split(/,(?![^()]*\))/);
     for(let ingredient of ingredients) {
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');
