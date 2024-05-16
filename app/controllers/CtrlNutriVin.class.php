@@ -135,6 +135,9 @@ class CtrlNutriVin {
                 header('HTTP/1.0 401 Unauthorized');
                 die ("Not authorized qrcodeAuthentication");
             }
+            if (!in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost']) && !isset($config['viticonnect_baseurl'])) {
+                $config['viticonnect_baseurl'] = 'https://viticonnect.net/cas';
+            }
             if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
                 return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/connect/viticonnect');
             }
