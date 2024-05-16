@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<div class="p-3 bg-light-subtle border-top ">
+<div class="px-3 pt-3 bg-light-subtle border-top ">
     <div class="card text-bg-light mt-2 mb-4 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
         <table class="table table-sm table-striped-columns mb-0">
@@ -169,7 +169,7 @@
         </table>
     </div>
 
-    <div class="card text-bg-Light mt-4 mb-2 shadow-sm liveform_anchor">
+    <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i>Autres informations</div>
         <p class="pt-2 px-2"
            data-liveform-name="autres_infos" data-liveform-template='{{%s}}'
@@ -177,6 +177,10 @@
             <?php echo $qrcode->autres_infos ?>
         </p>
 
+    </div>
+
+    <div class="mb-1 small">
+      <i class="bi bi-eye text-muted" title="<?php echo count($qrcode->getVisites()) ?> vues" style="cursor: pointer;"></i>
     </div>
 
 </div>

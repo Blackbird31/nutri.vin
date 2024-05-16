@@ -5,7 +5,7 @@
 <?php endif; ?>
     <div class="rounded-5 border border-2 bg-white border-light-subtle position-absolute top-0 start-50 translate-middle-x" style="width: 100px; height: 20px; margin-top: 15px;"></div>
     <div class="rounded-5 border border-2 bg-white border-light-subtle position-absolute top-0 end-0 mt-3 me-5" style="width: 20px; height: 20px;"></div>
-    <div class="border border-light-subtle overflow-auto" style="height: 70vh; width: 400px;" data-liveform-container>
+    <div class="border border-light-subtle overflow-auto rounded-3" style="height: 70vh; width: 400px;" data-liveform-container>
         <?php if ($iframe): ?>
             <iframe src="/<?php echo $qrcode->id ?>" style="height: 100%; width: 398px;"></iframe>
         <?php else: ?>
