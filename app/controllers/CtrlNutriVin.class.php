@@ -17,9 +17,21 @@ class CtrlNutriVin {
 
     }
 
+    private function authenticatedUserOnly(Base $f3) {
+        if (!$f3->exists('PARAMS.userid')) {
+            die('Unauthorized');
+        }
+        if (!$f3->exists('SESSION.userid')) {
+            die('Unauthorized');
+        }
+        if ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')) {
+            die('Unauthorized');
+        }
+    }
+
     function qrcodeWrite(Base $f3) {
         if ($f3->exists('POST.domaine_nom') && $f3->exists('PARAMS.userid')) {
-
+            $this->authenticatedUserOnly($f3);
             if ($f3->exists('POST.id')) {
                 $qrcode = QRCode::findById($f3->get('POST.id'));
             } else {
@@ -47,6 +59,7 @@ class CtrlNutriVin {
     }
 
     function qrcodeDeleteImage(Base $f3) {
+        $this->authenticatedUserOnly($f3);
         $qrcode = QRCode::findById($f3->get('PARAMS.id'));
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
@@ -70,6 +83,7 @@ class CtrlNutriVin {
     }
 
     function qrcodeCreate(Base $f3) {
+        $this->authenticatedUserOnly($f3);
         $qrcode = new QRCode();
         if (!$qrcode->tableExists()) {
             return $f3->reroute('/admin/setup', false);
@@ -85,6 +99,7 @@ class CtrlNutriVin {
 
 
     function qrcodeEdit(Base $f3) {
+        $this->authenticatedUserOnly($f3);
         $qrcode = QRCode::findById($f3->get('PARAMS.id'));
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
@@ -102,10 +117,91 @@ class CtrlNutriVin {
         if (!$qrcode->tableExists()) {
             return $f3->reroute('/admin/setup', false);
         }
-        return $f3->reroute('/qrcode/userid/list', false);
+        if (!$f3->exists('SESSION.userid')) {
+            $config = $f3->get('config');
+            if (isset($_SERVER['PHP_AUTH_USER']) && !$f3->exists('SESSION.userid') && !$f3->exists('SESSION.authtype')) {
+                $f3->set('SESSION.userid', $_SERVER['PHP_AUTH_USER']);
+                $f3->set('SESSION.username', $_SERVER['PHP_AUTH_USER']);
+                $f3->set('SESSION.authtype', 'http');
+            }
+            if (isset($config['http_auth']) && $config['http_auth']) {
+                header('WWW-Authenticate: Basic realm="My Realm"');
+                header('HTTP/1.0 401 Unauthorized');
+                die ("Not authorized");
+            }
+            if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
+                return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/connect/viticonnect');
+            }
+            if (in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost'])) {
+                if (!isset($config['default_user'])) {
+                    $config['default_user'] = 'userid';
+                }
+                $f3->set('SESSION.userid', $config['default_user']);
+                $f3->set('SESSION.username', $config['default_user']);
+                $f3->set('SESSION.authtype', 'default');
+                return $f3->reroute('/qrcode');
+            }
+            die ("Not authorized");
+        }
+        return $f3->reroute('/qrcode/'.$f3->get('SESSION.userid').'/list', false);
+    }
+
+    function qrcodeViticonnect(Base $f3) {
+        $ticket = $f3->get('GET.ticket');
+        $config = $f3->get('config');
+        if (!$ticket) {
+            return $f3->reroute('/qrcode');
+        }
+        if (!isset($config['viticonnect_baseurl']) || !$config['viticonnect_baseurl']) {
+            return $f3->reroute('/');
+        }
+        $validate = file_get_contents($config['viticonnect_baseurl'].'/serviceValidate?service='.$f3->get('urlbase').'/connect/viticonnect&ticket='.$ticket);
+        if ($validate) {
+            if(strpos($validate, 'INVALID_TICKET') !== false) {
+                return $f3->reroute('/qrcode');
+            }
+            $userid = null;
+            $origin = null;
+            $raison_sociale = null;
+            if (preg_match('/<cas:viticonnect_origin>([^<]*)<\/cas:viticonnect_origin>/', $validate, $m)) {
+                $origin = $m[1];
+            }
+            if (preg_match('/cas:viticonnect_entity_1_raison_sociale>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
+                $raison_sociale = $m[1];
+            }
+            if (preg_match('/cas:viticonnect_entity_1_cvi>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
+                $userid = $m[1];
+            }
+            if (!$userid && preg_match('/cas:viticonnect_entity_1_siret>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
+                $userid = $m[1];
+            }
+            if (!$userid && $origin && preg_match('/cas:user>([^<]*)<\/cas:user/', $validate, $m)) {
+                $userid = $origin.':'.$m[1];
+            }
+            if ($userid) {
+                if ($raison_sociale) {
+                    $f3->set('SESSION.username', $raison_sociale);
+                }
+                $f3->set('SESSION.userid', $userid);
+                $f3->set('SESSION.authtype', 'viticonnect');
+            }
+        }
+        return $f3->reroute('/qrcode');
+    }
+
+    function qrcodeDisconnect(Base $f3) {
+        $f3->clear('SESSION.userid');
+        $f3->clear('SESSION.username');
+        if ($f3->get('SESSION.authtype') == 'viticonnect') {
+            $f3->clear('SESSION.authtype');
+            $config = $f3->get('config');
+            return $f3->reroute($config['viticonnect_baseurl'].'/logout?service='.$f3->get('urlbase').'/');
+        }
+        return $f3->reroute('/');
     }
 
     function qrcodeList(Base $f3) {
+      $this->authenticatedUserOnly($f3);
       if ($f3->exists('PARAMS.userid')) {
         $f3->set('qrlist', QRCode::findByUserid($f3->get('PARAMS.userid')));
         $f3->set('userid', $f3->get('PARAMS.userid'));
@@ -131,12 +227,15 @@ class CtrlNutriVin {
     }
 
     public function qrcodeParametrage(Base $f3) {
+        $this->authenticatedUserOnly($f3);
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
     }
 
     public function export(Base $f3)
     {
+        $this->authenticatedUserOnly($f3);
+
         $format = $f3->get('PARAMS.format');
         $qrcode = $f3->get('PARAMS.qrcodeid');
 
