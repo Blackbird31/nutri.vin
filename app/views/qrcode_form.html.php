@@ -335,7 +335,7 @@
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Étiquette<br/>
-                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
                     <span class="img-add btn btn-sm">
                         <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
@@ -349,7 +349,7 @@
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Contre-étiquette<br/>
-                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
                     <span class="img-add btn btn-sm">
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
@@ -394,6 +394,35 @@
 </div>
 
 <script>
+
+
+const photoEtiquette = document.querySelector('#img_image_etiquette');
+const photoContreEtiquette = document.querySelector('#img_image_contreetiquette');
+
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if(mutation.attributeName.includes('src')){
+            observer.disconnect();
+            if (mutation.target.src.includes('data:')) {
+                mutation.target.style.opacity = "1";
+            } else {
+                mutation.target.style.opacity = "0.55";
+            }
+            observer.observe(photoEtiquette, config);
+            observer.observe(photoContreEtiquette, config);
+        }
+    });
+});
+const config = {
+        childList: true,
+        characterData: true,
+        subtree: true,
+        attributes: true
+};
+
+observer.observe(photoEtiquette, config);
+observer.observe(photoContreEtiquette, config);
+
 const liveform = (function () {
     const _template = document.querySelector("[data-liveform-container]")
     const classe   = 'form.live-form'
@@ -568,6 +597,10 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
+        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        if (!ingredient) {
+            return;
+        }
         if(ingredientsText) {
             ingredientsText += ', '
         }
@@ -583,7 +616,6 @@ function ingredientsTableToText() {
             ingredientsText += newAdditif + " : ";
             currentAdditif = newAdditif
         }
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }

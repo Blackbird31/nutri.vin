@@ -19,15 +19,12 @@ class CtrlNutriVin {
     }
 
     private function authenticatedUserOnly(Base $f3) {
-        if (!$f3->exists('PARAMS.userid')) {
+        if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
+             ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
+        {
             die('Unauthorized');
         }
-        if (!$f3->exists('SESSION.userid')) {
-            die('Unauthorized');
-        }
-        if ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')) {
-            die('Unauthorized');
-        }
+        return true;
     }
 
     function qrcodeWrite(Base $f3) {
@@ -121,7 +118,7 @@ class CtrlNutriVin {
         }
         if (!$f3->exists('SESSION.userid')) {
             if ($f3->exists('SESSION.authtype')) {
-                return $f3->reroute('/disconnect');
+                return $f3->reroute('/logout');
             }
             $config = $f3->get('config');
             if (isset($config['http_auth']) && $config['http_auth']) {
@@ -135,8 +132,11 @@ class CtrlNutriVin {
                 header('HTTP/1.0 401 Unauthorized');
                 die ("Not authorized qrcodeAuthentication");
             }
+            if (!in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost']) && !isset($config['viticonnect_baseurl'])) {
+                $config['viticonnect_baseurl'] = 'https://viticonnect.net/cas';
+            }
             if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
-                return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/connect/viticonnect');
+                return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/login/viticonnect');
             }
             if (in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost'])) {
                 if (!isset($config['default_user'])) {
@@ -161,7 +161,7 @@ class CtrlNutriVin {
         if (!isset($config['viticonnect_baseurl']) || !$config['viticonnect_baseurl']) {
             return $f3->reroute('/');
         }
-        $validate = file_get_contents($config['viticonnect_baseurl'].'/serviceValidate?service='.$f3->get('urlbase').'/connect/viticonnect&ticket='.$ticket);
+        $validate = file_get_contents($config['viticonnect_baseurl'].'/serviceValidate?service='.$f3->get('urlbase').'/login/viticonnect&ticket='.$ticket);
         if ($validate) {
             if(strpos($validate, 'INVALID_TICKET') !== false) {
                 return $f3->reroute('/qrcode');
@@ -241,16 +241,23 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
-        $geo = Geo::instance();
-        $location = $geo->location();
-        unset($location['request'], $location['delay'], $location['credit']);
-        $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
-        $qrcode->save();
+
+        if (! $f3->get('SESSION.userid')) {
+            $geo = Geo::instance();
+            $location = $geo->location();
+            unset($location['request'], $location['delay'], $location['credit']);
+            $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
+            $qrcode->save();
+        }
 
         $this->initDefaultOnQRCode($qrcode);
 
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
+        $f3->set('publicview', true);
+        if ($f3->get('GET.notpublicview')) {
+          $f3->set('publicview', false);
+        }
         echo View::instance()->render('layout_public.html.php');
     }
 
@@ -319,8 +326,6 @@ class CtrlNutriVin {
 
     public function export(Base $f3)
     {
-        $this->authenticatedUserOnly($f3);
-
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
 
         if ($qrcode === null) {

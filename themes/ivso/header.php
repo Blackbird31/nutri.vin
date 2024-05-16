@@ -27,7 +27,7 @@
                     <a class="nav-link" href="https://declaration.ivsopro.com/accueil">Déclarations ↗</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $urlbase; ?>/disconnect">Déconnexion</a>
+                    <a class="nav-link" href="<?php echo $urlbase; ?>/logout">Déconnexion</a>
                 </li>
             </ul>
         </div>
