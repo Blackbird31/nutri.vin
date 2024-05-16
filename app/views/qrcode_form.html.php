@@ -434,6 +434,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const ne_j    = document.querySelector('#nutritionnel_energie_kj')
     const conversion = 4.184
 
+    const rebuildCarousel = function () {
+        (document.querySelectorAll('.imgs-list img') || []).forEach(function (i) {
+            const imgCarousel = document.querySelector('#'+i.id.replace('img_', 'slide_'))
+            imgCarousel.src = i.src
+        })
+    }
+
     document.addEventListener('change', function (e) {
         if (e.target.id.includes('nutritionnel_energie')) {
             const updated  = e.target
@@ -475,6 +482,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.value = ""
             container.querySelector('.img-add').classList.remove('d-none')
             container.querySelector('.img-reset').classList.add('d-none')
+            rebuildCarousel()
         }
     })
 
