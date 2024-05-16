@@ -494,7 +494,7 @@ function ingredientsTextToTable() {
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
-    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
+    let ingredients = ingredientsText.split(/,(?![^()]*\))/);
     for(let ingredient of ingredients) {
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');
