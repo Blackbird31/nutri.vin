@@ -184,6 +184,54 @@
 
       <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
+      <h4>Simplifié</h4>
+
+      <div class="form-floating mb-3 col-sm-10">
+        <table class="table table-sm table-striped">
+          <tbody>
+            <tr>
+              <td class="align-middle">Type de vin</td>
+                <td>
+                  <div class="col-9 offset-3">
+                  <div class="input-group">
+                      <select name="vin_type" id="vin_type" class="form-control">
+                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à mouellleux)</option>
+                           <option value="liqueur">Vin de Liqueur</option>
+                           <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
+                      </select>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="align-middle">Teneur en sucre</td>
+                <td>
+                  <div class="col-6 offset-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control text-sm-end" id="teneur_sucre" name="teneur_sucre"/>
+                    <span class="input-group-text" id="basic-addon-cal" style="width:50px">g/L</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="align-middle">TAV</td>
+                <td>
+                  <div class="col-6 offset-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control text-sm-end" id="nutri_simple_tav" name="nutri_simple_tav"/>
+                    <span class="input-group-text" id="basic-addon-cal" style="width:50px">%</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="#" type="submit" class="btn btn-success" id="nutri_generate">Générer</a>
+      </div>
+
+      <h4>Complet</h4>
+
         <div class="form-floating mb-3 col-sm-10">
           <table class="table table-sm table-striped">
             <tbody>
@@ -657,6 +705,114 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
     ingredientsTableToText();
     liveform.update(document.getElementById('ingredients'));
 });
+
+convert_valeur_energetique_kj = {
+    'tranquille': {
+        'inf_4':  [24, 59, 122, 191, 260, 328, -1, -1, -1, -1],
+        'inf_9':  [32, 67, 130, 199, 267, 336, -1, -1, -1, -1],
+        'inf_12': [38, 74, 137, 205, 274, 343, -1, -1, -1, -1],
+        'inf_18': [48, 82, 144, 213, 282, 350, -1, -1, -1, -1],
+        'inf_45': [74,110, 173, 241, 310, 378, -1, -1, -1, -1]
+    },
+    'liqueur': {
+        'inf_4':  [-1, -1, -1, -1, -1, -1, 385, 443, 500, -1],
+        'inf_9':  [-1, -1, -1, -1, -1, -1, 393, 450, 508, -1],
+        'inf_12': [-1, -1, -1, -1, -1, -1, 400, 457, 514, -1],
+        'inf_18': [-1, -1, -1, -1, -1, -1, 408, 465, 522, -1],
+        'inf_45': [-1, -1, -1, -1, -1, -1, 436, 493, 550, -1]
+    },
+    'mousseux': {
+        'inf_3':  [23, 58, 121, 190, 259, 327, -1, -1, -1, -1],
+        'inf_6':  [28, 64, 127, 195, 264, 332, -1, -1, -1, -1],
+        'inf_12': [36, 71, 134, 203, 271, 340, -1, -1, -1, -1],
+        'inf_17': [45, 81, 144, 212, 281, 349, -1, -1, -1, -1],
+        'inf_32': [68, 98, 161, 229, 298, 367, -1, -1, -1, -1],
+        'inf_50': [90,126, 189, 257, 326, 395, -1, -1, -1, -1]
+    }
+};
+
+document.querySelector('#nutri_generate').addEventListener('click', function(e) {
+    e.preventDefault();
+    nutri_update_complet();
+});
+document.querySelector('#vin_type').addEventListener('change', function(e) {
+    e.preventDefault();
+    nutri_update_complet();
+});
+document.querySelector('#teneur_sucre').addEventListener('change', function(e) {
+    e.preventDefault();
+    nutri_update_complet();
+});
+document.querySelector('#nutri_simple_tav').addEventListener('change', function(e) {
+    e.preventDefault();
+    nutri_update_complet();
+});
+
+function nutri_update_complet() {
+    sucre = document.querySelector('#teneur_sucre').value;
+    cat_sucre = null;
+    type =  document.querySelector('#vin_type').value.replace(',', '.');
+    alcool =  document.querySelector('#nutri_simple_tav').value.replace(',', '.');
+    if (!alcool || !type || !sucre) {
+        return;
+    }
+    cat_alcool = 10;
+    if ((type == 'tranquille') || (type == 'liqueur')) {
+        if (sucre <= 4) {
+            cat_sucre = 'inf_4';
+        }else if (sucre <= 9) {
+            cat_sucre = 'inf_9';
+        }else if (sucre <= 12) {
+            cat_sucre = 'inf_12';
+        }else if (sucre <= 18) {
+            cat_sucre = 'inf_18';
+        }else if (sucre <= 45) {
+            cat_sucre = 'inf_45';
+        }
+    } else if (type == 'mousseux') {
+        if (sucre <= 0) {
+        }else if (sucre <= 3) {
+            cat_sucre = 'inf_3';
+        }else if (sucre <= 6) {
+            cat_sucre = 'inf_6';
+        }else if (sucre <= 12) {
+            cat_sucre = 'inf_12';
+        }else if (sucre <= 17) {
+            cat_sucre = 'inf_17';
+        }else if (sucre <= 32) {
+            cat_sucre = 'inf_32';
+        }else if (sucre <= 50) {
+            cat_sucre = 'inf_50';
+        }
+    }
+    if (alcool <= 0) {
+    }else if (alcool <= 0.5) {
+        cat_alcool = 0;
+    } else if (alcool <= 3) {
+        cat_alcool = 1;
+    } else if (alcool <= 6) {
+        cat_alcool = 2;
+    } else if (alcool <= 9) {
+        cat_alcool = 3;
+    } else if (alcool <= 12) {
+        cat_alcool = 4;
+    } else if (alcool <= 15) {
+        cat_alcool = 5;
+    } else if (alcool <= 17) {
+        cat_alcool = 6;
+    } else if (alcool <= 20) {
+        cat_alcool = 7;
+    } else if (alcool <= 22) {
+        cat_alcool = 8;
+    }
+
+    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool]) {
+        document.querySelector('#nutritionnel_energie_kj').value = convert_valeur_energetique_kj[type][cat_sucre][cat_alcool];
+        document.querySelector('#nutritionnel_glucides').value = alcool / 10;
+        document.querySelector('#nutritionnel_sucres').value = alcool / 10;
+    }
+    return false;
+}
 
 ingredientsTextToTable();
 
