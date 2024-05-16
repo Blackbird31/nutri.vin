@@ -19,57 +19,74 @@
     </div>
 
     <div class="bg-light-subtle border border-top-0 rounded rounded-top-0 pt-3 shadow-sm">
-        <p data-liveform-name="domaine_nom" data-liveform-template='{{%s}}'
-           class="fs-4"><?php echo $qrcode->domaine_nom ?></p>
+        <?php if (empty($publicview) || (!empty($publicview) && $qrcode->domaine_nom)): ?>
+        <p data-liveform-name="domaine_nom" data-liveform-template='{{%s}}' class="fs-4">
+          <?php echo $qrcode->domaine_nom ?>
+        </p>
+        <?php endif; ?>
+        <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->cuvee_nom || $qrcode->appellation || $qrcode->couleur))): ?>
         <p class="fs-3">
+            <?php if (empty($publicview) || $qrcode->cuvee_nom): ?>
             <span data-liveform-name="cuvee_nom" data-liveform-template='{{%s}}'>
                 <?php echo $qrcode->cuvee_nom ?>
-            </span><br/>
-            <small class="fw-light text-muted"
-                data-liveform-name="appellation" data-liveform-template='{{%s}}'
-            >
+            </span>
+            <br/>
+            <?php endif; ?>
+            <?php if (empty($publicview) || $qrcode->appellation): ?>
+            <small class="fw-light text-muted" data-liveform-name="appellation" data-liveform-template='{{%s}}'>
                 <?php echo $qrcode->appellation ?>
             </small>
-            <small class="fw-light text-muted"
-                data-liveform-name="couleur" data-liveform-template='{{%s}}'
-            >
+            <?php endif; ?>
+            <?php if (empty($publicview) || $qrcode->appellation): ?>
+            <small class="fw-light text-muted" data-liveform-name="couleur" data-liveform-template='{{%s}}'>
                 <?php echo $qrcode->couleur ?>
             </small>
+            <?php endif; ?>
         </p>
-        <p class="fs-4"
-           data-liveform-name="millesime" data-liveform-template='{{%s}}'
-        >
+        <?php endif; ?>
+        <?php if (empty($publicview) || (!empty($publicview) && $qrcode->millesime)): ?>
+        <p class="fs-4" data-liveform-name="millesime" data-liveform-template='{{%s}}'>
             <?php echo $qrcode->millesime ?>
         </p>
+        <?php endif; ?>
     </div>
 </div>
 
 <div class="px-3 pt-3 bg-light-subtle border-top ">
+    <?php if(empty($publicview) || (!empty($publicview) && ($qrcode->alcool_degre || $qrcode->centilisation || $qrcode->lot))): ?>
     <div class="card text-bg-light mt-2 mb-4 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
+                <?php if (empty($publicview) || $qrcode->alcool_degre): ?>
                 <tr>
                     <td class="text-start">Volume d'alcool</td>
                     <td class="text-end"
                         data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
                     ><?php echo $qrcode->alcool_degre ?>% vol</td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || $qrcode->centilisation): ?>
                 <tr>
                     <td class="text-start">Contenance</td>
                     <td class="text-end"
                         data-liveform-name="centilisation" data-liveform-template='{{%s}} cl'>
                             <?php echo $qrcode->centilisation ?> cl</td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || $qrcode->lot): ?>
                 <tr>
                     <td class="text-start">N° de lot</td>
                     <td class="text-end"
                         data-liveform-name="lot" data-liveform-template='{{%s}}'>
                             <?php echo $qrcode->lot ?></td>
                 </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
+    <?php endif; ?>
+    <?php if (empty($publicview) || (!empty($publicview) && $qrcode->ingredients)): ?>
     <div class="card text-bg-secondary mt-4 mb-3 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-card-list float-start"></i> Ingrédients</div>
         <div class="card-body text-dark bg-white">
@@ -83,6 +100,7 @@
             </small>
         </div>
     </div>
+    <?php endif; ?>
     <div class="card text-bg-primary mt-4 mb-2 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i> Informations nutritionnelles</div>
         <table class="table table-sm table-striped-columns mb-0">
@@ -169,6 +187,7 @@
         </table>
     </div>
 
+    <?php if (!empty($qrcode->autres_infos)): ?>
     <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i>Autres informations</div>
         <p class="pt-2 px-2"
@@ -176,8 +195,8 @@
         >
             <?php echo $qrcode->autres_infos ?>
         </p>
-
     </div>
+    <?php endif; ?>
 
     <div class="mb-1 small">
       <i class="bi bi-eye text-muted" title="<?php echo count($qrcode->getVisites()) ?> vues" style="cursor: pointer;"></i>
