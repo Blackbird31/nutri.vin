@@ -19,15 +19,12 @@ class CtrlNutriVin {
     }
 
     private function authenticatedUserOnly(Base $f3) {
-        if (!$f3->exists('PARAMS.userid')) {
+        if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
+             ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid'))
+        {
             die('Unauthorized');
         }
-        if (!$f3->exists('SESSION.userid')) {
-            die('Unauthorized');
-        }
-        if ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')) {
-            die('Unauthorized');
-        }
+        return true;
     }
 
     function qrcodeWrite(Base $f3) {
