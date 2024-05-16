@@ -178,7 +178,7 @@
             </div>
           </div>
           <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
-              <textarea class="form-control" rows="8" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
+              <textarea class="form-control" rows="5" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
           </div>
         </div>
 
@@ -194,7 +194,7 @@
                 <td>
                   <div class="col-9 offset-3">
                   <div class="input-group">
-                      <select name="vin_type" id="vin_type" class="form-control">
+                      <select name="vin_type" id="vin_type" class="form-select">
                            <option value="tranquille">Vin Tranquille ou Pétillant (de sec à mouellleux)</option>
                            <option value="liqueur">Vin de Liqueur</option>
                            <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
