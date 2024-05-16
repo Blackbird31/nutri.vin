@@ -241,11 +241,14 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
-        $geo = Geo::instance();
-        $location = $geo->location();
-        unset($location['request'], $location['delay'], $location['credit']);
-        $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
-        $qrcode->save();
+
+        if (! $f3->get('SESSION.userid')) {
+            $geo = Geo::instance();
+            $location = $geo->location();
+            unset($location['request'], $location['delay'], $location['credit']);
+            $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
+            $qrcode->save();
+        }
 
         $this->initDefaultOnQRCode($qrcode);
 
