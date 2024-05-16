@@ -544,6 +544,14 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation()
         }
 
+        if(e.target.classList.contains('checkbox_additif')) {
+            const row = e.target.closest('tr');
+            row.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
+            row.querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
+            row.querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
+            row.querySelector('.ingredient_additif .input_additif').focus();
+        }
+
         if (e.target.closest('#table_ingredients')) {
             ingredientsTableToText();
         }
@@ -607,16 +615,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function ingredientsTextToTable() {
     let ingredientsText = document.getElementById('ingredients').value
-    const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
-    ingredientsTbody.innerHTML = "";
+    const ingredientsTableBody = document.querySelector('table#table_ingredients tbody')
+
+    ingredientsTableBody.innerHTML = "";
+    document.querySelector('#table_ingredients').classList.toggle('d-none', !ingredientsText);
+    document.querySelector('#message_ingredients_vide').classList.toggle('d-none', ingredientsText);
+
     if(!ingredientsText) {
-        document.querySelector('table#table_ingredients').classList.add('d-none');
-        document.querySelector('#message_ingredients_vide').classList.remove('d-none');
         return;
     }
-
-    document.querySelector('#message_ingredients_vide').classList.add('d-none');
-    document.querySelector('table#table_ingredients').classList.remove('d-none');
 
     ingredientsText = ingredientsText.replace(/;/g, ',;');
 
@@ -646,7 +653,7 @@ function ingredientsTextToTable() {
         if(ingredient.match(/^_[^_]*_\*?$/)) {
             templateClone.querySelector('td.ingredient_allergene input').checked = true
         }
-        ingredientsTbody.appendChild(templateClone);
+        ingredientsTableBody.appendChild(templateClone);
     }
 }
 
@@ -654,7 +661,7 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        let ingredient = item.querySelector('input.input_ingredient').value
         if (!ingredient) {
             return;
         }
@@ -664,6 +671,7 @@ function ingredientsTableToText() {
         }
         if(currentAdditif && newAdditif != currentAdditif) {
             ingredientsText += '; '
+            currentAdditif = null;
         } else if(ingredientsText) {
             ingredientsText += ', '
         }
@@ -686,14 +694,6 @@ function ingredientsTableToText() {
     liveform.update(document.getElementById('ingredients'));
 }
 
-document.querySelector('table#table_ingredients').addEventListener('change', function(e) {
-    if(e.target.classList.contains('checkbox_additif')) {
-        e.target.closest('tr').querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
-        e.target.closest('tr').querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
-        e.target.closest('tr').querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
-        e.target.closest('tr').querySelector('.ingredient_additif .input_additif').focus();
-    }
-});
 
 document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
     e.preventDefault();
