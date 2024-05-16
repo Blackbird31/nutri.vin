@@ -124,7 +124,7 @@
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
                     <tr>
-                      <th class="col-4" scope="col"></th>
+                      <th class="col-4 ps-5" scope="col">Additif</th>
                       <th class="col-1 text-center" scope="col">Bio</th>
                       <th class="col-1 text-center" scope="col">Allergène</th>
                     </tr>
@@ -133,7 +133,7 @@
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" aria-label="Checkbox for following text input"></div><input type="text" class="form-control input_additif d-none"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_ab text-center align-middle">
                         <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
                     </td>
@@ -304,38 +304,47 @@
 
         <div class="mb-3 imgs-list">
             <div class="col-sm-10 row">
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Bouteille
-                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-preview img-thumbnail"/>
-                        <a href="#"><?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></a>
-                        <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Bouteille
+                    <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
+                        <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Etiquette<br/>
-                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-preview img-thumbnail"/>
-                        <span class="img_selector"><?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></span>
-                        <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Étiquette<br/>
+                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
+                        <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Contre-étiquette<br/>
-                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-preview img-thumbnail"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Contre-étiquette<br/>
+                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
@@ -363,7 +372,7 @@
       </form>
       <form id="form_add_ingredients"></form>
   </div>
-  <div class="col-4 position-relative">
+  <div class="col-4">
     <?php $iframe=false; ?>
     <?php include('_phone.html.php') ?>
     </div>
@@ -425,6 +434,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const ne_j    = document.querySelector('#nutritionnel_energie_kj')
     const conversion = 4.184
 
+    const rebuildCarousel = function () {
+        (document.querySelectorAll('.imgs-list img') || []).forEach(function (i) {
+            const imgCarousel = document.querySelector('#'+i.id.replace('img_', 'slide_'))
+            imgCarousel.src = i.src
+        })
+    }
+
     document.addEventListener('change', function (e) {
         if (e.target.id.includes('nutritionnel_energie')) {
             const updated  = e.target
@@ -439,21 +455,34 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.closest('#table_ingredients')) {
             ingredientsTableToText();
         }
+
+        if (e.target.type === 'file') {
+            const container = e.target.closest('.img_selector')
+            container.querySelector('.img-add').classList.add('d-none')
+            container.querySelector('.img-reset').classList.remove('d-none')
+        }
+
         if (e.target.closest(liveform.classe)) {
             liveform.update(e.target)
         }
     })
 
     document.querySelector('.imgs-list').addEventListener('click', function (e) {
-        let el = e.target
-        while ((el = el.parentNode) && el !== document) {
-            if (el.classList.contains('img_selector')) {
-                e.stopPropagation()
-                const img = el.querySelector('img')
-                document.querySelector("input[type=file]#"+img.id.replace('img_', '')).click()
+        const el = e.target
+        const container = el.closest('.img_selector')
+        const img = container.querySelector('img')
+        const input = document.querySelector("input[type=file]#"+img.id.replace('img_', ''))
 
-                return false
-            }
+        if (el.classList.contains('img-add') || el.classList.contains('img-preview')) {
+            input.click()
+        }
+
+        if (el.classList.contains('img-reset')) {
+            img.src = input.attributes['defaultvalue'].value
+            input.value = ""
+            container.querySelector('.img-add').classList.remove('d-none')
+            container.querySelector('.img-reset').classList.add('d-none')
+            rebuildCarousel()
         }
     })
 
@@ -494,10 +523,23 @@ function ingredientsTextToTable() {
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
-    let ingredients = ingredientsText.split(/,(?![^()]*\))/);
+    let ingredients = ingredientsText.split(/[ ]*,[ ]*(?![^()]*\))/);
+    let additif = null
+
     for(let ingredient of ingredients) {
+        if(ingredient.match(/\:/)) {
+            additif = ingredient.split(/[ ]*:[ ]*/)[0]
+            ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
+        }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
-        templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');
+        if(additif) {
+            templateClone.querySelector('.checkbox_additif').checked = true
+            templateClone.querySelector('.input_additif').classList.remove('d-none')
+            templateClone.querySelector('.input_additif').value = additif
+        } else {
+
+        }
+        templateClone.querySelector('td.ingredient_libelle input.input_ingredient').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
             templateClone.querySelector('td.ingredient_ab input').checked = true
         }
@@ -510,11 +552,20 @@ function ingredientsTextToTable() {
 
 function ingredientsTableToText() {
     let ingredientsText = '';
+    let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
         if(ingredientsText) {
             ingredientsText += ', '
         }
-        let ingredient = item.querySelector('td.ingredient_libelle input').value;
+        newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+        if(newAdditif == currentAdditif) {
+            newAdditif = null;
+        }
+        if(newAdditif) {
+            ingredientsText += newAdditif + " : ";
+            currentAdditif = newAdditif
+        }
+        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
@@ -544,6 +595,7 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
     input_ingredients.value += text_add_ingredient.value;
     text_add_ingredient.value = "";
     ingredientsTextToTable();
+    ingredientsTableToText();
     liveform.update(document.getElementById('ingredients'));
 });
 

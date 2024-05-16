@@ -34,13 +34,14 @@ class QRCode extends Mapper
 		"image_etiquette" => 1,
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
-		"authorization_key" => 1
+		"authorization_key" => 1,
+    "visites" => 1
   ];
 
 	 public static function getFieldsAndType() {
 		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
-         $fields['domaine_nom'] = 'VARCHAR(255)';
+     $fields['domaine_nom'] = 'VARCHAR(255)';
 		 $fields['adresse_domaine'] = 'VARCHAR(255)';
 		 $fields['appellation'] = 'VARCHAR(255)';
 		 $fields['couleur'] = 'VARCHAR(255)';
@@ -67,7 +68,8 @@ class QRCode extends Mapper
 		 $fields['authorization_key'] = 'VARCHAR(100)';
 		 $fields['date_creation'] = 'VARCHAR(26)';
 		 $fields['date_version'] = 'VARCHAR(26)';
-         $fields['logo'] = 'BOOL';
+     $fields['logo'] = 'BOOL';
+     $fields['visites'] = 'TEXT';
 		 return $fields;
  	}
 
@@ -280,5 +282,19 @@ class QRCode extends Mapper
 
 	public function getQRCodeContent($format, $urlbase, $config) {
       return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->getId(), $format, ($this->logo) ? $config['logo'] : false);
+  }
+
+  public function getVisites() {
+    $visites = $this->get('visites');
+    if ($visites) {
+      return json_decode($visites, true);
+    }
+    return [];
+  }
+
+  public function addVisite(array $infos) {
+    $visites = $this->getVisites();
+    $visites[] = $infos;
+    $this->visites = json_encode($visites);
   }
 }
