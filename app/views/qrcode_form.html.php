@@ -124,21 +124,31 @@
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
                     <tr>
-                      <th class="col-4 ps-5" scope="col">Additif</th>
-                      <th class="col-1 text-center" scope="col">Bio</th>
-                      <th class="col-1 text-center" scope="col">Allergène</th>
+                      <th class="" scope="col"></th>
+                      <th class="text-center" scope="col">Additif</th>
+                      <th class="text-center" scope="col">Bio</th>
+                      <th class="text-center" scope="col">Allergène</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" aria-label="Checkbox for following text input"></div><input type="text" class="form-control input_additif d-none"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_additif text-center align-middle">
+                        <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                        <div class="input-group d-none">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                            </div>
+                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie fonctionnelle">
+                        </div>
+                    </td>
                     <td class="ingredient_ab text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
                     </td>
                     <td class="ingredient_allergene text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
                     </td>
                 </tr>
             </template>
@@ -155,6 +165,11 @@
                 <datalist id="ingredients_list">
                     <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
                     <option value="<?php echo $ingredient ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
+                <datalist id="categories_additif_list">
+                    <?php foreach(QRCode::getListeCategoriesAdditif() as $categorie): ?>
+                    <option value="<?php echo $categorie ?>"></option>
                     <?php endforeach; ?>
                 </datalist>
             </div>
@@ -320,7 +335,7 @@
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Étiquette<br/>
-                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
                     <span class="img-add btn btn-sm">
                         <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
@@ -334,7 +349,7 @@
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Contre-étiquette<br/>
-                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
                     <span class="img-add btn btn-sm">
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
@@ -379,6 +394,35 @@
 </div>
 
 <script>
+
+
+const photoEtiquette = document.querySelector('#img_image_etiquette');
+const photoContreEtiquette = document.querySelector('#img_image_contreetiquette');
+
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if(mutation.attributeName.includes('src')){
+            observer.disconnect();
+            if (mutation.target.src.includes('data:')) {
+                mutation.target.style.opacity = "1";
+            } else {
+                mutation.target.style.opacity = "0.55";
+            }
+            observer.observe(photoEtiquette, config);
+            observer.observe(photoContreEtiquette, config);
+        }
+    });
+});
+const config = {
+        childList: true,
+        characterData: true,
+        subtree: true,
+        attributes: true
+};
+
+observer.observe(photoEtiquette, config);
+observer.observe(photoContreEtiquette, config);
+
 const liveform = (function () {
     const _template = document.querySelector("[data-liveform-container]")
     const classe   = 'form.live-form'
@@ -533,11 +577,10 @@ function ingredientsTextToTable() {
         }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         if(additif) {
-            templateClone.querySelector('.checkbox_additif').checked = true
-            templateClone.querySelector('.input_additif').classList.remove('d-none')
+            templateClone.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = true;})
+            templateClone.querySelector('td.ingredient_additif .input-group').classList.remove('d-none');
+            templateClone.querySelector('td.ingredient_additif > input[type=checkbox]').classList.add('d-none');
             templateClone.querySelector('.input_additif').value = additif
-        } else {
-
         }
         templateClone.querySelector('td.ingredient_libelle input.input_ingredient').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
@@ -554,10 +597,18 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
+        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        if (!ingredient) {
+            return;
+        }
         if(ingredientsText) {
             ingredientsText += ', '
         }
-        newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+
+        let newAdditif = null;
+        if(item.querySelector('input.checkbox_additif').checked) {
+            newAdditif = item.querySelector('input.input_additif').value
+        }
         if(newAdditif == currentAdditif) {
             newAdditif = null;
         }
@@ -565,7 +616,6 @@ function ingredientsTableToText() {
             ingredientsText += newAdditif + " : ";
             currentAdditif = newAdditif
         }
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
@@ -577,6 +627,15 @@ function ingredientsTableToText() {
     document.getElementById('ingredients').value = ingredientsText;
     liveform.update(document.getElementById('ingredients'));
 }
+
+document.querySelector('table#table_ingredients').addEventListener('change', function(e) {
+    if(e.target.classList.contains('checkbox_additif')) {
+        e.target.closest('tr').querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
+        e.target.closest('tr').querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
+        e.target.closest('tr').querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
+        e.target.closest('tr').querySelector('.ingredient_additif .input_additif').focus();
+    }
+});
 
 document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
     e.preventDefault();

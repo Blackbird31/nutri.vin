@@ -73,6 +73,13 @@ class QRCode extends Mapper
 		 return $fields;
  	}
 
+    public static function getListeCategoriesAdditif() {
+        return [
+            "Régulateur d'acidité",
+            "Agent stabilisateur",
+        ];
+    }
+
   public static function getFullListeIngredients() {
         return [
             "Raisins",
