@@ -554,6 +554,10 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
+        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        if (!ingredient) {
+            return;
+        }
         if(ingredientsText) {
             ingredientsText += ', '
         }
@@ -565,7 +569,6 @@ function ingredientsTableToText() {
             ingredientsText += newAdditif + " : ";
             currentAdditif = newAdditif
         }
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
