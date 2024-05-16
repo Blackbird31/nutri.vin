@@ -8,7 +8,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="/css/nutrivin.css" rel="stylesheet" />
+    <link href="/css/common.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container-sm text-center" style="max-width: 540px;">
