@@ -133,7 +133,7 @@
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" aria-label="Checkbox for following text input"></div><input type="text" class="form-control input_additif d-none"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value=""></div><input type="text" class="form-control input_additif d-none" placeholder="Catégorie d'additif" list="categories_additif_list"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_ab text-center align-middle">
                         <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
                     </td>
@@ -155,6 +155,11 @@
                 <datalist id="ingredients_list">
                     <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
                     <option value="<?php echo $ingredient ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
+                <datalist id="categories_additif_list">
+                    <?php foreach(QRCode::getListeCategoriesAdditif() as $categorie): ?>
+                    <option value="<?php echo $categorie ?>"></option>
                     <?php endforeach; ?>
                 </datalist>
             </div>
@@ -557,7 +562,11 @@ function ingredientsTableToText() {
         if(ingredientsText) {
             ingredientsText += ', '
         }
-        newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+
+        let newAdditif = null;
+        if(item.querySelector('td.ingredient_libelle input.checkbox_additif').checked) {
+            newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+        }
         if(newAdditif == currentAdditif) {
             newAdditif = null;
         }
@@ -577,6 +586,12 @@ function ingredientsTableToText() {
     document.getElementById('ingredients').value = ingredientsText;
     liveform.update(document.getElementById('ingredients'));
 }
+
+document.querySelector('table#table_ingredients').addEventListener('change', function(e) {
+    if(e.target.classList.contains('checkbox_additif')) {
+        e.target.closest('tr').querySelector('.input_additif').classList.toggle("d-none", !e.target.checked);
+    }
+});
 
 document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
     e.preventDefault();
