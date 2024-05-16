@@ -5,12 +5,12 @@
   </ol>
 </nav>
 
-<div class="row">
+<div class="row align-items-center mb-4">
     <div class="col-2">
         <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
     </div>
     <div class="col-8">
-        <h1 class="text-center mb-4">Visualisation de votre QR Code</h1>
+        <h1 class="text-center">Visualisation de votre QR Code</h1>
     </div>
 </div>
 <div class="row justify-content-end">
