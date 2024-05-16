@@ -124,7 +124,7 @@
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
                     <tr>
-                      <th class="col-4" scope="col"></th>
+                      <th class="col-4 ps-5" scope="col">Additif</th>
                       <th class="col-1 text-center" scope="col">Bio</th>
                       <th class="col-1 text-center" scope="col">Allergène</th>
                     </tr>
@@ -133,7 +133,7 @@
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" aria-label="Checkbox for following text input"></div><input type="text" class="form-control input_additif d-none"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_ab text-center align-middle">
                         <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
                     </td>
@@ -523,10 +523,23 @@ function ingredientsTextToTable() {
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
-    let ingredients = ingredientsText.split(/,(?![^()]*\))/);
+    let ingredients = ingredientsText.split(/[ ]*,[ ]*(?![^()]*\))/);
+    let additif = null
+
     for(let ingredient of ingredients) {
+        if(ingredient.match(/\:/)) {
+            additif = ingredient.split(/[ ]*:[ ]*/)[0]
+            ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
+        }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
-        templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');
+        if(additif) {
+            templateClone.querySelector('.checkbox_additif').checked = true
+            templateClone.querySelector('.input_additif').classList.remove('d-none')
+            templateClone.querySelector('.input_additif').value = additif
+        } else {
+
+        }
+        templateClone.querySelector('td.ingredient_libelle input.input_ingredient').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
             templateClone.querySelector('td.ingredient_ab input').checked = true
         }
@@ -539,11 +552,20 @@ function ingredientsTextToTable() {
 
 function ingredientsTableToText() {
     let ingredientsText = '';
+    let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
         if(ingredientsText) {
             ingredientsText += ', '
         }
-        let ingredient = item.querySelector('td.ingredient_libelle input').value;
+        newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
+        if(newAdditif == currentAdditif) {
+            newAdditif = null;
+        }
+        if(newAdditif) {
+            ingredientsText += newAdditif + " : ";
+            currentAdditif = newAdditif
+        }
+        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
@@ -573,6 +595,7 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
     input_ingredients.value += text_add_ingredient.value;
     text_add_ingredient.value = "";
     ingredientsTextToTable();
+    ingredientsTableToText();
     liveform.update(document.getElementById('ingredients'));
 });
 
