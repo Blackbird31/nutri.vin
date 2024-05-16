@@ -19,15 +19,12 @@ class CtrlNutriVin {
     }
 
     private function authenticatedUserOnly(Base $f3) {
-        if (!$f3->exists('PARAMS.userid')) {
+        if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
+             ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
+        {
             die('Unauthorized');
         }
-        if (!$f3->exists('SESSION.userid')) {
-            die('Unauthorized');
-        }
-        if ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')) {
-            die('Unauthorized');
-        }
+        return true;
     }
 
     function qrcodeWrite(Base $f3) {
@@ -244,11 +241,14 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
-        $geo = Geo::instance();
-        $location = $geo->location();
-        unset($location['request'], $location['delay'], $location['credit']);
-        $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
-        $qrcode->save();
+
+        if (! $f3->get('SESSION.userid')) {
+            $geo = Geo::instance();
+            $location = $geo->location();
+            unset($location['request'], $location['delay'], $location['credit']);
+            $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
+            $qrcode->save();
+        }
 
         $this->initDefaultOnQRCode($qrcode);
 
@@ -326,8 +326,6 @@ class CtrlNutriVin {
 
     public function export(Base $f3)
     {
-        $this->authenticatedUserOnly($f3);
-
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
 
         if ($qrcode === null) {
