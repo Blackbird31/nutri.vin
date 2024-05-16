@@ -281,4 +281,18 @@ class QRCode extends Mapper
 	public function getQRCodeContent($format, $urlbase, $config) {
       return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->getId(), $format, ($this->logo) ? $config['logo'] : false);
   }
+
+  public function getVisites() {
+    $visites = $this->get('visites');
+    if ($visites) {
+      return json_decode($visites, true);
+    }
+    return [];
+  }
+
+  public function addVisite(array $infos) {
+    $visites = $this->getVisites();
+    $visites[] = $infos;
+    $this->visites = json_encode($visites);
+  }
 }

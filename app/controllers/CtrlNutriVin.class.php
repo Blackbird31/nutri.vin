@@ -129,6 +129,9 @@ class CtrlNutriVin {
             $f3->error(404, "QRCode non trouvé");
             exit;
         }
+        
+        $qrcode->addVisite(['date' => date('Y-m-d H:i:s')]);
+        $qrcode->save();
 
         $this->initDefaultOnQRCode($qrcode);
 
