@@ -323,8 +323,6 @@ class CtrlNutriVin {
 
     public function export(Base $f3)
     {
-        $this->authenticatedUserOnly($f3);
-
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
 
         if ($qrcode === null) {
