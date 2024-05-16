@@ -310,7 +310,7 @@
                         <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="img-preview img-thumbnail"/>
                         <a href="#"><?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></a>
                         <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                         </span>
                     </center>
                     <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
@@ -321,7 +321,7 @@
                         <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="img-preview img-thumbnail"/>
                         <span class="img_selector"><?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?></span>
                         <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                         </span>
                     </center>
                     <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
@@ -332,7 +332,7 @@
                         <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="img-preview img-thumbnail"/>
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                         <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a href="/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                            - <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                         </span>
                     </center>
                     <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
@@ -494,7 +494,7 @@ function ingredientsTextToTable() {
     document.querySelector('#message_ingredients_vide').classList.add('d-none');
     document.querySelector('table#table_ingredients').classList.remove('d-none');
 
-    let ingredients = ingredientsText.split(/[ ]*,[ ]*/)
+    let ingredients = ingredientsText.split(/,(?![^()]*\))/);
     for(let ingredient of ingredients) {
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         templateClone.querySelector('td.ingredient_libelle input').value = ingredient.replace(/[_\*]/g, '');

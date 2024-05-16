@@ -249,10 +249,6 @@ class QRCode extends Mapper
         ];
   }
 
-	public function getListeIngredients() {
-		return preg_split('/[,\n\r]+/', $this->ingredients);
-	}
-
 	public function save() {
 		if (!isset($this->authorization_key) || $this->authorization_key) {
 			$this->authorization_key = sha1(implode(',',$this->toArray()).rand());
