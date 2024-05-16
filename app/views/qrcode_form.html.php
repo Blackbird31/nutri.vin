@@ -304,44 +304,47 @@
 
         <div class="mb-3 imgs-list">
             <div class="col-sm-10 row">
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Bouteille
-                        <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 img-preview img-thumbnail"/>
-                        <span class="img-add btn btn-sm">
-                            <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </span>
-                        <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" value="<?php echo $qrcode->image_bouteille; ?>"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Bouteille
+                    <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
+                        <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Etiquette<br/>
-                        <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 img-preview img-thumbnail"/>
-                        <span class="img-add btn btn-sm">
-                            <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </span>
-                        <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" value="<?php echo $qrcode->image_etiquette; ?>"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Étiquette<br/>
+                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
+                        <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
-                <div class="col-sm-4 img_selector">
-                    <center>
-                        Contre-étiquette<br/>
-                        <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 img-preview img-thumbnail"/>
-                        <span class="img-add btn btn-sm">
-                            <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
-                        </span>
-                        <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                            - <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
-                        </span>
-                    </center>
-                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" value="<?php echo $qrcode->image_contreetiquette; ?>"/>
+                <div class="text-center col-sm-4 img_selector">
+                    Contre-étiquette<br/>
+                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
+                    <span class="img-add btn btn-sm">
+                        <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
+                    </span>
+                    <span class="img-reset btn btn-sm d-none">
+                        Réinitialiser
+                    </span>
+                    <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                    </span>
+                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
@@ -445,6 +448,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.closest('#table_ingredients')) {
             ingredientsTableToText();
         }
+
+        if (e.target.type === 'file') {
+            const container = e.target.closest('.img_selector')
+            container.querySelector('.img-add').classList.add('d-none')
+            container.querySelector('.img-reset').classList.remove('d-none')
+        }
+
         if (e.target.closest(liveform.classe)) {
             liveform.update(e.target)
         }
@@ -458,6 +468,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (el.classList.contains('img-add') || el.classList.contains('img-preview')) {
             input.click()
+        }
+
+        if (el.classList.contains('img-reset')) {
+            img.src = input.attributes['defaultvalue'].value
+            input.value = ""
+            container.querySelector('.img-add').classList.remove('d-none')
+            container.querySelector('.img-reset').classList.add('d-none')
         }
     })
 
