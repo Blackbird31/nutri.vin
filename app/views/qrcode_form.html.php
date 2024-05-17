@@ -447,7 +447,10 @@
       <form id="form_add_ingredients"></form>
   </div>
   <div class="col-4">
-    <?php $iframe=false; ?>
+    <?php
+      $iframe=false;
+      $notpublicview = true;
+    ?>
     <?php include('_phone.html.php') ?>
     </div>
 </div>
