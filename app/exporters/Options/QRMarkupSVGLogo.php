@@ -18,6 +18,7 @@ class QRMarkupSVGLogo extends QRMarkupSVG
         $svg = parent::paths();
         $svg .= $this->getLogo();
         $svg .= $this->getTitle();
+        $svg .= $this->getEnergies();
 
         return $svg;
     }
@@ -50,6 +51,16 @@ class QRMarkupSVGLogo extends QRMarkupSVG
         return sprintf(
             '%2$s<text x="50%%" y="3" font-size="3" text-anchor="middle">%1$s</text>%2$s',
             $this->options->svgTitle,
+            $this->options->eol
+        );
+    }
+
+    protected function getEnergies()
+    {
+        return sprintf(
+            '%3$s<text x="50%%" y="40" font-size="3" text-anchor="middle">E = %1$s KCal / %2$s KJ</text>%3$s',
+            $this->options->svgEnergies[0],
+            $this->options->svgEnergies[1],
             $this->options->eol
         );
     }
