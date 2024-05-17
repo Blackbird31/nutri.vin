@@ -9,11 +9,14 @@
 
 <div class="row">
   <div class="col-7">
-      <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
+      <form method="POST" id="form-edition" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
       <?php endif; ?>
 
+      <?php if (count($qrcode->getVisites())): ?>
+      <p class="alert alert-warning">Ce QRCode a déjà été consulté par au moins une personne extérieure. Par soucis de transparence, la modification que vous pourriez réaliser sera consultable publiquement</p>
+      <?php endif; ?>
 
       <h3 class="mt-4 mb-4">Identité du commercialisant</h3>
 
@@ -444,17 +447,10 @@
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-6">
-                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
-            </div>
-            <div class="col-4 text-end">
-                <?php if ($qrcode->exists('authorization_key')): ?>
-                <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
-                <?php endif; ?>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> Valider</button>
-            </div>
-        </div>
+        <?php if ($qrcode->exists('authorization_key')): ?>
+            <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
+        <?php endif; ?>
+
       </form>
       <form id="form_add_ingredients"></form>
       <form id="form_convertir_nutritionnelle"></form>
@@ -468,6 +464,15 @@
       $notpublicview = true;
     ?>
     <?php include('_phone.html.php') ?>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-6">
+        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+    </div>
+    <div class="col-6 text-end">
+        <button type="submit" form="form-edition" class="btn btn-primary"><i class="bi bi-check2-circle"></i> Valider</button>
     </div>
 </div>
 
