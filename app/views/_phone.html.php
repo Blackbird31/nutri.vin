@@ -7,7 +7,7 @@
     <div class="rounded-5 border border-2 bg-white border-light-subtle position-absolute top-0 end-0 mt-3 me-5" style="width: 20px; height: 20px;"></div>
     <div class="border border-light-subtle overflow-auto rounded-3" style="height: 70vh; width: 390px;" data-liveform-container>
         <?php if ($iframe): ?>
-            <iframe src="/<?php echo $qrcode->id ?>?notpublicview=1" style="height: 99%; width: 388px;"></iframe>
+            <iframe src="/<?php echo $qrcode->id ?><?php if (!empty($notpublicview)): ?>?notpublicview=1<?php endif; ?>" style="height: 99%; width: 388px;"></iframe>
         <?php else: ?>
             <?php include('qrcode_show.html.php'); ?>
         <?php endif; ?>
