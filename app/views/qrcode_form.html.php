@@ -163,8 +163,11 @@
                     </div>
                 </div>
                 <datalist id="ingredients_list">
-                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
-                    <option value="<?php echo $ingredient ?>"></option>
+                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient => $extra): ?>
+                    <option value="<?php echo $ingredient ?>"<?php
+                        foreach($extra as $k => $v) {
+                            echo ' data-'.$k.'="'.$v.'"';
+                        } ?>></option>
                     <?php endforeach; ?>
                 </datalist>
                 <datalist id="categories_additif_list">
@@ -602,13 +605,15 @@ document.addEventListener('DOMContentLoaded', function () {
             container.querySelector('.img-reset').classList.add('d-none')
             rebuildCarousel()
         }
-    })
+    });
 
-    document.querySelector('.input-float').addEventListener('change', function() {
-        let valeur = this.value;
-        valeur = valeur.replace(/,/g, '.');
-        valeur = parseFloat(valeur).toFixed(2);
-        this.value = valeur;
+    (document.querySelectorAll('.input-float') || []).forEach(function (el) {
+        el.addEventListener('change', function() {
+            let valeur = this.value;
+            valeur = valeur.replace(/,/g, '.');
+            valeur = parseFloat(valeur).toFixed(2);
+            this.value = valeur;
+        })
     });
 
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
@@ -719,11 +724,24 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
         return;
     }
 
+    ingredient_to_add = text_add_ingredient.value;
+
+    /* selection automatique des allergenes et additif */
+    const datalist = document.getElementById(text_add_ingredient.getAttribute("list"));
+    const option = datalist.querySelector(`[value="${ingredient_to_add}"]`);
+    if (option) {
+        if (option.getAttribute('data-allergene')) {
+            ingredient_to_add = '_'+ingredient_to_add+'_';
+        }
+        if (option.getAttribute('data-additif')) {
+            ingredient_to_add = option.getAttribute('data-additif')+' : '+ingredient_to_add;
+        }
+    }
+
     if(input_ingredients.value) {
         input_ingredients.value += ', '
     }
-
-    input_ingredients.value += text_add_ingredient.value;
+    input_ingredients.value += ingredient_to_add;
     text_add_ingredient.value = "";
     ingredientsTextToTable();
     ingredientsTableToText();
