@@ -187,6 +187,9 @@ class CtrlNutriVin {
             if (preg_match('/cas:viticonnect_entity_1_cvi>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
                 $userid = $m[1];
             }
+            if (preg_match('/cas:viticonnect_entity_1_accises>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
+                $userid = $m[1];
+            }
             if (!$userid && preg_match('/cas:viticonnect_entity_1_siret>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
                 $userid = $m[1];
             }
