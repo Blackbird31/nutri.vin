@@ -1,11 +1,11 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Création de votre QR Code</li>
+      <li class="breadcrumb-item active" aria-current="page"><?php if (isset($qrcode->id)): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></li>
   </ol>
 </nav>
 
-<h2>Création d'un vin</h2>
+<h2><?php if (isset($qrcode->id)): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></h2>
 
 <div class="row">
   <div class="col-7">
