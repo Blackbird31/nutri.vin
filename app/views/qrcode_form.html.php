@@ -806,7 +806,7 @@ function nutri_update_complet() {
         cat_alcool = 8;
     }
 
-    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool]) {
+    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] > 0) {
         document.querySelector('#nutritionnel_energie_kj').value = convert_valeur_energetique_kj[type][cat_sucre][cat_alcool];
         document.querySelector('#nutritionnel_glucides').value = alcool / 10;
         document.querySelector('#nutritionnel_sucres').value = alcool / 10;
