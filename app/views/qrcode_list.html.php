@@ -37,8 +37,8 @@
                         <td>
                             <?php echo $qr->cuvee_nom; ?>
                             <?php echo $qr->appellation; ?> <?php echo $qr->couleur; ?>
-                            <?php echo $qr->millesime; ?> -
-                            <?php echo $qr->centilisation; ?> cl
+                            <?php echo $qr->millesime; ?>
+                            <?php echo ($qr->centilisation) ? ' - '.$qr->centilisation . ' cl' : ''; ?>
                         </td>
                         <td><?php echo ($qr->visites) ? count( (array) json_decode($qr->visites) ) : 0; ?></<td>
                         <td>
