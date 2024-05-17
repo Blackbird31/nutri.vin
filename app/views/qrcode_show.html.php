@@ -101,6 +101,18 @@
         </div>
     </div>
     <?php endif; ?>
+    <?php if (
+            empty($publicview) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_energie_kj || $qrcode->nutritionnel_energie_kj === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_energie_kcal || $qrcode->nutritionnel_energie_kcal === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_graisses || $qrcode->nutritionnel_graisses === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_glucides || $qrcode->nutritionnel_glucides === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_fibres || $qrcode->nutritionnel_fibres === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_proteines || $qrcode->nutritionnel_proteines === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_sel || $qrcode->nutritionnel_sel === 0)) ||
+            (!empty($publicview) && ($qrcode->nutritionnel_sodium || $qrcode->nutritionnel_sodium === 0))
+          ):
+    ?>
     <div class="card text-bg-primary mt-4 mb-2 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i> Informations nutritionnelles</div>
         <table class="table table-sm table-striped-columns mb-0">
@@ -111,18 +123,25 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kj || $qrcode->nutritionnel_energie_kj === 0)) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kcal || $qrcode->nutritionnel_energie_kcal === 0))): ?>
                 <tr>
                     <td class="text-start">Énergie</td>
                     <td class="text-end">
+                        <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kj || $qrcode->nutritionnel_energie_kj === 0))): ?>
                         <span data-liveform-name="nutritionnel_energie_kj" data-liveform-template='{{%s}} kJ'>
                             <?php echo $qrcode->nutritionnel_energie_kj ?: 0 ?> kJ
                         </span>
                         <br>
+                        <?php endif; ?>
+                        <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kcal || $qrcode->nutritionnel_energie_kcal === 0))): ?>
                         <span data-liveform-name="nutritionnel_energie_kcal" data-liveform-template='{{%s}} kCal'>
                             <?php echo $qrcode->nutritionnel_energie_kcal ?: 0 ?> kCal
                         </span><br>
+                        <?php endif; ?>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_graisses || $qrcode->nutritionnel_graisses === 0))): ?>
                 <tr>
                     <td class="text-start">Matières grasses<br><small class="ps-3">dont acides gras saturés</small></td>
                     <td class="text-end">
@@ -137,6 +156,8 @@
                         </small>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_glucides || $qrcode->nutritionnel_glucides === 0))): ?>
                 <tr>
                     <td class="text-start">Glucides<br><small class="ps-3">dont sucres</small></td>
                     <td class="text-end">
@@ -151,6 +172,8 @@
                         </small>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_fibres || $qrcode->nutritionnel_fibres === 0))): ?>
                 <tr>
                     <td class="text-start">Fibres alimentaires</td>
                     <td class="text-end">
@@ -159,6 +182,8 @@
                         </span>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_proteines || $qrcode->nutritionnel_proteines === 0))): ?>
                 <tr>
                     <td class="text-start">Protéines</td>
                     <td class="text-end">
@@ -167,6 +192,8 @@
                         </span>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_sel || $qrcode->nutritionnel_sel === 0))): ?>
                 <tr>
                     <td class="text-start">Sel</td>
                     <td class="text-end">
@@ -175,6 +202,8 @@
                         </span>
                     </td>
                 </tr>
+                <?php endif; ?>
+                <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_sodium || $qrcode->nutritionnel_sodium === 0))): ?>
                 <tr>
                     <td class="text-start">Sodium</td>
                     <td class="text-end">
@@ -183,9 +212,11 @@
                         </span>
                     </td>
                 </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
+    <?php endif; ?>
 
     <?php if (!empty($qrcode->autres_infos)): ?>
     <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
