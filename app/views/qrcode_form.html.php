@@ -8,7 +8,7 @@
 <h2>Création d'un vin</h2>
 
 <div class="row">
-  <div class="col-7 border-end">
+  <div class="col-7">
       <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
@@ -17,11 +17,11 @@
 
       <h3 class="mt-4 mb-4">Identité du commercialisant</h3>
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
           <label for="domaine_nom">Nom du Domaine</label>
       </div>
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
           <input type="text" class="form-control" id="adresse_domaine" name="adresse_domaine" placeholder="L'adresse de mon domaine" value="<?php echo $qrcode->adresse_domaine ;?>"/>
           <label for="adresse_domaine">Adresse du Domaine</label>
       </div>
@@ -29,12 +29,12 @@
       <h3 class="mt-4 mb-4">Information relative au vin</h3>
 
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
            <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
            <label for="cuvee_nom">Nom de la cuvée</label>
        </div>
 
-       <div class="form-floating mb-3 col-sm-10">
+       <div class="form-floating mb-3">
            <input list="appellations_liste" type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
             <datalist id="appellations_liste">
             <?php
@@ -50,7 +50,7 @@
             <label form="appellation">Appellation</label>
        </div>
 
-       <div class="d-flex col-sm-10 justify-content-between">
+       <div class="d-flex justify-content-between">
 
        <div class="form-floating col-sm-5">
            <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millésime"/>
@@ -76,7 +76,7 @@
        </div>
 
         <h3 class="mt-4 mb-4">Informations complémentaires</h3>
-        <div class="d-flex col-sm-10 justify-content-between">
+        <div class="d-flex justify-content-between">
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
@@ -109,7 +109,7 @@
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
-        <ul class="nav nav-tabs col-sm-10" role="tablist">
+        <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="ingredients_tableau_tab" data-bs-toggle="tab" data-bs-target="#ingredients_tableau" type="button" role="tab" aria-controls="ingredients_tableau" aria-selected="true">Liste</button>
           </li>
@@ -118,10 +118,10 @@
           </li>
         </ul>
 
-        <div class="tab-content py-4 col-sm-10">
+        <div class="tab-content py-4">
           <div class="tab-pane show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-            <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
+            <table id="table_ingredients" class="table table-sm table-striped">
                   <thead>
                     <tr>
                       <th class="" scope="col"></th>
@@ -187,7 +187,7 @@
 
         <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
-        <ul id="nutritionnelle_tabs" class="nav nav-tabs col-sm-10" role="tablist">
+        <ul id="nutritionnelle_tabs" class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="nutritionnelle_simplifie_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_simplifie" type="button" role="tab" aria-controls="nutritionnelle_simplifie" aria-selected="true">Simplifié</button>
             </li>
@@ -196,7 +196,7 @@
             </li>
         </ul>
 
-        <div class="tab-content mb-3 pt-4 col-sm-10">
+        <div class="tab-content mb-3 pt-4">
             <div class="tab-pane show active m-0 p-0" id="nutritionnelle_simplifie" role="tabpanel" aria-labelledby="nutritionnelle_simplifie" tabindex="0">
             <table class="table table-sm table-striped">
               <tbody>
@@ -378,7 +378,7 @@
         <h3 class="mt-4 mb-4" id="photos">Photos</h3>
 
         <div class="mb-3 imgs-list">
-            <div class="col-sm-10 row">
+            <div class="row">
                 <div class="text-center col-sm-4 img_selector">
                     Bouteille
                     <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
@@ -423,10 +423,10 @@
                 </div>
             </div>
         </div>
-        
+
         <h3 class="mt-4 mb-4">Labels complémentaires</h3>
         <?php $labels = $qrcode->getLabels(); ?>
-        <div class="mb-3 col-sm-10">
+        <div class="mb-3">
           <?php foreach (QRCode::$LABELS as $label): ?>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="label<?php echo $label ?>" value="<?php echo $label ?>" name="labels[]"<?php if(in_array($label, $labels)): ?> checked<?php endif; ?> />
@@ -437,7 +437,7 @@
 
         <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
 
-        <div class="mb-3 col-sm-10">
+        <div class="mb-3">
             <textarea class="form-control" name="autres_infos" rows="3"><?php echo $qrcode->autres_infos; ?></textarea>
             <div class="form-text">
               Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
@@ -458,6 +458,9 @@
       </form>
       <form id="form_add_ingredients"></form>
       <form id="form_convertir_nutritionnelle"></form>
+  </div>
+  <div class="col-1 text-center">
+    <div class="vr h-100" style="color: var(--bs-border-color); opacity:1"></div>
   </div>
   <div class="col-4 mx-auto">
     <?php
