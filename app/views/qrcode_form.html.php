@@ -7,8 +7,8 @@
 
 <h2>Création d'un vin</h2>
 
-<div class="row justify-content-end">
-  <div class="col-8">
+<div class="row">
+  <div class="col-7">
       <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
@@ -17,11 +17,11 @@
 
       <h3 class="mt-4 mb-4">Identité du commercialisant</h3>
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
           <label for="domaine_nom">Nom du Domaine</label>
       </div>
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
           <input type="text" class="form-control" id="adresse_domaine" name="adresse_domaine" placeholder="L'adresse de mon domaine" value="<?php echo $qrcode->adresse_domaine ;?>"/>
           <label for="adresse_domaine">Adresse du Domaine</label>
       </div>
@@ -29,12 +29,12 @@
       <h3 class="mt-4 mb-4">Information relative au vin</h3>
 
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="form-floating mb-3">
            <input type="text" class="form-control" id="cuvee_nom" name="cuvee_nom" placeholder="Ma cuvée" value="<?php echo $qrcode->cuvee_nom; ?>"/>
            <label for="cuvee_nom">Nom de la cuvée</label>
        </div>
 
-       <div class="form-floating mb-3 col-sm-10">
+       <div class="form-floating mb-3">
            <input list="appellations_liste" type="text" class="form-control" id="appellation" name="appellation" value="<?php echo $qrcode->appellation; ?>" placeholder="Appellation"/>
             <datalist id="appellations_liste">
             <?php
@@ -50,7 +50,7 @@
             <label form="appellation">Appellation</label>
        </div>
 
-       <div class="d-flex col-sm-10 justify-content-between">
+       <div class="d-flex justify-content-between">
 
        <div class="form-floating col-sm-5">
            <input type="text" class="form-control" id="millesime" name="millesime" value="<?php echo $qrcode->millesime; ?>" placeholder="Millésime"/>
@@ -76,11 +76,11 @@
        </div>
 
         <h3 class="mt-4 mb-4">Informations complémentaires</h3>
-        <div class="d-flex col-sm-10 justify-content-between">
+        <div class="d-flex justify-content-between">
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end input-float" id="alcool_degre" name="alcool_degre" placeholder="Volume d'alcool">
+                      <input type="text" class="form-control text-end input-float" id="alcool_degre" name="alcool_degre" value="<?php echo $qrcode->alcool_degre; ?>" placeholder="Volume d'alcool">
                       <label form="alcool_degre">Volume d'alcool</label>
                   </div>
                   <span class="input-group-text">%</span>
@@ -90,7 +90,7 @@
             <div class="col-sm-3">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control text-end input-float" id="centilisation" name="centilisation" placeholder="Contenance">
+                      <input type="text" class="form-control text-end input-float" id="centilisation" name="centilisation" value="<?php echo $qrcode->centilisation; ?>" placeholder="Contenance">
                       <label form="centilisation">Contenance</label>
                   </div>
                   <span class="input-group-text">cl</span>
@@ -100,7 +100,7 @@
             <div class="col-sm-4">
                 <div class="input-group mb-3">
                   <div class="form-floating">
-                      <input type="text" class="form-control" id="lot" name="lot" placeholder="Numéro de lot">
+                      <input type="text" class="form-control" id="lot" name="lot" value="<?php echo $qrcode->lot; ?>" placeholder="Numéro de lot">
                       <label form="lot">Numéro de lot</label>
                   </div>
                 </div>
@@ -119,26 +119,36 @@
         </ul>
 
         <div class="tab-content py-4">
-          <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+          <div class="tab-pane show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
-            <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
+            <table id="table_ingredients" class="table table-sm table-striped">
                   <thead>
                     <tr>
-                      <th class="col-4 ps-5" scope="col">Additif</th>
-                      <th class="col-1 text-center" scope="col">Bio</th>
-                      <th class="col-1 text-center" scope="col">Allergène</th>
+                      <th class="" scope="col"></th>
+                      <th class="text-center" scope="col">Additif</th>
+                      <th class="text-center" scope="col">Bio</th>
+                      <th class="text-center" scope="col">Allergène</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
             </table>
             <template id="ingredient_row">
                 <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><div class="input-group-text"><input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" aria-label="Checkbox for following text input"></div><input type="text" class="form-control input_additif d-none"><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_additif text-center align-middle">
+                        <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                        <div class="input-group d-none">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                            </div>
+                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
+                        </div>
+                    </td>
                     <td class="ingredient_ab text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient bio">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
                     </td>
                     <td class="ingredient_allergene text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour ingrédient allergène">
+                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
                     </td>
                 </tr>
             </template>
@@ -153,8 +163,16 @@
                     </div>
                 </div>
                 <datalist id="ingredients_list">
-                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
-                    <option value="<?php echo $ingredient ?>"></option>
+                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient => $extra): ?>
+                    <option value="<?php echo $ingredient ?>"<?php
+                        foreach($extra as $k => $v) {
+                            echo ' data-'.$k.'="'.$v.'"';
+                        } ?>></option>
+                    <?php endforeach; ?>
+                </datalist>
+                <datalist id="categories_additif_list">
+                    <?php foreach(QRCode::getListeCategoriesAdditif() as $categorie): ?>
+                    <option value="<?php echo $categorie ?>"></option>
                     <?php endforeach; ?>
                 </datalist>
             </div>
@@ -162,197 +180,265 @@
               Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
             </div>
           </div>
-          <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
-              <textarea class="form-control" rows="8" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
+          <div class="tab-pane m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+              <textarea class="form-control" rows="5" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
           </div>
         </div>
 
-      <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
+        <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
-        <div class="form-floating mb-3 col-sm-10">
-          <table class="table table-sm table-striped">
-            <tbody>
-              <tr>
-                <td class="align-middle">Énergie (kJ)</td>
-                  <td>
-                    <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
-                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
-                    </div>
-                  </div>
-                  </td>
-              </tr>
-              <tr>
-                <td class="align-middle">Énergie (kcal)</td>
-                  <td>
-                    <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
-                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
-                    </div>
-                  </div>
-                  </td>
-              </tr>
+        <ul id="nutritionnelle_tabs" class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="nutritionnelle_simplifie_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_simplifie" type="button" role="tab" aria-controls="nutritionnelle_simplifie" aria-selected="true">Simplifié</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="nutritionnelle_complet_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_complet" type="button" role="tab" aria-controls="nutritionnelle_complet" aria-selected="false">Complet</button>
+            </li>
+        </ul>
 
-
-              <tr>
-                <td class="align-middle">Graisses</td>
-                  <td class="text-sm-start">
-                    <div class="col-6 offset-6">
+        <div class="tab-content mb-3 pt-4">
+            <div class="tab-pane show active m-0 p-0" id="nutritionnelle_simplifie" role="tabpanel" aria-labelledby="nutritionnelle_simplifie" tabindex="0">
+            <table class="table table-sm table-striped">
+              <tbody>
+                <tr>
+                  <td class="align-middle">Type de vin</td>
+                    <td>
+                      <div class="col-9 offset-3">
                       <div class="input-group">
-                        <input type="text" class="form-control text-sm-end" id="nutritionnel_graisses" name="nutritionnel_graisses" value="<?php echo $qrcode->nutritionnel_graisses; ?>"/>
-                        <span class="input-group-text" id="basic-addon-graisses">g</span>
+                          <select name="vin_type" id="vin_type" class="form-select" form="form_convertir_nutritionnelle" required>
+                               <option value="tranquille">Vin Tranquille ou Pétillant (de sec à moelleux)</option>
+                               <option value="liqueur">Vin de Liqueur</option>
+                               <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
+                          </select>
                       </div>
                     </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="ps-5 align-middle">- dont acides gras saturés</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_acides_gras" name="nutritionnel_acides_gras" value="<?php echo $qrcode->nutritionnel_acides_gras; ?>"/>
-                      <span class="input-group-text" id="basic-addon-gras">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="align-middle">Glucides</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_glucides" name="nutritionnel_glucides" value="<?php echo $qrcode->nutritionnel_glucides; ?>"/>
-                      <span class="input-group-text" id="basic-addon-glucides">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="ps-5 align-middle">- dont sucres</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sucres" name="nutritionnel_sucres" value="<?php echo $qrcode->nutritionnel_sucres; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sucres">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                  <td class="align-middle">Fibres alimentaires</td>
-                  <td class="text-sm-start">
-                      <div class="col-6 offset-6">
-                          <div class="input-group">
-                              <input type="text" class="form-control text-sm-end" id="nutritionnel_fibres" name="nutritionnel_fibres" value="<?php echo $qrcode->nutritionnel_fibres; ?>"/>
-                              <span class="input-group-text" id="basic-addon-fibres">g</span>
-                          </div>
-                      </div>
                   </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">Protéines</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_proteines" name="nutritionnel_proteines" value="<?php echo $qrcode->nutritionnel_proteines; ?>"/>
-                      <span class="input-group-text" id="basic-addon-proteines">g</span>
+                </tr>
+                <tr>
+                  <td class="align-middle">Teneur en sucre</td>
+                    <td>
+                      <div class="col-6 offset-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-sm-end" id="teneur_sucre" name="teneur_sucre" form="form_convertir_nutritionnelle" required />
+                        <span class="input-group-text" id="basic-addon-cal" style="width:50px">g/L</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="align-middle">Sel</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sel" name="nutritionnel_sel" value="<?php echo $qrcode->nutritionnel_sel; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sel">g</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="align-middle">Volume d'alcool (TAV)</td>
+                    <td>
+                      <div class="col-6 offset-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-sm-end" id="nutri_simple_tav" name="nutri_simple_tav" form="form_convertir_nutritionnelle" required />
+                        <span class="input-group-text" id="basic-addon-cal" style="width:50px">%</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-end">
+            <button type="submit" form="form_convertir_nutritionnelle" class="btn btn-outline-primary"><i class="bi bi-calculator"></i> Convertir</button>
+            </div>
+            </div>
 
-              <tr>
-                <td class="align-middle">Sodium</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sodium" name="nutritionnel_sodium" value="<?php echo $qrcode->nutritionnel_sodium; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sodium">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+            <div class="tab-pane m-0 p-0" id="nutritionnelle_complet" role="tabpanel" aria-labelledby="nutritionnelle_complet">
+                <table class="table table-sm table-striped">
+                <tbody>
+                  <tr>
+                    <td class="align-middle">Énergie (kJ)</td>
+                      <td>
+                        <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
+                          <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
+                        </div>
+                      </div>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle">Énergie (kcal)</td>
+                      <td>
+                        <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
+                          <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
+                        </div>
+                      </div>
+                      </td>
+                  </tr>
 
-            </tbody>
-          </table>
+
+                  <tr>
+                    <td class="align-middle">Graisses</td>
+                      <td class="text-sm-start">
+                        <div class="col-6 offset-6">
+                          <div class="input-group">
+                            <input type="text" class="form-control text-sm-end" id="nutritionnel_graisses" name="nutritionnel_graisses" value="<?php echo $qrcode->nutritionnel_graisses; ?>"/>
+                            <span class="input-group-text" id="basic-addon-graisses">g</span>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="ps-5 align-middle">- dont acides gras saturés</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_acides_gras" name="nutritionnel_acides_gras" value="<?php echo $qrcode->nutritionnel_acides_gras; ?>"/>
+                          <span class="input-group-text" id="basic-addon-gras">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="align-middle">Glucides</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_glucides" name="nutritionnel_glucides" value="<?php echo $qrcode->nutritionnel_glucides; ?>"/>
+                          <span class="input-group-text" id="basic-addon-glucides">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="ps-5 align-middle">- dont sucres</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sucres" name="nutritionnel_sucres" value="<?php echo $qrcode->nutritionnel_sucres; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sucres">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                      <td class="align-middle">Fibres alimentaires</td>
+                      <td class="text-sm-start">
+                          <div class="col-6 offset-6">
+                              <div class="input-group">
+                                  <input type="text" class="form-control text-sm-end" id="nutritionnel_fibres" name="nutritionnel_fibres" value="<?php echo $qrcode->nutritionnel_fibres; ?>"/>
+                                  <span class="input-group-text" id="basic-addon-fibres">g</span>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+
+                  <tr>
+                    <td class="align-middle">Protéines</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_proteines" name="nutritionnel_proteines" value="<?php echo $qrcode->nutritionnel_proteines; ?>"/>
+                          <span class="input-group-text" id="basic-addon-proteines">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="align-middle">Sel</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sel" name="nutritionnel_sel" value="<?php echo $qrcode->nutritionnel_sel; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sel">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="align-middle">Sodium</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sodium" name="nutritionnel_sodium" value="<?php echo $qrcode->nutritionnel_sodium; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sodium">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+                </table>
+            </div>
         </div>
 
         <h3 class="mt-4 mb-4" id="photos">Photos</h3>
 
         <div class="mb-3 imgs-list">
-            <div class="col-sm-10 row">
+            <div class="row">
                 <div class="text-center col-sm-4 img_selector">
                     Bouteille
                     <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
-                    <span class="img-add btn btn-sm">
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Étiquette<br/>
-                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
-                    <span class="img-add btn btn-sm">
+                    <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Contre-étiquette<br/>
-                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
-                    <span class="img-add btn btn-sm">
+                    <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
 
+        <h3 class="mt-4 mb-4">Labels complémentaires</h3>
+        <?php $labels = $qrcode->getLabels(); ?>
+        <div class="mb-3">
+          <?php foreach (QRCode::$LABELS as $label): ?>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="label<?php echo $label ?>" value="<?php echo $label ?>" name="labels[]"<?php if(in_array($label, $labels)): ?> checked<?php endif; ?> />
+              <label class="form-check-label" for="label<?php echo $label ?>"><?php echo $label ?></label>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
         <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
 
-        <div class="mb-3 col-sm-10">
-            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
+        <div class="mb-3">
+            <textarea class="form-control" name="autres_infos" rows="3"><?php echo $qrcode->autres_infos; ?></textarea>
             <div class="form-text">
               Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
             </div>
@@ -360,25 +446,61 @@
 
         <div class="row mt-5">
             <div class="col-6">
-                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
+                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
             </div>
             <div class="col-4 text-end">
                 <?php if ($qrcode->exists('authorization_key')): ?>
                 <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
                 <?php endif; ?>
-                <button type="submit" class="btn btn-primary">Valider</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> Valider</button>
             </div>
         </div>
       </form>
       <form id="form_add_ingredients"></form>
+      <form id="form_convertir_nutritionnelle"></form>
   </div>
-  <div class="col-4">
-    <?php $iframe=false; ?>
+  <div class="col-1 text-center">
+    <div class="vr h-100" style="color: var(--bs-border-color); opacity:1"></div>
+  </div>
+  <div class="col-4 mx-auto">
+    <?php
+      $iframe=false;
+      $notpublicview = true;
+    ?>
     <?php include('_phone.html.php') ?>
     </div>
 </div>
 
 <script>
+
+
+const photoEtiquette = document.querySelector('#img_image_etiquette');
+const photoContreEtiquette = document.querySelector('#img_image_contreetiquette');
+
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if(mutation.attributeName.includes('src')){
+            observer.disconnect();
+            if (mutation.target.src.includes('data:')) {
+                mutation.target.style.opacity = "1";
+            } else {
+                mutation.target.style.opacity = "0.55";
+            }
+            observer.observe(photoEtiquette, config);
+            observer.observe(photoContreEtiquette, config);
+        }
+    });
+});
+const config = {
+        childList: true,
+        characterData: true,
+        subtree: true,
+        attributes: true
+};
+
+observer.observe(photoEtiquette, config);
+observer.observe(photoContreEtiquette, config);
+
 const liveform = (function () {
     const _template = document.querySelector("[data-liveform-container]")
     const classe   = 'form.live-form'
@@ -452,8 +574,20 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation()
         }
 
+        if(e.target.classList.contains('checkbox_additif')) {
+            const row = e.target.closest('tr');
+            row.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
+            row.querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
+            row.querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
+            row.querySelector('.ingredient_additif .input_additif').focus();
+        }
+
         if (e.target.closest('#table_ingredients')) {
             ingredientsTableToText();
+        }
+
+        if (e.target.id == 'ingredients') {
+            ingredientsTextToTable();
         }
 
         if (e.target.type === 'file') {
@@ -467,7 +601,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    document.querySelector('.imgs-list').addEventListener('click', function (e) {
+    document.querySelector('.imgs-list .row').addEventListener('click', function (e) {
         const el = e.target
         const container = el.closest('.img_selector')
         const img = container.querySelector('img')
@@ -484,13 +618,15 @@ document.addEventListener('DOMContentLoaded', function () {
             container.querySelector('.img-reset').classList.add('d-none')
             rebuildCarousel()
         }
-    })
+    });
 
-    document.querySelector('.input-float').addEventListener('change', function() {
-        let valeur = this.value;
-        valeur = valeur.replace(/,/g, '.');
-        valeur = parseFloat(valeur).toFixed(2);
-        this.value = valeur;
+    (document.querySelectorAll('.input-float') || []).forEach(function (el) {
+        el.addEventListener('change', function() {
+            let valeur = this.value;
+            valeur = valeur.replace(/,/g, '.');
+            valeur = parseFloat(valeur).toFixed(2);
+            this.value = valeur;
+        })
     });
 
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
@@ -510,34 +646,37 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function ingredientsTextToTable() {
-    const ingredientsText = document.getElementById('ingredients').value
-    const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
-    ingredientsTbody.innerHTML = "";
+    let ingredientsText = document.getElementById('ingredients').value
+    const ingredientsTableBody = document.querySelector('table#table_ingredients tbody')
+
+    ingredientsTableBody.innerHTML = "";
+    document.querySelector('#table_ingredients').classList.toggle('d-none', !ingredientsText);
+    document.querySelector('#message_ingredients_vide').classList.toggle('d-none', ingredientsText);
+
     if(!ingredientsText) {
-        document.querySelector('table#table_ingredients').classList.add('d-none');
-        document.querySelector('#message_ingredients_vide').classList.remove('d-none');
-        message_ingredients_vide
         return;
     }
 
-    document.querySelector('#message_ingredients_vide').classList.add('d-none');
-    document.querySelector('table#table_ingredients').classList.remove('d-none');
+    ingredientsText = ingredientsText.replace(/;/g, ',;');
 
     let ingredients = ingredientsText.split(/[ ]*,[ ]*(?![^()]*\))/);
     let additif = null
 
     for(let ingredient of ingredients) {
+        if(ingredient.match(/^;/)) {
+            additif = null
+            ingredient = ingredient.replace(/^;[ ]*/, '')
+        }
         if(ingredient.match(/\:/)) {
             additif = ingredient.split(/[ ]*:[ ]*/)[0]
             ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
         }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         if(additif) {
-            templateClone.querySelector('.checkbox_additif').checked = true
-            templateClone.querySelector('.input_additif').classList.remove('d-none')
+            templateClone.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = true;})
+            templateClone.querySelector('td.ingredient_additif .input-group').classList.remove('d-none');
+            templateClone.querySelector('td.ingredient_additif > input[type=checkbox]').classList.add('d-none');
             templateClone.querySelector('.input_additif').value = additif
-        } else {
-
         }
         templateClone.querySelector('td.ingredient_libelle input.input_ingredient').value = ingredient.replace(/[_\*]/g, '');
         if(ingredient.match(/\*$/)) {
@@ -546,7 +685,7 @@ function ingredientsTextToTable() {
         if(ingredient.match(/^_[^_]*_\*?$/)) {
             templateClone.querySelector('td.ingredient_allergene input').checked = true
         }
-        ingredientsTbody.appendChild(templateClone);
+        ingredientsTableBody.appendChild(templateClone);
     }
 }
 
@@ -554,14 +693,20 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        let ingredient = item.querySelector('input.input_ingredient').value
         if (!ingredient) {
             return;
         }
-        if(ingredientsText) {
+        let newAdditif = null;
+        if(item.querySelector('input.checkbox_additif').checked) {
+            newAdditif = item.querySelector('input.input_additif').value
+        }
+        if(currentAdditif && newAdditif != currentAdditif) {
+            ingredientsText += ' ; '
+            currentAdditif = null;
+        } else if(ingredientsText) {
             ingredientsText += ', '
         }
-        newAdditif = item.querySelector('td.ingredient_libelle input.input_additif').value
         if(newAdditif == currentAdditif) {
             newAdditif = null;
         }
@@ -581,6 +726,7 @@ function ingredientsTableToText() {
     liveform.update(document.getElementById('ingredients'));
 }
 
+
 document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
     e.preventDefault();
     const input_ingredients = document.querySelector('#ingredients');
@@ -591,15 +737,130 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
         return;
     }
 
+    ingredient_to_add = text_add_ingredient.value;
+
+    /* selection automatique des allergenes et additif */
+    const datalist = document.getElementById(text_add_ingredient.getAttribute("list"));
+    const option = datalist.querySelector(`[value="${ingredient_to_add}"]`);
+    if (option) {
+        if (option.getAttribute('data-allergene')) {
+            ingredient_to_add = '_'+ingredient_to_add+'_';
+        }
+        if (option.getAttribute('data-additif')) {
+            ingredient_to_add = option.getAttribute('data-additif')+' : '+ingredient_to_add;
+        }
+    }
+
     if(input_ingredients.value) {
         input_ingredients.value += ', '
     }
-
-    input_ingredients.value += text_add_ingredient.value;
+    input_ingredients.value += ingredient_to_add;
     text_add_ingredient.value = "";
     ingredientsTextToTable();
     ingredientsTableToText();
     liveform.update(document.getElementById('ingredients'));
+});
+
+convert_valeur_energetique_kj = {
+    'tranquille': {
+        'inf_4':  [24, 59, 122, 191, 260, 328, -1, -1, -1, -1],
+        'inf_9':  [32, 67, 130, 199, 267, 336, -1, -1, -1, -1],
+        'inf_12': [38, 74, 137, 205, 274, 343, -1, -1, -1, -1],
+        'inf_18': [48, 82, 144, 213, 282, 350, -1, -1, -1, -1],
+        'inf_45': [74,110, 173, 241, 310, 378, -1, -1, -1, -1]
+    },
+    'liqueur': {
+        'inf_4':  [-1, -1, -1, -1, -1, -1, 385, 443, 500, -1],
+        'inf_9':  [-1, -1, -1, -1, -1, -1, 393, 450, 508, -1],
+        'inf_12': [-1, -1, -1, -1, -1, -1, 400, 457, 514, -1],
+        'inf_18': [-1, -1, -1, -1, -1, -1, 408, 465, 522, -1],
+        'inf_45': [-1, -1, -1, -1, -1, -1, 436, 493, 550, -1]
+    },
+    'mousseux': {
+        'inf_3':  [23, 58, 121, 190, 259, 327, -1, -1, -1, -1],
+        'inf_6':  [28, 64, 127, 195, 264, 332, -1, -1, -1, -1],
+        'inf_12': [36, 71, 134, 203, 271, 340, -1, -1, -1, -1],
+        'inf_17': [45, 81, 144, 212, 281, 349, -1, -1, -1, -1],
+        'inf_32': [68, 98, 161, 229, 298, 367, -1, -1, -1, -1],
+        'inf_50': [90,126, 189, 257, 326, 395, -1, -1, -1, -1]
+    }
+};
+
+document.querySelector('#form_convertir_nutritionnelle').addEventListener('submit', function(e) {
+    e.preventDefault();
+    nutri_update_complet();
+    bootstrap.Tab.getOrCreateInstance(document.querySelector('#nutritionnelle_complet_tab')).show()
+});
+
+function nutri_update_complet() {
+    sucre = document.querySelector('#teneur_sucre').value;
+    cat_sucre = null;
+    type =  document.querySelector('#vin_type').value.replace(',', '.');
+    alcool =  document.querySelector('#nutri_simple_tav').value.replace(',', '.');
+    if (!alcool || !type || !sucre) {
+        return;
+    }
+    cat_alcool = 10;
+    if ((type == 'tranquille') || (type == 'liqueur')) {
+        if (sucre <= 4) {
+            cat_sucre = 'inf_4';
+        }else if (sucre <= 9) {
+            cat_sucre = 'inf_9';
+        }else if (sucre <= 12) {
+            cat_sucre = 'inf_12';
+        }else if (sucre <= 18) {
+            cat_sucre = 'inf_18';
+        }else if (sucre <= 45) {
+            cat_sucre = 'inf_45';
+        }
+    } else if (type == 'mousseux') {
+        if (sucre <= 0) {
+        }else if (sucre <= 3) {
+            cat_sucre = 'inf_3';
+        }else if (sucre <= 6) {
+            cat_sucre = 'inf_6';
+        }else if (sucre <= 12) {
+            cat_sucre = 'inf_12';
+        }else if (sucre <= 17) {
+            cat_sucre = 'inf_17';
+        }else if (sucre <= 32) {
+            cat_sucre = 'inf_32';
+        }else if (sucre <= 50) {
+            cat_sucre = 'inf_50';
+        }
+    }
+    if (alcool <= 0) {
+    }else if (alcool <= 0.5) {
+        cat_alcool = 0;
+    } else if (alcool <= 3) {
+        cat_alcool = 1;
+    } else if (alcool <= 6) {
+        cat_alcool = 2;
+    } else if (alcool <= 9) {
+        cat_alcool = 3;
+    } else if (alcool <= 12) {
+        cat_alcool = 4;
+    } else if (alcool <= 15) {
+        cat_alcool = 5;
+    } else if (alcool <= 17) {
+        cat_alcool = 6;
+    } else if (alcool <= 20) {
+        cat_alcool = 7;
+    } else if (alcool <= 22) {
+        cat_alcool = 8;
+    }
+
+    if (convert_valeur_energetique_kj[type] && convert_valeur_energetique_kj[type][cat_sucre] && convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] && convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] > 0) {
+        document.querySelector('#nutritionnel_energie_kj').value = convert_valeur_energetique_kj[type][cat_sucre][cat_alcool];
+        document.querySelector('#nutritionnel_glucides').value = alcool / 10;
+        document.querySelector('#nutritionnel_sucres').value = alcool / 10;
+        document.querySelector('#nutritionnel_energie_kj').dispatchEvent(new Event('change', {bubbles: true}));
+    }
+    return false;
+}
+
+document.querySelector('#alcool_degre').addEventListener('change', function(e) {
+        document.querySelector('#nutri_simple_tav').value = document.querySelector('#alcool_degre').value;
 });
 
 ingredientsTextToTable();

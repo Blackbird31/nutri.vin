@@ -5,49 +5,53 @@
   </ol>
 </nav>
 
-<div class="row">
-    <div class="col-2">
-        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
-    </div>
-    <div class="col-8">
-        <h1 class="text-center mb-4">Paramétrage de votre QR code</h1>
-    </div>
+<div class="mb-4">
+    <h1 class="text-center">Visualisation de votre QR Code</h1>
 </div>
 <div class="row justify-content-end">
-    <div class="col-8 mt-5">
-        <div class="d-flex justify-content-center">
-            <img src="/<?php echo $qrcode->id ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
-        </div>
+    <div class="col-4 offset-1">
+        <?php $iframe = true; ?>
+        <?php include('_phone.html.php') ?>
+    </div>
+    <div class="col-6 mt-5 offset-1 border-start">
         <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->id ?>" enctype="multipart/form-data">
-            <input type="checkbox" class="btn-check" id="btncheck1" name="logo" autocomplete="off" value="1" <?php if($qrcode->logo):?>checked<?php endif; ?>>
-            <div class="d-flex justify-content-center">
-                <label class="btn btn-outline-primary mt-5" for="btncheck1">Logo IVSO <?php if($qrcode->logo):?>activé<?php else:?>désactivé<?php endif; ?></label>
-            </div>
-            </form>
-            <div class="row position-absolute top-100 start-40">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-download"></i> Formats de téléchargement
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf#zoom=1000">PDF</a></li>
-                        <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
-                        <li><a class="dropdown-item" href="/<?php echo $qrcode->id ?>/eps">EPS</a></li>
-                    </ul>
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <img src="/<?php echo $qrcode->id ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? 'checked' : ''?>>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du qrcode</label>
                 </div>
             </div>
+        </form>
+
+        <div class="mt-5 text-center">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-download"></i> Télécharger le qrcode
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf#zoom=1000">PDF</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
+                    <li><a class="dropdown-item" href="/<?php echo $qrcode->id ?>/eps">EPS</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-4">
-            <?php $iframe = true; ?>
-            <?php include('_phone.html.php') ?>
+
+        <div class="mt-5 text-center">
+            <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id ?>" class="btn btn-secondary">Modifier</a>
+            <a href="/<?php echo $qrcode->id ?>" class="btn btn-secondary">Voir la page finale</a>
         </div>
     </div>
+</div>
 
-    <script>
-    var checkbox = document.getElementById('btncheck1');
+<div class="mt-5">
+    <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+</div>
 
-    checkbox.addEventListener('click', function() {
-        document.querySelector('input[name="logo"]').value = this.checked ? 1 : 0;
+<script>
+    const checkbox = document.getElementById('switch-logo-qrcode');
+
+    checkbox.addEventListener('change', function() {
         document.getElementById('logoForm').submit();
     });
 </script>
