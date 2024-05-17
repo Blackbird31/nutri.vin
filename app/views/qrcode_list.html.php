@@ -11,7 +11,7 @@
     <form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
         <div class="col">
             <?php if ($qrlist): ?>
-                <button type="submit" id="multiExportBtn" class="btn btn-primary mb-2" disabled>Télécharger la sélection</button>
+                <button type="submit" id="multiExportBtn" class="btn btn-light mb-2" disabled>Télécharger la sélection</button>
             <?php endif; ?>
         </div>
     </form>
