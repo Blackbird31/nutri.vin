@@ -37,19 +37,13 @@
                         <?php echo $qr->millesime; ?> -
                         <?php echo $qr->centilisation; ?> cl
                     </td>
-                    <td class="position-relative">
-                        <div class="position-absolute top-50 start-50 translate-middle">
-                            <a class="p-1" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>" style="color: black;">
-                                <i class="bi bi-pencil-fill"></i></a>
-                                    <a class="p-1" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>" style="color: black;">
-                                        <i class="bi bi-qr-code"></i></a>
-                                    </div>
-                                    <div class="position-absolute top-50 end-0 translate-middle-y">
-                                        <a href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->id ?>" class="btn"><i class="bi bi-copy"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <td>
+                        <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>"><i class="bi bi-pencil-fill"></i></a>
+                        <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>"><i class="bi bi-qr-code"></i></a>
+                        <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->id ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
                     </tbody>
                 <?php endif; ?>
             </table>

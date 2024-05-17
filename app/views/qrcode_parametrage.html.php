@@ -5,13 +5,8 @@
   </ol>
 </nav>
 
-<div class="row align-items-center mb-4">
-    <div class="col-2">
-        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
-    </div>
-    <div class="col-8">
-        <h1 class="text-center">Visualisation de votre QR Code</h1>
-    </div>
+<div class="mb-4">
+    <h1 class="text-center">Visualisation de votre QR Code</h1>
 </div>
 <div class="row justify-content-end">
     <div class="col-4 offset-1">
@@ -43,13 +38,17 @@
         </div>
 
         <div class="mt-5 text-center">
-            <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id ?>" class="btn btn-secondary">Retour à l'édition</a>
+            <a href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id ?>" class="btn btn-secondary">Modifier</a>
             <a href="/<?php echo $qrcode->id ?>" class="btn btn-secondary">Voir la page finale</a>
         </div>
     </div>
 </div>
 
-    <script>
+<div class="mt-5">
+    <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+</div>
+
+<script>
     const checkbox = document.getElementById('switch-logo-qrcode');
 
     checkbox.addEventListener('change', function() {

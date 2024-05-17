@@ -109,7 +109,7 @@
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs col-sm-10" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="ingredients_tableau_tab" data-bs-toggle="tab" data-bs-target="#ingredients_tableau" type="button" role="tab" aria-controls="ingredients_tableau" aria-selected="true">Liste</button>
           </li>
@@ -118,8 +118,8 @@
           </li>
         </ul>
 
-        <div class="tab-content py-4">
-          <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+        <div class="tab-content py-4 col-sm-10">
+          <div class="tab-pane fade show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
@@ -141,7 +141,7 @@
                             <div class="input-group-text">
                                 <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                             </div>
-                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie fonctionnelle">
+                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
                         </div>
                     </td>
                     <td class="ingredient_ab text-center align-middle">
@@ -177,8 +177,8 @@
               Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
             </div>
           </div>
-          <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
-              <textarea class="form-control" rows="8" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
+          <div class="tab-pane fade m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+              <textarea class="form-control" rows="5" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
           </div>
         </div>
 
@@ -186,7 +186,7 @@
 
       <h4>Simplifié</h4>
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="mb-3 col-sm-10">
         <table class="table table-sm table-striped">
           <tbody>
             <tr>
@@ -194,8 +194,8 @@
                 <td>
                   <div class="col-9 offset-3">
                   <div class="input-group">
-                      <select name="vin_type" id="vin_type" class="form-control">
-                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à mouellleux)</option>
+                      <select name="vin_type" id="vin_type" class="form-select">
+                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à moelleux)</option>
                            <option value="liqueur">Vin de Liqueur</option>
                            <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
                       </select>
@@ -544,8 +544,20 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation()
         }
 
+        if(e.target.classList.contains('checkbox_additif')) {
+            const row = e.target.closest('tr');
+            row.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
+            row.querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
+            row.querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
+            row.querySelector('.ingredient_additif .input_additif').focus();
+        }
+
         if (e.target.closest('#table_ingredients')) {
             ingredientsTableToText();
+        }
+
+        if (e.target.id == 'ingredients') {
+            ingredientsTextToTable();
         }
 
         if (e.target.type === 'file') {
@@ -602,23 +614,27 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function ingredientsTextToTable() {
-    const ingredientsText = document.getElementById('ingredients').value
-    const ingredientsTbody = document.querySelector('table#table_ingredients tbody')
-    ingredientsTbody.innerHTML = "";
+    let ingredientsText = document.getElementById('ingredients').value
+    const ingredientsTableBody = document.querySelector('table#table_ingredients tbody')
+
+    ingredientsTableBody.innerHTML = "";
+    document.querySelector('#table_ingredients').classList.toggle('d-none', !ingredientsText);
+    document.querySelector('#message_ingredients_vide').classList.toggle('d-none', ingredientsText);
+
     if(!ingredientsText) {
-        document.querySelector('table#table_ingredients').classList.add('d-none');
-        document.querySelector('#message_ingredients_vide').classList.remove('d-none');
-        message_ingredients_vide
         return;
     }
 
-    document.querySelector('#message_ingredients_vide').classList.add('d-none');
-    document.querySelector('table#table_ingredients').classList.remove('d-none');
+    ingredientsText = ingredientsText.replace(/;/g, ',;');
 
     let ingredients = ingredientsText.split(/[ ]*,[ ]*(?![^()]*\))/);
     let additif = null
 
     for(let ingredient of ingredients) {
+        if(ingredient.match(/^;/)) {
+            additif = null
+            ingredient = ingredient.replace(/^;[ ]*/, '')
+        }
         if(ingredient.match(/\:/)) {
             additif = ingredient.split(/[ ]*:[ ]*/)[0]
             ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
@@ -637,7 +653,7 @@ function ingredientsTextToTable() {
         if(ingredient.match(/^_[^_]*_\*?$/)) {
             templateClone.querySelector('td.ingredient_allergene input').checked = true
         }
-        ingredientsTbody.appendChild(templateClone);
+        ingredientsTableBody.appendChild(templateClone);
     }
 }
 
@@ -645,17 +661,19 @@ function ingredientsTableToText() {
     let ingredientsText = '';
     let currentAdditif = '';
     document.querySelector('table#table_ingredients tbody').querySelectorAll('tr').forEach(function(item) {
-        let ingredient = item.querySelector('td.ingredient_libelle input.input_ingredient').value
+        let ingredient = item.querySelector('input.input_ingredient').value
         if (!ingredient) {
             return;
         }
-        if(ingredientsText) {
-            ingredientsText += ', '
-        }
-
         let newAdditif = null;
         if(item.querySelector('input.checkbox_additif').checked) {
             newAdditif = item.querySelector('input.input_additif').value
+        }
+        if(currentAdditif && newAdditif != currentAdditif) {
+            ingredientsText += '; '
+            currentAdditif = null;
+        } else if(ingredientsText) {
+            ingredientsText += ', '
         }
         if(newAdditif == currentAdditif) {
             newAdditif = null;
@@ -676,14 +694,6 @@ function ingredientsTableToText() {
     liveform.update(document.getElementById('ingredients'));
 }
 
-document.querySelector('table#table_ingredients').addEventListener('change', function(e) {
-    if(e.target.classList.contains('checkbox_additif')) {
-        e.target.closest('tr').querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
-        e.target.closest('tr').querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
-        e.target.closest('tr').querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
-        e.target.closest('tr').querySelector('.ingredient_additif .input_additif').focus();
-    }
-});
 
 document.querySelector('#form_add_ingredients').addEventListener('submit', function(e) {
     e.preventDefault();
