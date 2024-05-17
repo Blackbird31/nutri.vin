@@ -226,7 +226,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="align-middle">TAV</td>
+                  <td class="align-middle">Volume d'alcool (TAV)</td>
                     <td>
                       <div class="col-6 offset-6">
                       <div class="input-group">
@@ -852,13 +852,18 @@ function nutri_update_complet() {
         cat_alcool = 8;
     }
 
-    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] > 0) {
+    if (convert_valeur_energetique_kj[type] && convert_valeur_energetique_kj[type][cat_sucre] && convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] && convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] > 0) {
         document.querySelector('#nutritionnel_energie_kj').value = convert_valeur_energetique_kj[type][cat_sucre][cat_alcool];
         document.querySelector('#nutritionnel_glucides').value = alcool / 10;
         document.querySelector('#nutritionnel_sucres').value = alcool / 10;
+        document.querySelector('#nutritionnel_energie_kj').dispatchEvent(new Event('change', {bubbles: true}));
     }
     return false;
 }
+
+document.querySelector('#alcool_degre').addEventListener('change', function(e) {
+        document.querySelector('#nutri_simple_tav').value = document.querySelector('#alcool_degre').value;
+});
 
 ingredientsTextToTable();
 
