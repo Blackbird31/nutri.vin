@@ -21,12 +21,15 @@ class ExporterNatif
         return $this->qroptions[$format]::setResponseHeaders();
     }
 
-    public function getQRCodeContent($qrCodeData, $format, $logo = false) {
+    public function getQRCodeContent($qrCodeData, $format, $logo = false, $energies = []) {
         $configuration = new $this->qroptions[$format];
 
         if($logo) {
             $configuration->setLogo($logo);
         }
+
+        $configuration->setTitle("  INGRÉDIENTS :");
+        $configuration->setEnergies($energies);
 
         $content = (new QRCode($configuration))->render($qrCodeData);
 
