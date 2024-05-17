@@ -115,6 +115,14 @@ class CtrlNutriVin {
         echo View::instance()->render('layout.html.php');
     }
 
+    private function getConfig() {
+        $config = $f3->get('config');
+        if (!in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost']) && !isset($config['viticonnect_baseurl'])) {
+            $config['viticonnect_baseurl'] = 'https://viticonnect.net/cas';
+        }
+        return $config;
+    }
+
     function qrcodeAuthentication(Base $f3) {
         $qrcode = new QRCode();
         if (!$qrcode->tableExists()) {
@@ -124,7 +132,7 @@ class CtrlNutriVin {
             if ($f3->exists('SESSION.authtype')) {
                 return $f3->reroute('/logout');
             }
-            $config = $f3->get('config');
+            $config = $this->getConfig();
             if (isset($config['http_auth']) && $config['http_auth']) {
                 if (isset($_SERVER['PHP_AUTH_USER'])) {
                     $f3->set('SESSION.userid', $_SERVER['PHP_AUTH_USER']);
@@ -135,9 +143,6 @@ class CtrlNutriVin {
                 header('WWW-Authenticate: Basic realm="My Realm"');
                 header('HTTP/1.0 401 Unauthorized');
                 die ("Not authorized qrcodeAuthentication");
-            }
-            if (!in_array($_SERVER['SERVER_NAME'], ['127.0.0.1', 'localhost']) && !isset($config['viticonnect_baseurl'])) {
-                $config['viticonnect_baseurl'] = 'https://viticonnect.net/cas';
             }
             if (isset($config['viticonnect_baseurl']) && $config['viticonnect_baseurl']) {
                 return $f3->reroute($config['viticonnect_baseurl'].'/login?service='.$f3->get('urlbase').'/login/viticonnect');
@@ -158,7 +163,7 @@ class CtrlNutriVin {
 
     function qrcodeViticonnect(Base $f3) {
         $ticket = $f3->get('GET.ticket');
-        $config = $f3->get('config');
+        $config = $this->getConfig();
         if (!$ticket) {
             return $f3->reroute('/qrcode');
         }
@@ -204,7 +209,7 @@ class CtrlNutriVin {
         $f3->clear('SESSION.username');
         if ($f3->get('SESSION.authtype') == 'viticonnect') {
             $f3->clear('SESSION.authtype');
-            $config = $f3->get('config');
+            $config = $this->getConfig();
             return $f3->reroute($config['viticonnect_baseurl'].'/logout?service='.$f3->get('urlbase').'/');
         } elseif ($f3->get('SESSION.authtype') == 'http') {
             if ($f3->exists('SESSION.disconnection')) {
@@ -288,7 +293,7 @@ class CtrlNutriVin {
     public function qrcodeMultiExport(Base $f3) {
         $qrcodes = $f3->get('GET.qrcodes');
         $formats = ['svg', 'pdf', 'eps'];
-        $config = $f3->get('config');
+        $config = $this->getConfig();
         $options = isset($config['qrcode']) ? $config['qrcode'] : [];
         $userid = null;
 
