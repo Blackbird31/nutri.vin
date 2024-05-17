@@ -9,6 +9,7 @@ class QRCode extends Mapper
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
                             '0123456789';
+    public static $LABELS = ["HVE", "Demeter", "Biodynamie", "Biodyvin"];
 
 	public static $copy_field_filter = [
 		"domaine_nom" => 1,
