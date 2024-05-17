@@ -40,7 +40,11 @@ class CtrlNutriVin {
             if ($qrcode->user_id && $qrcode->user_id != $f3->get('PARAMS.userid')) {
                 return $f3->reroute('/qrcode/'.$f3->get('userid').'/create', false);
             }
-
+            if ($f3->get('POST.labels')) {
+              $f3->set('POST.labels', json_encode($f3->get('POST.labels')));
+            } else {
+              $f3->set('POST.labels', json_encode([]));
+            }
             $qrcode->copyFrom('POST');
             if (!$qrcode->user_id) {
                 $qrcode->user_id = $f3->get('PARAMS.userid');
