@@ -7,8 +7,8 @@
 
 <h2>Création d'un vin</h2>
 
-<div class="row justify-content-end">
-  <div class="col-8">
+<div class="row">
+  <div class="col-7 border-end">
       <form method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
       <?php if (isset($qrcode->id)): ?>
           <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
@@ -446,7 +446,7 @@
       </form>
       <form id="form_add_ingredients"></form>
   </div>
-  <div class="col-4">
+  <div class="col-4 mx-auto">
     <?php
       $iframe=false;
       $notpublicview = true;
