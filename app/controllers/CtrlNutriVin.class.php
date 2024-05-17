@@ -255,7 +255,7 @@ class CtrlNutriVin {
             exit;
         }
 
-        if (!isset($_SESSION) || ! $f3->get('SESSION.userid')) {
+        if (! ( isset($_SESSION)  || isset($_COOKIE) ) || ! $f3->get('SESSION.userid')) {
             $geo = Geo::instance();
             $location = $geo->location();
             unset($location['request'], $location['delay'], $location['credit']);
