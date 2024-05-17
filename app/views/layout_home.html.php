@@ -24,6 +24,8 @@
         <p class="fs-3 mt-5 text-primary">
             Ouverture le 1er juin 2024
         </p>
+        <video controls class="img-fluid border rounded mt-4" src="/nutrivin.webm"></video>
+
         <a href="https://framaforms.org/ouverture-de-nutrivin-1706284140" class="btn btn-primary bg-primary border-primary btn-lg mt-5 rounded-pill" type="button">
           <i class="bi bi-envelope-plus text-warning"></i>&nbsp;&nbsp;Me le rappeler
         </a>
