@@ -177,7 +177,7 @@
               Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
             </div>
           </div>
-          <div class="tab-pane fade col-sm-10 m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+          <div class="tab-pane fade m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
               <textarea class="form-control" rows="5" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
           </div>
         </div>
