@@ -37,12 +37,6 @@ abstract class Mapper
 		return $e;
 	}
 
-	public static function findByUserid($userid) {
-		$class = get_called_class();
-        $e = new $class();
-		return $e->mapper->find(array('user_id=?',$userid));
-	}
-
 	public function copyFrom($arg, $func = null) {
 		if ($this->authorization_key && $arg == 'POST' && (!isset($_POST['authorization_key'])  || ($_POST['authorization_key'] != $this->authorization_key)) ) {
 			throw new Exception('Not authorized to edit this object');

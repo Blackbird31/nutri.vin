@@ -76,6 +76,12 @@ class QRCode extends Mapper
 		 return $fields;
  	}
 
+    public static function findByUserid($userid) {
+		$class = get_called_class();
+        $e = new $class();
+		return $e->mapper->find(array('user_id=?',$userid));
+	}
+
     public static function getListeCategoriesAdditif() {
         return [
             "Régulateur d'acidité",
