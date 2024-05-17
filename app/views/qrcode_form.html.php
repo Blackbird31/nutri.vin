@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    document.querySelector('.imgs-list').addEventListener('click', function (e) {
+    document.querySelector('.imgs-list .row').addEventListener('click', function (e) {
         const el = e.target
         const container = el.closest('.img_selector')
         const img = container.querySelector('img')
