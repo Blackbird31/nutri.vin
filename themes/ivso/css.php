@@ -16,11 +16,22 @@
         --bs-btn-active-border-color: #6681af;
     }
 
+    .btn-outline-primary {
+      --bs-btn-color: #0e2244;
+      --bs-btn-border-color: #0e2244;
+      --bs-btn-hover-bg: #0e2244;
+      --bs-btn-hover-border-color: #0e2244;
+      --bs-btn-active-bg: #0e2244;
+      --bs-btn-active-border-color: #0e2244;
+      --bs-btn-disabled-color: #0e2244;
+      --bs-btn-disabled-border-color: #0e2244;
+    }
+
     body {
         background-color: #efefef;
     }
 
-    body#body_public {
+    body#body_public, body#body_home {
         background-color: #fff;
     }
 </style>
