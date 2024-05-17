@@ -237,7 +237,7 @@
 
     <div class="mb-1 small text-center">
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?>" style="cursor: pointer;"></i>
+      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?> (Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie.)" style="cursor: pointer;"></i>
     </div>
 
 </div>
