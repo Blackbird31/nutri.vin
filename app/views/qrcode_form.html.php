@@ -226,7 +226,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="align-middle">TAV</td>
+                  <td class="align-middle">Volume d'alcool (TAV)</td>
                     <td>
                       <div class="col-6 offset-6">
                       <div class="input-group">
@@ -866,6 +866,10 @@ function nutri_update_complet() {
     }
     return false;
 }
+
+document.querySelector('#alcool_degre').addEventListener('change', function(e) {
+        document.querySelector('#nutri_simple_tav').value = document.querySelector('#alcool_degre').value;
+});
 
 ingredientsTextToTable();
 
