@@ -40,7 +40,7 @@
                             <?php echo $qr->millesime; ?> -
                             <?php echo $qr->centilisation; ?> cl
                         </td>
-                        <td><?php echo ($qr->visites) ? count(json_decode($qr-visites)): 0; ?></<td>
+                        <td><?php echo ($qr->visites) ? count(json_decode($qr->visites)): 0; ?></<td>
                         <td>
                             <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>"><i class="bi bi-pencil-fill"></i></a>
                             <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>"><i class="bi bi-qr-code"></i></a>
