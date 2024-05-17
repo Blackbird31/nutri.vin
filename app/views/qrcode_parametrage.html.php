@@ -30,9 +30,9 @@
                     <i class="bi bi-download"></i> Télécharger le QR Code
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf#zoom=1000">PDF</a></li>
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
                     <li><a class="dropdown-item" href="/<?php echo $qrcode->id ?>/eps">EPS</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf">PDF</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
                 </ul>
             </div>
         </div>
