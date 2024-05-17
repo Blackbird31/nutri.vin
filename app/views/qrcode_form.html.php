@@ -788,18 +788,6 @@ document.querySelector('#form_convertir_nutritionnelle').addEventListener('submi
     nutri_update_complet();
     bootstrap.Tab.getOrCreateInstance(document.querySelector('#nutritionnelle_complet_tab')).show()
 });
-document.querySelector('#vin_type').addEventListener('change', function(e) {
-    e.preventDefault();
-    nutri_update_complet();
-});
-document.querySelector('#teneur_sucre').addEventListener('change', function(e) {
-    e.preventDefault();
-    nutri_update_complet();
-});
-document.querySelector('#nutri_simple_tav').addEventListener('change', function(e) {
-    e.preventDefault();
-    nutri_update_complet();
-});
 
 function nutri_update_complet() {
     sucre = document.querySelector('#teneur_sucre').value;
