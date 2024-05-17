@@ -699,7 +699,7 @@ function ingredientsTableToText() {
             newAdditif = item.querySelector('input.input_additif').value
         }
         if(currentAdditif && newAdditif != currentAdditif) {
-            ingredientsText += '; '
+            ingredientsText += ' ; '
             currentAdditif = null;
         } else if(ingredientsText) {
             ingredientsText += ', '
