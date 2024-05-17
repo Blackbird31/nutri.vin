@@ -18,10 +18,10 @@
     <table id="list_qr" class="table table-bordered table-striped text-center">
         <thead>
             <tr>
-                <th class="col-1"><input id="allCheck" type="checkbox"></input></th>
                 <th class="col-3">Nom commercial</th>
                 <th class="col-6">Vin</th>
                 <th class="col-2">Actions</th>
+                <th class="col-1"><input id="allCheck" type="checkbox"></input></th>
             </tr>
         </thead>
         <?php if (!$qrlist): ?>
@@ -34,7 +34,6 @@
                 <?php foreach($qrlist as $qr): ?>
                     <?php  ?>
                     <tr>
-                        <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->id; ?>'></td>
                         <td><?php echo $qr->domaine_nom; ?></td>
                         <td>
                             <?php echo $qr->cuvee_nom; ?>
@@ -47,6 +46,7 @@
                             <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>"><i class="bi bi-qr-code"></i></a>
                             <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->id ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
                         </td>
+                        <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->id; ?>'></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
