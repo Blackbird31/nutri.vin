@@ -6,7 +6,7 @@
 
 <h2 class="text-center"><?php echo $userid;?> QR Codes</h2>
 
-<h3 class="mt-4 ">Liste des QR code</h3>
+<h3 class="mt-4 ">Liste des QR codes</h3>
 <div class="text-end row">
     <form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
         <div class="col">
