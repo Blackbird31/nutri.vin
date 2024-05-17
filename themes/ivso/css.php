@@ -31,7 +31,7 @@
         background-color: #efefef;
     }
 
-    body#body_public {
+    body#body_public, body#body_home {
         background-color: #fff;
     }
 </style>
