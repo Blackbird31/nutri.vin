@@ -229,8 +229,9 @@
     </div>
     <?php endif; ?>
 
-    <div class="mb-1 small">
-      <i class="bi bi-eye text-muted" title="<?php echo count($qrcode->getVisites()) ?> vues" style="cursor: pointer;"></i>
+    <div class="mb-1 small text-center">
+      <?php $nbVue = count($qrcode->getVisites()); ?>
+      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?>" style="cursor: pointer;"></i>
     </div>
 
 </div>
