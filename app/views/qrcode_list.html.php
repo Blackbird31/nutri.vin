@@ -6,7 +6,7 @@
 
 <h2 class="text-center mb-5"><?php echo htmlspecialchars($_SESSION["username"]);?> QR Codes</h2>
 
-<div class="text-end row">
+<div class="text-end">
     <form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
         <div class="col">
             <?php if ($qrlist): ?>
