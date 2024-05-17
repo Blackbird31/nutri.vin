@@ -35,7 +35,8 @@ class QRCode extends Mapper
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1,
-    "visites" => 1
+    "visites" => 1,
+    "labels" => 1,
   ];
 
 	 public static function getFieldsAndType() {
@@ -70,6 +71,7 @@ class QRCode extends Mapper
 		 $fields['date_version'] = 'VARCHAR(26)';
      $fields['logo'] = 'BOOL';
      $fields['visites'] = 'TEXT';
+     $fields['labels'] = 'TEXT';
 		 return $fields;
  	}
 
@@ -303,5 +305,13 @@ class QRCode extends Mapper
     $visites = $this->getVisites();
     $visites[] = $infos;
     $this->visites = json_encode($visites);
+  }
+
+  public function getLabels() {
+    $labels = $this->get('labels');
+    if ($labels) {
+      return json_decode($labels, true);
+    }
+    return [];
   }
 }
