@@ -4,14 +4,13 @@
     </ol>
 </nav>
 
-<h2 class="text-center"><?php echo $userid;?> QR Codes</h2>
+<h2 class="text-center mb-5"><?php echo htmlspecialchars($_SESSION["username"]);?> QR Codes</h2>
 
-<h3 class="mt-4 ">Liste des QR codes</h3>
 <div class="text-end row">
     <form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
         <div class="col">
             <?php if ($qrlist): ?>
-                <button type="submit" id="multiExportBtn" class="btn btn-primary mb-2" disabled>Télécharger la sélection</button>
+                <button type="submit" id="multiExportBtn" class="btn btn-light mb-2" disabled>Télécharger la sélection</button>
             <?php endif; ?>
         </div>
     </form>
@@ -19,7 +18,8 @@
         <thead>
             <tr>
                 <th class="col-3">Nom commercial</th>
-                <th class="col-6">Vin</th>
+                <th class="col-5">Vin</th>
+                <th class="col-1">Nb vues</th>
                 <th class="col-2">Actions</th>
                 <th class="col-1"><input id="allCheck" type="checkbox"></input></th>
             </tr>
@@ -32,7 +32,6 @@
             <tbody>
 
                 <?php foreach($qrlist as $qr): ?>
-                    <?php  ?>
                     <tr>
                         <td><?php echo $qr->domaine_nom; ?></td>
                         <td>
@@ -41,6 +40,7 @@
                             <?php echo $qr->millesime; ?> -
                             <?php echo $qr->centilisation; ?> cl
                         </td>
+                        <td><?php echo ($qr->visites) ? count(json_decode($qr-visites)): 0; ?></<td>
                         <td>
                             <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>"><i class="bi bi-pencil-fill"></i></a>
                             <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>"><i class="bi bi-qr-code"></i></a>
