@@ -411,16 +411,7 @@
                 </div>
             </div>
         </div>
-
-        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
-
-        <div class="mb-3 col-sm-10">
-            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
-            <div class="form-text">
-              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
-            </div>
-        </div>
-
+        
         <h3 class="mt-4 mb-4">Labels complémentaires</h3>
         <?php $labels = $qrcode->getLabels(); ?>
         <div class="mb-3 col-sm-10">
@@ -430,6 +421,15 @@
               <label class="form-check-label" for="label<?php echo $label ?>"><?php echo $label ?></label>
             </div>
           <?php endforeach; ?>
+        </div>
+
+        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
+
+        <div class="mb-3 col-sm-10">
+            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
+            <div class="form-text">
+              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
+            </div>
         </div>
 
         <div class="row mt-5">
