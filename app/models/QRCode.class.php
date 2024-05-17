@@ -301,7 +301,12 @@ class QRCode extends Mapper
 	}
 
 	public function getQRCodeContent($format, $urlbase, $config) {
-      return Exporter::getInstance()->getQRCodeContent($urlbase.'/'.$this->getId(), $format, ($this->logo) ? $config['logo'] : false);
+        return Exporter::getInstance()->getQRCodeContent(
+            $urlbase.'/'.$this->getId(),
+            $format,
+            ($this->logo) ? $config['logo'] : false,
+            [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]
+        );
   }
 
   public function getVisites() {

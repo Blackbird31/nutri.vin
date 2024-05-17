@@ -7,8 +7,8 @@ use app\exporters\utils\rsvgconvert;
 
 class ExporterRSVG extends ExporterNatif
 {
-    public function getQRCodeContent($qrCodeData, $format, $logo = false) {
-        $svgContent = parent::getQRCodeContent($qrCodeData, 'svg', $logo);
+    public function getQRCodeContent($qrCodeData, $format, $logo = false, $energies = []) {
+        $svgContent = parent::getQRCodeContent($qrCodeData, 'svg', $logo, $energies);
 
         if($format == 'svg') {
 

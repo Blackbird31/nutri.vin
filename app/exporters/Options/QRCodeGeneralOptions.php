@@ -11,9 +11,11 @@ use chillerlan\QRCode\Common\EccLevel;
 
 abstract class QRCodeGeneralOptions extends QROptions
 {
-    protected string $svgLogo;
+    protected string $svgLogo = '';
     protected float $svgLogoScale = 0.20;
     protected string $svgLogoCssClass = '';
+    protected string $svgTitle = '';
+    protected array $svgEnergies = [];
 
     public function __construct()
     {
@@ -42,6 +44,11 @@ abstract class QRCodeGeneralOptions extends QROptions
         $this->svgLogoScale = max(0.05, min(0.3, $svgLogoScale));
     }
 
+    protected function set_svgTitle(string $svgTitle)
+    {
+        $this->svgTitle = $svgTitle;
+    }
+
     public function setLogo($logo)
     {
         $this->addLogoSpace = true;
@@ -54,6 +61,22 @@ abstract class QRCodeGeneralOptions extends QROptions
         $this->svgLogo = $logo;
         $this->svgLogoScale = 0.25;
         $this->svgLogoCssClass = 'dark';
+    }
+
+    public function setTitle($title)
+    {
+        $this->outputType = QROutputInterface::CUSTOM;
+        $this->outputInterface = QRMarkupSVGLogo::class;
+
+        $this->svgTitle = $title;
+    }
+
+    public function setEnergies($energies)
+    {
+        $this->outputType = QROutputInterface::CUSTOM;
+        $this->outputInterface = QRMarkupSVGLogo::class;
+
+        $this->svgEnergies = $energies;
     }
 
     public static function setResponseHeaders()
