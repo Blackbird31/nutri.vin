@@ -259,9 +259,7 @@ class CtrlNutriVin {
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
         $f3->set('publicview', true);
-        if ($f3->get('GET.notpublicview')) {
-          $f3->set('publicview', false);
-        }
+
         echo View::instance()->render('layout_public.html.php');
     }
 
