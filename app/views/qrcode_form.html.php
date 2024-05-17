@@ -109,7 +109,7 @@
 
         <h3 class="mt-4 mb-4">Liste des ingrédients</h3>
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs col-sm-10" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="ingredients_tableau_tab" data-bs-toggle="tab" data-bs-target="#ingredients_tableau" type="button" role="tab" aria-controls="ingredients_tableau" aria-selected="true">Liste</button>
           </li>
@@ -118,8 +118,8 @@
           </li>
         </ul>
 
-        <div class="tab-content py-4">
-          <div class="tab-pane fade show active container col-sm-10 m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+        <div class="tab-content py-4 col-sm-10">
+          <div class="tab-pane fade show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
@@ -186,7 +186,7 @@
 
       <h4>Simplifié</h4>
 
-      <div class="form-floating mb-3 col-sm-10">
+      <div class="mb-3 col-sm-10">
         <table class="table table-sm table-striped">
           <tbody>
             <tr>
