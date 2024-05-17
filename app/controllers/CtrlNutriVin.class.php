@@ -40,7 +40,11 @@ class CtrlNutriVin {
             if ($qrcode->user_id && $qrcode->user_id != $f3->get('PARAMS.userid')) {
                 return $f3->reroute('/qrcode/'.$f3->get('userid').'/create', false);
             }
-
+            if ($f3->get('POST.labels')) {
+              $f3->set('POST.labels', json_encode($f3->get('POST.labels')));
+            } else {
+              $f3->set('POST.labels', json_encode([]));
+            }
             $qrcode->copyFrom('POST');
             if (!$qrcode->user_id) {
                 $qrcode->user_id = $f3->get('PARAMS.userid');
@@ -255,9 +259,7 @@ class CtrlNutriVin {
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
         $f3->set('publicview', true);
-        if ($f3->get('GET.notpublicview')) {
-          $f3->set('publicview', false);
-        }
+
         echo View::instance()->render('layout_public.html.php');
     }
 
