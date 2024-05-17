@@ -195,7 +195,7 @@
                   <div class="col-9 offset-3">
                   <div class="input-group">
                       <select name="vin_type" id="vin_type" class="form-select">
-                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à mouellleux)</option>
+                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à moelleux)</option>
                            <option value="liqueur">Vin de Liqueur</option>
                            <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
                       </select>
