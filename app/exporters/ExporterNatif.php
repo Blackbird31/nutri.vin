@@ -28,6 +28,7 @@ class ExporterNatif
             $configuration->setLogo($logo);
         }
 
+        $configuration->setTitle("  INGRÉDIENTS :");
         $content = (new QRCode($configuration))->render($qrCodeData);
 
         if($format == 'eps') {
