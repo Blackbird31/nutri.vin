@@ -421,6 +421,17 @@
             </div>
         </div>
 
+        <h3 class="mt-4 mb-4">Labels complémentaires</h3>
+        <?php $labels = $qrcode->getLabels(); ?>
+        <div class="mb-3 col-sm-10">
+          <?php foreach (QRCode::$LABELS as $label): ?>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="label<?php echo $label ?>" value="<?php echo $label ?>" name="labels[]"<?php if(in_array($label, $labels)): ?> checked<?php endif; ?> />
+              <label class="form-check-label" for="label<?php echo $label ?>"><?php echo $label ?></label>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
         <div class="row mt-5">
             <div class="col-6">
                 <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
