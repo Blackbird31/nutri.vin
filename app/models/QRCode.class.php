@@ -36,8 +36,7 @@ class QRCode extends Mapper
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1,
-    "visites" => 1,
-    "labels" => 1,
+        "labels" => 1,
   ];
 
 	 public static function getFieldsAndType() {
