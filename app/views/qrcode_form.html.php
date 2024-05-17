@@ -599,13 +599,15 @@ document.addEventListener('DOMContentLoaded', function () {
             container.querySelector('.img-reset').classList.add('d-none')
             rebuildCarousel()
         }
-    })
+    });
 
-    document.querySelector('.input-float').addEventListener('change', function() {
-        let valeur = this.value;
-        valeur = valeur.replace(/,/g, '.');
-        valeur = parseFloat(valeur).toFixed(2);
-        this.value = valeur;
+    (document.querySelectorAll('.input-float') || []).forEach(function (el) {
+        el.addEventListener('change', function() {
+            let valeur = this.value;
+            valeur = valeur.replace(/,/g, '.');
+            valeur = parseFloat(valeur).toFixed(2);
+            this.value = valeur;
+        })
     });
 
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
