@@ -19,4 +19,8 @@
     body {
         background-color: #efefef;
     }
+
+    body#body_public {
+        background-color: #fff;
+    }
 </style>

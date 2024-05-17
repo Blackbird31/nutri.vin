@@ -14,7 +14,7 @@
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet" />
   </head>
-  <body>
+  <body id="body_public">
     <div class="container-sm text-center" style="max-width: 540px;">
         <?php include($THEME.'header_public.php'); ?>
         <?php include($content); ?>
