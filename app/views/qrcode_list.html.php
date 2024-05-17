@@ -4,10 +4,10 @@
   </ol>
 </nav>
 
-<h2 class="text-center"><?php echo $userid;?> QR Codes</h2>
+<h2 class="text-center"><?php echo htmlspecialchars($_SESSION["username"]);?> QR Codes</h2>
 
 <h3 class="mt-4 ">Liste des QR code</h3>
-<form id="multiExportForm" method="GET" action="/qrcode/<?php echo $userid ?>/multiexport" enctype="multipart/form-data">
+<form id="multiExportForm" method="GET" action="/qrcode/<?php echo htmlspecialchars($_SESSION["userid"]) ?>/multiexport" enctype="multipart/form-data">
     <button type="submit" id="multiExportBtn" class="btn btn-primary mb-2" disabled>Télécharger la sélection</button>
 </form>
 <table id="list_qr" class="table table-bordered table-striped text-center">
