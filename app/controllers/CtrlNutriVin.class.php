@@ -261,6 +261,9 @@ class CtrlNutriVin {
             unset($location['request'], $location['delay'], $location['credit']);
             $qrcode->addVisite(['date' => date('Y-m-d H:i:s'), 'location' => $location]);
             $qrcode->save();
+            header('Cache-Control: max-age=1800');
+            header('Expires: '.date('r', strtotime('+30min')));
+            header('Pragma: cache');
         }
 
         $this->initDefaultOnQRCode($qrcode);
