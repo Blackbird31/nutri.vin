@@ -163,8 +163,11 @@
                     </div>
                 </div>
                 <datalist id="ingredients_list">
-                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient): ?>
-                    <option value="<?php echo $ingredient ?>"></option>
+                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient => $extra): ?>
+                    <option value="<?php echo $ingredient ?>"<?php
+                        foreach($extra as $k => $v) {
+                            echo ' data-'.$k.'="'.$v.'"';
+                        } ?>></option>
                     <?php endforeach; ?>
                 </datalist>
                 <datalist id="categories_additif_list">
@@ -379,46 +382,57 @@
                 <div class="text-center col-sm-4 img_selector">
                     Bouteille
                     <img id="img_image_bouteille" src="<?php echo $qrcode->image_bouteille ?>" class="mb-2 mx-auto img-preview img-thumbnail"/>
-                    <span class="img-add btn btn-sm">
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Étiquette<br/>
                     <img id="img_image_etiquette" src="<?php echo $qrcode->image_etiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
-                    <span class="img-add btn btn-sm">
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Contre-étiquette<br/>
                     <img id="img_image_contreetiquette" src="<?php echo $qrcode->image_contreetiquette ?>" class="mb-2 mx-auto img-preview img-thumbnail" style="opacity:<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false): ?>0.55<?php else: ?>1<?php endif; ?>"/>
-                    <span class="img-add btn btn-sm">
+                    <span class="img-add btn btn-link btn-sm">
                         <?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false): ?>Ajouter<?php else: ?>Modifier<?php endif; ?>
                     </span>
-                    <span class="img-reset btn btn-sm d-none">
+                    <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
+        </div>
+        
+        <h3 class="mt-4 mb-4">Labels complémentaires</h3>
+        <?php $labels = $qrcode->getLabels(); ?>
+        <div class="mb-3 col-sm-10">
+          <?php foreach (QRCode::$LABELS as $label): ?>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="label<?php echo $label ?>" value="<?php echo $label ?>" name="labels[]"<?php if(in_array($label, $labels)): ?> checked<?php endif; ?> />
+              <label class="form-check-label" for="label<?php echo $label ?>"><?php echo $label ?></label>
+            </div>
+          <?php endforeach; ?>
         </div>
 
         <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
@@ -446,7 +460,10 @@
       <form id="form_convertir_nutritionnelle"></form>
   </div>
   <div class="col-4">
-    <?php $iframe=false; ?>
+    <?php
+      $iframe=false;
+      $notpublicview = true;
+    ?>
     <?php include('_phone.html.php') ?>
     </div>
 </div>
@@ -581,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    document.querySelector('.imgs-list').addEventListener('click', function (e) {
+    document.querySelector('.imgs-list .row').addEventListener('click', function (e) {
         const el = e.target
         const container = el.closest('.img_selector')
         const img = container.querySelector('img')
@@ -598,13 +615,15 @@ document.addEventListener('DOMContentLoaded', function () {
             container.querySelector('.img-reset').classList.add('d-none')
             rebuildCarousel()
         }
-    })
+    });
 
-    document.querySelector('.input-float').addEventListener('change', function() {
-        let valeur = this.value;
-        valeur = valeur.replace(/,/g, '.');
-        valeur = parseFloat(valeur).toFixed(2);
-        this.value = valeur;
+    (document.querySelectorAll('.input-float') || []).forEach(function (el) {
+        el.addEventListener('change', function() {
+            let valeur = this.value;
+            valeur = valeur.replace(/,/g, '.');
+            valeur = parseFloat(valeur).toFixed(2);
+            this.value = valeur;
+        })
     });
 
     document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
@@ -715,11 +734,24 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
         return;
     }
 
+    ingredient_to_add = text_add_ingredient.value;
+
+    /* selection automatique des allergenes et additif */
+    const datalist = document.getElementById(text_add_ingredient.getAttribute("list"));
+    const option = datalist.querySelector(`[value="${ingredient_to_add}"]`);
+    if (option) {
+        if (option.getAttribute('data-allergene')) {
+            ingredient_to_add = '_'+ingredient_to_add+'_';
+        }
+        if (option.getAttribute('data-additif')) {
+            ingredient_to_add = option.getAttribute('data-additif')+' : '+ingredient_to_add;
+        }
+    }
+
     if(input_ingredients.value) {
         input_ingredients.value += ', '
     }
-
-    input_ingredients.value += text_add_ingredient.value;
+    input_ingredients.value += ingredient_to_add;
     text_add_ingredient.value = "";
     ingredientsTextToTable();
     ingredientsTableToText();
@@ -827,7 +859,7 @@ function nutri_update_complet() {
         cat_alcool = 8;
     }
 
-    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool]) {
+    if (convert_valeur_energetique_kj[type][cat_sucre][cat_alcool] > 0) {
         document.querySelector('#nutritionnel_energie_kj').value = convert_valeur_energetique_kj[type][cat_sucre][cat_alcool];
         document.querySelector('#nutritionnel_glucides').value = alcool / 10;
         document.querySelector('#nutritionnel_sucres').value = alcool / 10;
