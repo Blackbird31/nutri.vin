@@ -218,6 +218,12 @@
     </div>
     <?php endif; ?>
 
+    <div class="py-2 bg-white text-center liveform_anchor">
+      <?php foreach ($qrcode->getLabels() as $label): ?>
+        <img class="bg-white px-1" style="height: 30px;" title="Vin labellisé <?php echo $label ?>" src="/images/labels/<?php echo strtolower($label) ?>.png" >
+      <?php endforeach; ?>
+    </div>
+
     <?php if (!empty($qrcode->autres_infos)): ?>
     <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i>Autres informations</div>

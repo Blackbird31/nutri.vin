@@ -119,7 +119,7 @@
         </ul>
 
         <div class="tab-content py-4 col-sm-10">
-          <div class="tab-pane fade show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
+          <div class="tab-pane show active container m-0 p-0" id="ingredients_tableau" role="tabpanel" aria-labelledby="ingredients_tableau" tabindex="0" data-liveform-ignore>
             <p id="message_ingredients_vide" class="d-none">Aucun ingredient n'a été saisi</p>
             <table id="table_ingredients" class="table table-sm col-sm-10 table-striped">
                   <thead>
@@ -180,190 +180,199 @@
               Il est possible d'ajouter plusieurs ingrédients d'un coup en les séparant par une ","
             </div>
           </div>
-          <div class="tab-pane fade m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
+          <div class="tab-pane m-0 p-0" id="ingredients_texte" role="tabpanel" aria-labelledby="ingredients_texte" tabindex="0">
               <textarea class="form-control" rows="5" name="ingredients" id="ingredients"><?php echo $qrcode->ingredients ?></textarea>
           </div>
         </div>
 
-      <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
+        <h3 class="mt-4 mb-4">Informations nutritionelles</h3>
 
-      <h4>Simplifié</h4>
+        <ul id="nutritionnelle_tabs" class="nav nav-tabs col-sm-10" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="nutritionnelle_simplifie_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_simplifie" type="button" role="tab" aria-controls="nutritionnelle_simplifie" aria-selected="true">Simplifié</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="nutritionnelle_complet_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_complet" type="button" role="tab" aria-controls="nutritionnelle_complet" aria-selected="false">Complet</button>
+            </li>
+        </ul>
 
-      <div class="mb-3 col-sm-10">
-        <table class="table table-sm table-striped">
-          <tbody>
-            <tr>
-              <td class="align-middle">Type de vin</td>
-                <td>
-                  <div class="col-9 offset-3">
-                  <div class="input-group">
-                      <select name="vin_type" id="vin_type" class="form-select">
-                           <option value="tranquille">Vin Tranquille ou Pétillant (de sec à moelleux)</option>
-                           <option value="liqueur">Vin de Liqueur</option>
-                           <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
-                      </select>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="align-middle">Teneur en sucre</td>
-                <td>
-                  <div class="col-6 offset-6">
-                  <div class="input-group">
-                    <input type="text" class="form-control text-sm-end" id="teneur_sucre" name="teneur_sucre"/>
-                    <span class="input-group-text" id="basic-addon-cal" style="width:50px">g/L</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="align-middle">TAV</td>
-                <td>
-                  <div class="col-6 offset-6">
-                  <div class="input-group">
-                    <input type="text" class="form-control text-sm-end" id="nutri_simple_tav" name="nutri_simple_tav"/>
-                    <span class="input-group-text" id="basic-addon-cal" style="width:50px">%</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <a href="#" type="submit" class="btn btn-success" id="nutri_generate">Générer</a>
-      </div>
-
-      <h4>Complet</h4>
-
-        <div class="form-floating mb-3 col-sm-10">
-          <table class="table table-sm table-striped">
-            <tbody>
-              <tr>
-                <td class="align-middle">Énergie (kJ)</td>
-                  <td>
-                    <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
-                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
-                    </div>
-                  </div>
-                  </td>
-              </tr>
-              <tr>
-                <td class="align-middle">Énergie (kcal)</td>
-                  <td>
-                    <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
-                      <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
-                    </div>
-                  </div>
-                  </td>
-              </tr>
-
-
-              <tr>
-                <td class="align-middle">Graisses</td>
-                  <td class="text-sm-start">
-                    <div class="col-6 offset-6">
+        <div class="tab-content mb-3 pt-4 col-sm-10">
+            <div class="tab-pane show active m-0 p-0" id="nutritionnelle_simplifie" role="tabpanel" aria-labelledby="nutritionnelle_simplifie" tabindex="0">
+            <table class="table table-sm table-striped">
+              <tbody>
+                <tr>
+                  <td class="align-middle">Type de vin</td>
+                    <td>
+                      <div class="col-9 offset-3">
                       <div class="input-group">
-                        <input type="text" class="form-control text-sm-end" id="nutritionnel_graisses" name="nutritionnel_graisses" value="<?php echo $qrcode->nutritionnel_graisses; ?>"/>
-                        <span class="input-group-text" id="basic-addon-graisses">g</span>
+                          <select name="vin_type" id="vin_type" class="form-select" form="form_convertir_nutritionnelle" required>
+                               <option value="tranquille">Vin Tranquille ou Pétillant (de sec à moelleux)</option>
+                               <option value="liqueur">Vin de Liqueur</option>
+                               <option value="mousseux">Vin Mousseux (de brut à demi-sec)</option>
+                          </select>
                       </div>
                     </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="ps-5 align-middle">- dont acides gras saturés</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_acides_gras" name="nutritionnel_acides_gras" value="<?php echo $qrcode->nutritionnel_acides_gras; ?>"/>
-                      <span class="input-group-text" id="basic-addon-gras">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="align-middle">Glucides</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_glucides" name="nutritionnel_glucides" value="<?php echo $qrcode->nutritionnel_glucides; ?>"/>
-                      <span class="input-group-text" id="basic-addon-glucides">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="ps-5 align-middle">- dont sucres</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sucres" name="nutritionnel_sucres" value="<?php echo $qrcode->nutritionnel_sucres; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sucres">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                  <td class="align-middle">Fibres alimentaires</td>
-                  <td class="text-sm-start">
-                      <div class="col-6 offset-6">
-                          <div class="input-group">
-                              <input type="text" class="form-control text-sm-end" id="nutritionnel_fibres" name="nutritionnel_fibres" value="<?php echo $qrcode->nutritionnel_fibres; ?>"/>
-                              <span class="input-group-text" id="basic-addon-fibres">g</span>
-                          </div>
-                      </div>
                   </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">Protéines</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_proteines" name="nutritionnel_proteines" value="<?php echo $qrcode->nutritionnel_proteines; ?>"/>
-                      <span class="input-group-text" id="basic-addon-proteines">g</span>
+                </tr>
+                <tr>
+                  <td class="align-middle">Teneur en sucre</td>
+                    <td>
+                      <div class="col-6 offset-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-sm-end" id="teneur_sucre" name="teneur_sucre" form="form_convertir_nutritionnelle" required />
+                        <span class="input-group-text" id="basic-addon-cal" style="width:50px">g/L</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td class="align-middle">Sel</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sel" name="nutritionnel_sel" value="<?php echo $qrcode->nutritionnel_sel; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sel">g</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="align-middle">TAV</td>
+                    <td>
+                      <div class="col-6 offset-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-sm-end" id="nutri_simple_tav" name="nutri_simple_tav" form="form_convertir_nutritionnelle" required />
+                        <span class="input-group-text" id="basic-addon-cal" style="width:50px">%</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-end">
+            <button type="submit" form="form_convertir_nutritionnelle" class="btn btn-outline-primary"><i class="bi bi-calculator"></i> Convertir</button>
+            </div>
+            </div>
 
-              <tr>
-                <td class="align-middle">Sodium</td>
-                <td class="text-sm-start">
-                  <div class="col-6 offset-6">
-                    <div class="input-group">
-                      <input type="text" class="form-control text-sm-end" id="nutritionnel_sodium" name="nutritionnel_sodium" value="<?php echo $qrcode->nutritionnel_sodium; ?>"/>
-                      <span class="input-group-text" id="basic-addon-sodium">g</span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+            <div class="tab-pane m-0 p-0" id="nutritionnelle_complet" role="tabpanel" aria-labelledby="nutritionnelle_complet">
+                <table class="table table-sm table-striped">
+                <tbody>
+                  <tr>
+                    <td class="align-middle">Énergie (kJ)</td>
+                      <td>
+                        <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kj" name="nutritionnel_energie_kj" value="<?php echo $qrcode->nutritionnel_energie_kj; ?>"/>
+                          <span class="input-group-text" id="basic-addon-cal" style="width:50px">kJ</span>
+                        </div>
+                      </div>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle">Énergie (kcal)</td>
+                      <td>
+                        <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_energie_kcal" name="nutritionnel_energie_kcal" value="<?php echo $qrcode->nutritionnel_energie_kcal; ?>"/>
+                          <span class="input-group-text" id="basic-addon-cal" style="width:50px">kcal</span>
+                        </div>
+                      </div>
+                      </td>
+                  </tr>
 
-            </tbody>
-          </table>
+
+                  <tr>
+                    <td class="align-middle">Graisses</td>
+                      <td class="text-sm-start">
+                        <div class="col-6 offset-6">
+                          <div class="input-group">
+                            <input type="text" class="form-control text-sm-end" id="nutritionnel_graisses" name="nutritionnel_graisses" value="<?php echo $qrcode->nutritionnel_graisses; ?>"/>
+                            <span class="input-group-text" id="basic-addon-graisses">g</span>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="ps-5 align-middle">- dont acides gras saturés</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_acides_gras" name="nutritionnel_acides_gras" value="<?php echo $qrcode->nutritionnel_acides_gras; ?>"/>
+                          <span class="input-group-text" id="basic-addon-gras">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="align-middle">Glucides</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_glucides" name="nutritionnel_glucides" value="<?php echo $qrcode->nutritionnel_glucides; ?>"/>
+                          <span class="input-group-text" id="basic-addon-glucides">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="ps-5 align-middle">- dont sucres</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sucres" name="nutritionnel_sucres" value="<?php echo $qrcode->nutritionnel_sucres; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sucres">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                      <td class="align-middle">Fibres alimentaires</td>
+                      <td class="text-sm-start">
+                          <div class="col-6 offset-6">
+                              <div class="input-group">
+                                  <input type="text" class="form-control text-sm-end" id="nutritionnel_fibres" name="nutritionnel_fibres" value="<?php echo $qrcode->nutritionnel_fibres; ?>"/>
+                                  <span class="input-group-text" id="basic-addon-fibres">g</span>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+
+                  <tr>
+                    <td class="align-middle">Protéines</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_proteines" name="nutritionnel_proteines" value="<?php echo $qrcode->nutritionnel_proteines; ?>"/>
+                          <span class="input-group-text" id="basic-addon-proteines">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="align-middle">Sel</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sel" name="nutritionnel_sel" value="<?php echo $qrcode->nutritionnel_sel; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sel">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="align-middle">Sodium</td>
+                    <td class="text-sm-start">
+                      <div class="col-6 offset-6">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-sm-end" id="nutritionnel_sodium" name="nutritionnel_sodium" value="<?php echo $qrcode->nutritionnel_sodium; ?>"/>
+                          <span class="input-group-text" id="basic-addon-sodium">g</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+                </table>
+            </div>
         </div>
 
         <h3 class="mt-4 mb-4" id="photos">Photos</h3>
@@ -414,16 +423,7 @@
                 </div>
             </div>
         </div>
-
-        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
-
-        <div class="mb-3 col-sm-10">
-            <textarea class="form-control" name="autres_infos" rows="5"><?php echo $qrcode->autres_infos; ?></textarea>
-            <div class="form-text">
-              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
-            </div>
-        </div>
-
+        
         <h3 class="mt-4 mb-4">Labels complémentaires</h3>
         <?php $labels = $qrcode->getLabels(); ?>
         <div class="mb-3 col-sm-10">
@@ -435,19 +435,29 @@
           <?php endforeach; ?>
         </div>
 
+        <h3 class="mt-4 mb-4">Autres informations destinées aux consommateurs</h3>
+
+        <div class="mb-3 col-sm-10">
+            <textarea class="form-control" name="autres_infos" rows="3"><?php echo $qrcode->autres_infos; ?></textarea>
+            <div class="form-text">
+              Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
+            </div>
+        </div>
+
         <div class="row mt-5">
             <div class="col-6">
-                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light">Retour à la liste</a>
+                <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
             </div>
             <div class="col-4 text-end">
                 <?php if ($qrcode->exists('authorization_key')): ?>
                 <input type="hidden" name="authorization_key" value="<?php echo $qrcode->authorization_key; ?>"/>
                 <?php endif; ?>
-                <button type="submit" class="btn btn-primary">Valider</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> Valider</button>
             </div>
         </div>
       </form>
       <form id="form_add_ingredients"></form>
+      <form id="form_convertir_nutritionnelle"></form>
   </div>
   <div class="col-4">
     <?php
@@ -773,9 +783,10 @@ convert_valeur_energetique_kj = {
     }
 };
 
-document.querySelector('#nutri_generate').addEventListener('click', function(e) {
+document.querySelector('#form_convertir_nutritionnelle').addEventListener('submit', function(e) {
     e.preventDefault();
     nutri_update_complet();
+    bootstrap.Tab.getOrCreateInstance(document.querySelector('#nutritionnelle_complet_tab')).show()
 });
 document.querySelector('#vin_type').addEventListener('change', function(e) {
     e.preventDefault();
