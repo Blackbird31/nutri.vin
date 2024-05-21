@@ -32,4 +32,13 @@ class QRCodePDFOptions extends QRCodeGeneralOptions
         $this->returnResource = true;
         $this->fpdfTitle = mb_convert_encoding($title, "ISO-8859-15", "UTF-8");
     }
+
+    public function setEnergies($energies)
+    {
+        $this->outputType = QROutputInterface::CUSTOM;
+        $this->outputInterface = QRFpdfCustom::class;
+
+        $this->returnResource = true;
+        $this->fpdfEnergies = $energies;
+    }
 }
