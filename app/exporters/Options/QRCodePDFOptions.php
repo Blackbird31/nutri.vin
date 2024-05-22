@@ -12,6 +12,7 @@ class QRCodePDFOptions extends QRCodeGeneralOptions
     protected string $fpdfMeasureUnit = 'mm';
 
     protected string $fpdfTitle = '';
+    protected array $fpdfEnergies = [];
 
     public static function setResponseHeaders()
     {
@@ -30,7 +31,7 @@ class QRCodePDFOptions extends QRCodeGeneralOptions
         $this->outputInterface = QRFpdfCustom::class;
 
         $this->returnResource = true;
-        $this->fpdfTitle = mb_convert_encoding($title, "ISO-8859-15", "UTF-8");
+        $this->fpdfTitle = $title;
     }
 
     public function setEnergies($energies)

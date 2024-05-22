@@ -9,10 +9,10 @@ class QRFpdfCustom extends QRFpdf
     public function dump(string $file = null) // la signature doit correspondre au parent
     {
         $fpdf = parent::dump($file);
-        $fpdf->SetFont('Arial','', 8 * $this->scale);
-        $fpdf->text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->options->fpdfTitle) / 2), 18, $this->options->fpdfTitle);
-
-        $fpdf->text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->getEnergies()) / 2), $this->length - 1.5 * $this->scale, $this->getEnergies());
+        $fpdf->SetAutoPageBreak(TRUE, 0); // pas de margin bottom, sinon ça passe à la ligne après la fin des carrés du QRCode
+        $fpdf->SetFont('helvetica', '', floor(8 * $this->scale));
+        $fpdf->Text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->options->fpdfTitle) / 2), 1, $this->options->fpdfTitle);
+        $fpdf->Text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->getEnergies()) / 2), $this->length - (4 * $this->scale), $this->getEnergies());
 
         $pdfData = $fpdf->Output('S');
 
