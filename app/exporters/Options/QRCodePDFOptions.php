@@ -22,7 +22,9 @@ class QRCodePDFOptions extends QRCodeGeneralOptions
 
     public function setLogo($logo)
     {
-        // Not working with this format
+        parent::setLogo($logo);
+        $this->outputType = QROutputInterface::CUSTOM;
+        $this->outputInterface = QRFpdfCustom::class;
     }
 
     public function setTitle($title)

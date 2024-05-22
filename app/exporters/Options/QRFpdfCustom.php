@@ -11,8 +11,18 @@ class QRFpdfCustom extends QRFpdf
         $fpdf = parent::dump($file);
         $fpdf->SetAutoPageBreak(TRUE, 0); // pas de margin bottom, sinon ça passe à la ligne après la fin des carrés du QRCode
         $fpdf->SetFont('helvetica', '', floor(8 * $this->scale));
-        $fpdf->Text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->options->fpdfTitle) / 2), 1, $this->options->fpdfTitle);
+        $fpdf->Text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->options->fpdfTitle) / 2), 0, $this->options->fpdfTitle);
         $fpdf->Text(ceil($this->length / 2) - ($fpdf->GetStringWidth($this->getEnergies()) / 2), $this->length - (4 * $this->scale), $this->getEnergies());
+
+        if ($this->options->svgLogo) {
+            $fpdf->ImageSVG(
+                $this->options->svgLogo,
+                ($this->length - $this->options->logoSpaceWidth * $this->scale) / 2,
+                ($this->length - $this->options->logoSpaceHeight * $this->scale) / 2,
+                $this->options->logoSpaceWidth * $this->scale,
+                $this->options->logoSpaceHeight * $this->scale,
+            );
+        }
 
         $pdfData = $fpdf->Output('S');
 
