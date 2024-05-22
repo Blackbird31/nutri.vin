@@ -13,7 +13,7 @@ $psr4 = [
     "app\\" => "../app/",
     "chillerlan\\QRCode\\" => "php-qrcode/src",
     "chillerlan\\Settings\\" => "php-settings-container/src",
-    "FPDF\\" => "FPDF",
+    "TCPDF\\" => "tcpdf",
     "DB\\" => "php-couchdb/src"
 ];
 

@@ -13,21 +13,21 @@ namespace chillerlan\QRCode\Output;
 
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\Settings\SettingsContainerInterface;
-use FPDF;
+use TCPDF;
 
 use function array_values, class_exists, count, intval, is_array, is_numeric, max, min;
 
 /**
- * QRFpdf output module (requires fpdf)
+ * QRFpdf output module (requires tcpdf)
  *
- * @see https://github.com/Setasign/FPDF
- * @see http://www.fpdf.org/
+ * @see https://github.com/tecnickcom/TCPDF/
+ * @see https://tcpdf.org/
  */
 class QRFpdf extends QROutputAbstract{
 
 	public const MIME_TYPE = 'application/pdf';
 
-	protected FPDF   $fpdf;
+	protected TCPDF   $fpdf;
 	protected ?array $prevColor = null;
 
 	/**
@@ -37,11 +37,11 @@ class QRFpdf extends QROutputAbstract{
 	 */
 	public function __construct(SettingsContainerInterface $options, QRMatrix $matrix){
 
-		if(!class_exists(FPDF::class)){
+		if(!class_exists(TCPDF::class)){
 			// @codeCoverageIgnoreStart
 			throw new QRCodeOutputException(
-				'The QRFpdf output requires FPDF (https://github.com/Setasign/FPDF)'.
-				' as dependency but the class "\\FPDF" couldn\'t be found.'
+				'The QRFpdf output requires TCPDF (https://github.com/tecnickcom/TCPDF/)'.
+				' as dependency but the class "\\TCPDF" couldn\'t be found.'
 			);
 			// @codeCoverageIgnoreEnd
 		}
@@ -109,8 +109,8 @@ class QRFpdf extends QROutputAbstract{
 	/**
 	 * Initializes an FPDF instance
 	 */
-	protected function initFPDF():FPDF{
-		return new FPDF('P', $this->options->fpdfMeasureUnit, $this->getOutputDimensions());
+	protected function initTCPDF():TCPDF{
+		return new TCPDF('P', $this->options->fpdfMeasureUnit, $this->getOutputDimensions());
 	}
 
 	/**
@@ -119,7 +119,9 @@ class QRFpdf extends QROutputAbstract{
 	 * @return string|\FPDF
 	 */
 	public function dump(string $file = null){
-		$this->fpdf = $this->initFPDF();
+		$this->fpdf = $this->initTCPDF();
+		$this->fpdf->setPrintHeader(false);
+		$this->fpdf->setPrintFooter(false);
 		$this->fpdf->AddPage();
 
 		if($this::moduleValueIsValid($this->options->bgColor)){
