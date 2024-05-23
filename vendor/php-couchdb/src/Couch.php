@@ -31,7 +31,7 @@ class Couch {
 			throw new \Exception('cURL must be enabled');
 		}
 		$this->dsn = str_replace('couchdb:', '', $dsn);
-        $this->dsn = substr($this->dsn, 0, strrpos($this->dsn, '/') + 1);
+        $this->dsn = substr($this->dsn, 0, strrpos($this->dsn, '/'));
 
 		$this->db = substr(strrchr($dsn, '/'), 1);
 
