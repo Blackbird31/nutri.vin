@@ -26,12 +26,15 @@ class Couch {
 		return $this->db;
 	}
 
-	public function __construct ($dsn, $db, $options = []) {
+	public function __construct ($dsn, $options = []) {
 		if (!function_exists('curl_init')) {
 			throw new \Exception('cURL must be enabled');
 		}
-		$this->dsn = $dsn;
-		$this->db = $db;
+		$this->dsn = str_replace('couchdb:', '', $dsn);
+        $this->dsn = substr($this->dsn, 0, strrpos($this->dsn, '/') + 1);
+
+		$this->db = substr(strrchr($dsn, '/'), 1);
+
 		$this->options = $options;
 	}
 

@@ -9,8 +9,9 @@ class Mapper extends \DB\Cursor {
 	protected $document = [];
 	protected $props = [];
 
-	function __construct(\DB\Couch $db) {
+	function __construct(\DB\Couch $db, $class) {
 		$this->db = $db;
+        $this->document = array_fill_keys(array_keys($class::getFieldsAndType()), null);
 	}
 
 	function dbtype() {

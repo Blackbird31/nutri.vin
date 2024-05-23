@@ -27,7 +27,7 @@ class DBManager {
         switch ($scheme) {
             case 'couchdb':
                 self::$db = "DB\\Couch";
-                self::$mapper = "DB\\Couch";
+                self::$mapper = "DB\\Couch\\Mapper";
                 break;
             case 'sqlite':
                 self::$db = "DB\\SQL";
@@ -36,6 +36,21 @@ class DBManager {
             default:
                 throw new LogicException('Pas de config pour ce type de connexion');
                 break;
+        }
+    }
+
+    public static function createTable($fields = null)
+    {
+        if (self::$db === "DB\\SQL") {
+            $create_fields_sql = '';
+            foreach(get_called_class()::getFieldsAndType() as $field => $type) {
+                $create_fields_sql .= ($create_fields_sql) ? ",\n" : '';
+                $create_fields_sql .= "$field $type";
+            }
+            $sql = "CREATE TABLE ".strtolower(get_called_class())." (".$create_fields_sql.");";
+            return self::$db->exec($sql);
+        } else {
+            self::$db->createDb();
         }
     }
 }
