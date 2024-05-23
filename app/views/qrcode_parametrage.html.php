@@ -49,4 +49,14 @@
     checkbox.addEventListener('change', function() {
         document.getElementById('logoForm').submit();
     });
+
+    history.pushState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->id; ?>");
+    history.pushState({ page: "parametrage" }, "parametrage", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/parametrage/".$qrcode->id; ?>");
+
+    window.addEventListener("popstate", (event) => {
+        history.replaceState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->id; ?>");
+        window.location.reload();
+});
+
+
 </script>
