@@ -55,7 +55,7 @@ class CtrlNutriVin {
                 }
             }
             $qrcode->save();
-            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId(), false);
+            return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId().'?from=create', false);
         }
         return $f3->reroute('/qrcode', false);
     }
@@ -276,6 +276,9 @@ class CtrlNutriVin {
     }
 
     public function qrcodeParametrage(Base $f3) {
+        if (isset($_GET['from'])) {
+            $f3->set('from', $_GET['from']);
+        }
         $this->authenticatedUserOnly($f3);
         $qrcode = $f3->get('PARAMS.qrcodeid');
 

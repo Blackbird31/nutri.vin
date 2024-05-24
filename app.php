@@ -22,7 +22,7 @@ if (isset($config['urlbase'])) {
 }
 
 require_once('app/models/DBManager.class.php');
-DBManager::createDB('sqlite:'.$f3->get('ROOT').'/db/nutrivin.sqlite');
+DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin');
 
 require_once('app/models/QRCode.class.php');
 

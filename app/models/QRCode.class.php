@@ -51,7 +51,7 @@ class QRCode extends Mapper
   ];
 
 	 public static function getFieldsAndType() {
-		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
+		 $fields['_id'] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
      $fields['domaine_nom'] = 'VARCHAR(255)';
 		 $fields['adresse_domaine'] = 'VARCHAR(255)';

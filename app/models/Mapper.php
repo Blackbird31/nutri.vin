@@ -8,15 +8,15 @@ abstract class Mapper
 
     public function __construct()
     {
-        $this->mapper = new \DB\SQL\Mapper(DBManager::getDB(), strtolower(get_called_class()));
+        $this->mapper = new \DB\Couch\Mapper(DBManager::getDB(), strtolower(get_called_class()));
     }
 
 	public function getId() {
-		return $this->mapper->get('id');
+		return $this->mapper->get('_id');
 	}
 
 	public function setId($id) {
-		$this->mapper->set('id', $id);
+		$this->mapper->set('_id', $id);
 	}
 
 	public function toArray() {
@@ -30,8 +30,8 @@ abstract class Mapper
 	public static function findById($id) {
 		$class = get_called_class();
         $e = new $class();
-		$e->mapper->load(array('id=?',$id));
-		if (!$e->id) {
+		$e->mapper->load(array('_id=?', $id));
+		if (!$e->_id) {
 			return null;
 		}
 		return $e;
@@ -52,13 +52,7 @@ abstract class Mapper
 	}
 
 	public static function createTable() {
-		$create_fields_sql = '';
-		foreach(get_called_class()::getFieldsAndType() as $field => $type) {
-			$create_fields_sql .= ($create_fields_sql) ? ",\n" : '';
-			$create_fields_sql .= "$field $type";
-		}
-		$sql = "CREATE TABLE ".strtolower(get_called_class())." (".$create_fields_sql.");";
-		return DBManager::getDB()->exec($sql);
+        DBManager::createTable(get_called_class()::getFieldsAndType());
 	}
 
 	public function tableExists() {
