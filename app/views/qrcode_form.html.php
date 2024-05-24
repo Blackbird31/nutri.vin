@@ -1,17 +1,17 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><?php if ($qrcode->getId()): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></li>
+      <li class="breadcrumb-item active" aria-current="page"><?php if (isset($qrcode->id)): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></li>
   </ol>
 </nav>
 
-<h2><?php if ($qrcode->getId()): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></h2>
+<h2><?php if (isset($qrcode->id)): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></h2>
 
 <div class="row">
   <div class="col-7">
       <form method="POST" id="form-edition" action="/qrcode/<?php echo $qrcode->user_id ?>/write" enctype="multipart/form-data" class="live-form">
-      <?php if ($qrcode->getId()): ?>
-          <input type="hidden" name="id" value="<?php echo $qrcode->getId(); ?>" />
+      <?php if (isset($qrcode->id)): ?>
+          <input type="hidden" name="id" value="<?php echo $qrcode->id; ?>" />
       <?php endif; ?>
 
       <?php if (count($qrcode->getVisites())): ?>
@@ -392,7 +392,7 @@
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/0/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/0/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
@@ -406,7 +406,7 @@
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/1/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/1/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
@@ -420,7 +420,7 @@
                         Réinitialiser
                     </span>
                     <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
-                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/2/delete">Supprimer</a>
+                        <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->id; ?>/img/2/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
