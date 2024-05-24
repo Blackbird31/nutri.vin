@@ -51,7 +51,7 @@ class QRCode extends Mapper
   ];
 
 	 public static function getFieldsAndType() {
-		 $fields['_id'] = 'VARCHAR(255) PRIMARY KEY';
+		 $fields[self::$primaryKey] = 'VARCHAR(255) PRIMARY KEY';
 		 $fields['user_id'] = 'VARCHAR(255)';
      $fields['domaine_nom'] = 'VARCHAR(255)';
 		 $fields['adresse_domaine'] = 'VARCHAR(255)';
@@ -90,7 +90,13 @@ class QRCode extends Mapper
     public static function findByUserid($userid) {
 		$class = get_called_class();
         $e = new $class();
-		return $e->mapper->find(array('user_id=?',$userid));
+        $qr = [];
+        foreach ($e->mapper->find(array('user_id=?',$userid)) as $result) {
+            $a = new $class();
+            $a->mapper->load([self::$primaryKey.'=?', $result->{self::$primaryKey}]);
+            $qr[] = $a;
+        };
+        return $qr;
 	}
 
     public static function getListeCategoriesAdditif() {

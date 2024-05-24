@@ -5,18 +5,20 @@ require_once('DBManager.class.php');
 abstract class Mapper
 {
     private $mapper;
+    static public $primaryKey;
 
     public function __construct()
     {
         $this->mapper = new \DB\Couch\Mapper(DBManager::getDB(), strtolower(get_called_class()));
+        self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper->getPrimaryKey() : 'id';
     }
 
 	public function getId() {
-		return $this->mapper->get('_id');
+		return $this->mapper->get(self::$primaryKey);
 	}
 
 	public function setId($id) {
-		$this->mapper->set('_id', $id);
+		$this->mapper->set(self::$primaryKey, $id);
 	}
 
 	public function toArray() {
@@ -30,8 +32,8 @@ abstract class Mapper
 	public static function findById($id) {
 		$class = get_called_class();
         $e = new $class();
-		$e->mapper->load(array('_id=?', $id));
-		if (!$e->_id) {
+		$e->mapper->load(array(self::$primaryKey.'=?', $id));
+		if (!$e->{self::$primaryKey}) {
 			return null;
 		}
 		return $e;

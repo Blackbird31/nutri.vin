@@ -6,7 +6,7 @@
 </nav>
 
 <div class="mb-4">
-    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->_id ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
+    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
 </div>
 <div class="row justify-content-end">
     <div class="col-4 offset-1">
@@ -14,9 +14,9 @@
         <?php include('_phone.html.php') ?>
     </div>
     <div class="col-6 mt-5 offset-1 border-start">
-        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->_id ?>" enctype="multipart/form-data">
+        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->getId() ?>" enctype="multipart/form-data">
             <div class="d-flex justify-content-center align-items-center flex-column">
-                <img src="/<?php echo $qrcode->_id ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
+                <img src="/<?php echo $qrcode->getId() ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
                 <div class="form-check form-switch">
                     <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? 'checked' : ''?>>
                     <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du QR Code</label>
@@ -30,9 +30,9 @@
                     <i class="bi bi-download"></i> Télécharger le QR Code
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/<?php echo $qrcode->_id ?>/eps">EPS</a></li>
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->_id ?>/pdf">PDF</a></li>
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->_id ?>/svg">SVG</a></li>
+                    <li><a class="dropdown-item" href="/<?php echo $qrcode->getId() ?>/eps">EPS</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->getId() ?>/pdf">PDF</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->getId() ?>/svg">SVG</a></li>
                 </ul>
             </div>
         </div>
