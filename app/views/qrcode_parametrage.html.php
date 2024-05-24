@@ -14,9 +14,9 @@
         <?php include('_phone.html.php') ?>
     </div>
     <div class="col-6 mt-5 offset-1 border-start">
-        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->id ?>" enctype="multipart/form-data">
+        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->getId() ?>" enctype="multipart/form-data">
             <div class="d-flex justify-content-center align-items-center flex-column">
-                <img src="/<?php echo $qrcode->id ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
+                <img src="/<?php echo $qrcode->getId() ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
                 <div class="form-check form-switch">
                     <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? 'checked' : ''?>>
                     <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du QR Code</label>
@@ -30,9 +30,9 @@
                     <i class="bi bi-download"></i> Télécharger le QR Code
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/<?php echo $qrcode->id ?>/eps">EPS</a></li>
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/pdf">PDF</a></li>
-                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->id ?>/svg">SVG</a></li>
+                    <li><a class="dropdown-item" href="/<?php echo $qrcode->getId() ?>/eps">EPS</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->getId() ?>/pdf">PDF</a></li>
+                    <li><a class="dropdown-item" target="_blank" href="/<?php echo $qrcode->getId() ?>/svg">SVG</a></li>
                 </ul>
             </div>
         </div>
@@ -52,11 +52,11 @@
 
     <?php if (isset($from)): ?>
     console.log('<?php echo $from; ?>');
-        history.pushState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->id; ?>");
-        history.pushState({ page: "parametrage" }, "parametrage", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/parametrage/".$qrcode->id; ?>");
+        history.pushState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->getId(); ?>");
+        history.pushState({ page: "parametrage" }, "parametrage", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/parametrage/".$qrcode->getId(); ?>");
 
         window.addEventListener("popstate", (event) => {
-            history.replaceState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->id; ?>");
+            history.replaceState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->getId(); ?>");
             window.location.reload();
 
         });
