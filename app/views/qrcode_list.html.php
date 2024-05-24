@@ -42,11 +42,11 @@
                         </td>
                         <td><?php echo ($qr->visites) ? count( (array) json_decode($qr->visites) ) : 0; ?></<td>
                         <td>
-                            <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->id ?>"><i class="bi bi-pencil-fill"></i></a>
-                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->id ?>"><i class="bi bi-qr-code"></i></a>
-                            <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->id ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
+                            <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->_id ?>"><i class="bi bi-pencil-fill"></i></a>
+                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->_id ?>"><i class="bi bi-qr-code"></i></a>
+                            <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->_id ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
                         </td>
-                        <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->id; ?>'></td>
+                        <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->_id; ?>'></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
