@@ -6,6 +6,8 @@ require_once('Mapper.php');
 
 class QRCode extends Mapper
 {
+    const VERSION_KEY_DATEFORMAT = 'Y-m-d H:i:s';
+
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
                             '0123456789';
@@ -337,11 +339,18 @@ class QRCode extends Mapper
     $this->visites = json_encode($visites);
   }
 
-  public function getLabels() {
-    $labels = $this->get('labels');
-    if ($labels) {
-      return json_decode($labels, true);
+  private function addVersion(array $qrcode, $datetime = null) {
+    $versions = $this->getVersions();
+    $key = date(self::VERSION_KEY_DATEFORMAT);
+    if ($datetime) {
+      if ($d = DateTime::createFromFormat(self::VERSION_KEY_DATEFORMAT, $datetime)) {
+        if ($d->format(self::VERSION_KEY_DATEFORMAT) === $datetime) {
+          $key = $datetime;
+        }
+      }
     }
-    return [];
+    $versions[$key] = $qrcode;
+    krsort($versions);
+    $this->versions = json_encode($versions);
   }
 }
