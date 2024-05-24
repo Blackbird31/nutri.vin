@@ -13,6 +13,14 @@ class QRCode extends Mapper
                             '0123456789';
     public static $LABELS = ["HVE", "Demeter", "Biodyvin"];
 
+    public static $versionning_ignore_fields = [
+      'authorization_key',
+      'date_version',
+      'logo',
+      'visites',
+      'versions'
+    ];
+
 	public static $copy_field_filter = [
 		"domaine_nom" => 1,
 		"adresse_domaine" => 1,
@@ -287,8 +295,28 @@ class QRCode extends Mapper
 			$this->date_creation = $this->date_version;
 		}
 
+    $this->saveVersion();
+
 		return $this->mapper->save();
 	}
+
+  private function saveVersion() {
+    if (!$this->getVisites()) return;
+    if (!$this->changed()) return;
+    if (!$this->getId()) return;
+
+    $initial = (self::findById($this->getId()))->toArray();
+    $current = $this->toArray();
+
+    foreach (self::$versionning_ignore_fields as $field) {
+      if (isset($initial[$field])) unset($initial[$field]);
+      if (isset($current[$field])) unset($current[$field]);
+    }
+
+    if (array_diff_assoc($current, $initial)) {
+      $this->addVersion($current);
+    }
+  }
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
