@@ -311,12 +311,24 @@ class QRCode extends Mapper
         );
   }
 
-  public function getVisites() {
-    $visites = $this->get('visites');
-    if ($visites) {
-      return json_decode($visites, true);
+  protected function getJsonValueField($field) {
+    $value = $this->get($field);
+    if ($value) {
+      return json_decode($value, true);
     }
     return [];
+  }
+
+  public function getVisites() {
+    return $this->getJsonValueField('visites');
+  }
+
+  public function getLabels() {
+    return $this->getJsonValueField('labels');
+  }
+
+  public function getVersions() {
+    return $this->getJsonValueField('versions');
   }
 
   public function addVisite(array $infos) {
