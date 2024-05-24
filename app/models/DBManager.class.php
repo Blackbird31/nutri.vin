@@ -39,7 +39,7 @@ class DBManager {
         }
     }
 
-    public static function createTable($fields = null)
+    public static function createTable($table, $fields = null)
     {
         if (get_class(self::$db) === "DB\\SQL") {
             $create_fields_sql = '';
@@ -47,7 +47,7 @@ class DBManager {
                 $create_fields_sql .= ($create_fields_sql) ? ",\n" : '';
                 $create_fields_sql .= "$field $type";
             }
-            $sql = "CREATE TABLE ".strtolower(get_called_class())." (".$create_fields_sql.");";
+            $sql = "CREATE TABLE ".strtolower($table)." (".$create_fields_sql.");";
             return self::$db->exec($sql);
         } else {
             self::$db->createDb();

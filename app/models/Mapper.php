@@ -52,7 +52,7 @@ abstract class Mapper
 	}
 
 	public static function createTable() {
-        DBManager::createTable(get_called_class()::getFieldsAndType());
+        DBManager::createTable(get_called_class(), get_called_class()::getFieldsAndType());
 	}
 
 	public function tableExists() {
