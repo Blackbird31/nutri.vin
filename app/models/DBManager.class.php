@@ -41,9 +41,9 @@ class DBManager {
 
     public static function createTable($fields = null)
     {
-        if (self::$db === "DB\\SQL") {
+        if (get_class(self::$db) === "DB\\SQL") {
             $create_fields_sql = '';
-            foreach(get_called_class()::getFieldsAndType() as $field => $type) {
+            foreach($fields as $field => $type) {
                 $create_fields_sql .= ($create_fields_sql) ? ",\n" : '';
                 $create_fields_sql .= "$field $type";
             }
