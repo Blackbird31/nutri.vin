@@ -6,10 +6,20 @@ require_once('Mapper.php');
 
 class QRCode extends Mapper
 {
+    const VERSION_KEY_DATEFORMAT = 'Y-m-d H:i:s';
+
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
                             '0123456789';
     public static $LABELS = ["HVE", "Demeter", "Biodyvin"];
+
+    public static $versionning_ignore_fields = [
+      'authorization_key',
+      'date_version',
+      'logo',
+      'visites',
+      'versions'
+    ];
 
 	public static $copy_field_filter = [
 		"domaine_nom" => 1,
@@ -36,7 +46,8 @@ class QRCode extends Mapper
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1,
-        "labels" => 1,
+    "labels" => 1,
+    "versions" => 1,
   ];
 
 	 public static function getFieldsAndType() {
@@ -72,6 +83,7 @@ class QRCode extends Mapper
      $fields['logo'] = 'BOOL';
      $fields['visites'] = 'TEXT';
      $fields['labels'] = 'TEXT';
+     $fields['versions'] = 'TEXT';
 		 return $fields;
  	}
 
@@ -283,8 +295,28 @@ class QRCode extends Mapper
 			$this->date_creation = $this->date_version;
 		}
 
+    $this->saveVersion();
+
 		return $this->mapper->save();
 	}
+
+  private function saveVersion() {
+    if (!$this->getVisites()) return;
+    if (!$this->changed()) return;
+    if (!$this->getId()) return;
+
+    $initial = (self::findById($this->getId()))->toArray();
+    $current = $this->toArray();
+
+    foreach (self::$versionning_ignore_fields as $field) {
+      if (isset($initial[$field])) unset($initial[$field]);
+      if (isset($current[$field])) unset($current[$field]);
+    }
+
+    if (array_diff_assoc($current, $initial)) {
+      $this->addVersion($current);
+    }
+  }
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
@@ -309,12 +341,24 @@ class QRCode extends Mapper
         );
   }
 
-  public function getVisites() {
-    $visites = $this->get('visites');
-    if ($visites) {
-      return json_decode($visites, true);
+  protected function getJsonValueField($field) {
+    $value = $this->get($field);
+    if ($value) {
+      return json_decode($value, true);
     }
     return [];
+  }
+
+  public function getVisites() {
+    return $this->getJsonValueField('visites');
+  }
+
+  public function getLabels() {
+    return $this->getJsonValueField('labels');
+  }
+
+  public function getVersions() {
+    return $this->getJsonValueField('versions');
   }
 
   public function addVisite(array $infos) {
@@ -323,11 +367,18 @@ class QRCode extends Mapper
     $this->visites = json_encode($visites);
   }
 
-  public function getLabels() {
-    $labels = $this->get('labels');
-    if ($labels) {
-      return json_decode($labels, true);
+  private function addVersion(array $qrcode, $datetime = null) {
+    $versions = $this->getVersions();
+    $key = date(self::VERSION_KEY_DATEFORMAT);
+    if ($datetime) {
+      if ($d = DateTime::createFromFormat(self::VERSION_KEY_DATEFORMAT, $datetime)) {
+        if ($d->format(self::VERSION_KEY_DATEFORMAT) === $datetime) {
+          $key = $datetime;
+        }
+      }
     }
-    return [];
+    $versions[$key] = $qrcode;
+    krsort($versions);
+    $this->versions = json_encode($versions);
   }
 }

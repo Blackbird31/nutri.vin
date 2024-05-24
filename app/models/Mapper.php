@@ -93,4 +93,12 @@ abstract class Mapper
         return $this->toArray();
     }
 
+    public function changed($key = null) {
+      return $this->mapper->changed($key);
+    }
+
+    public function erase($filter = null, $quick = true) {
+      return $this->mapper->erase($filter, $quick);
+    }
+
 }
