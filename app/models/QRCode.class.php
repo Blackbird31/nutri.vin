@@ -47,7 +47,6 @@ class QRCode extends Mapper
 		"autres_infos" => 1,
 		"authorization_key" => 1,
     "labels" => 1,
-    "versions" => 1,
   ];
 
     public static $getFieldsAndType = [
