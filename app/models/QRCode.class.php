@@ -374,16 +374,9 @@ class QRCode extends Mapper
     $this->visites = json_encode($visites);
   }
 
-  private function addVersion(array $qrcode, $datetime = null) {
+  private function addVersion(array $qrcode, $datetime) {
     $versions = $this->getVersions();
-    $key = date(self::VERSION_KEY_DATEFORMAT);
-    if ($datetime) {
-      if ($d = DateTime::createFromFormat(self::VERSION_KEY_DATEFORMAT, $datetime)) {
-        if ($d->format(self::VERSION_KEY_DATEFORMAT) === $datetime) {
-          $key = $datetime;
-        }
-      }
-    }
+    $key = date(self::VERSION_KEY_DATEFORMAT, strtotime($datetime));
     $versions[$key] = $qrcode;
     krsort($versions);
     $this->versions = json_encode($versions);
