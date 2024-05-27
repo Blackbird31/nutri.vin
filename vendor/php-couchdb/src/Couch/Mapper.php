@@ -11,8 +11,14 @@ class Mapper extends \DB\Cursor {
 
 	function __construct(\DB\Couch $db, $class) {
 		$this->db = $db;
-        $this->document = array_fill_keys(array_keys($class::getFieldsAndType()), null);
+        $this->document = [self::getPrimaryKey() => 'VARCHAR(255) PRIMARY KEY'] + $class::$getFieldsAndType;
+        array_walk($this->document, function (&$v) { $v = null; });
 	}
+
+    public static function getPrimaryKey()
+    {
+        return '_id';
+    }
 
 	function dbtype() {
 		return 'Couch';

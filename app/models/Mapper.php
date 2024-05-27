@@ -9,8 +9,9 @@ abstract class Mapper
 
     public function __construct()
     {
-        $this->mapper = new \DB\Couch\Mapper(DBManager::getDB(), strtolower(get_called_class()));
-        self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper->getPrimaryKey() : 'id';
+        $mapper = DBManager::getMapper();
+        $this->mapper = new $mapper(DBManager::getDB(), strtolower(get_called_class()));
+        self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper::getPrimaryKey() : 'id';
     }
 
 	public function getId() {
@@ -54,7 +55,10 @@ abstract class Mapper
 	}
 
 	public static function createTable() {
-        DBManager::createTable(get_called_class(), get_called_class()::getFieldsAndType());
+        $fields = get_called_class()::$getFieldsAndType;
+        $pk = (method_exists(DBManager::getMapper(), 'getPrimaryKey')) ? DBManager::getMapper()::getPrimaryKey() : 'id';
+        $fields = array_merge([$pk => 'VARCHAR(255) PRIMARY KEY'], $fields);
+        DBManager::createTable(get_called_class(), $fields);
 	}
 
 	public function tableExists() {

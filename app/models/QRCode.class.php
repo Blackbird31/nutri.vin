@@ -50,42 +50,41 @@ class QRCode extends Mapper
     "versions" => 1,
   ];
 
-	 public static function getFieldsAndType() {
-		 $fields[self::$primaryKey] = 'VARCHAR(255) PRIMARY KEY';
-		 $fields['user_id'] = 'VARCHAR(255)';
-     $fields['domaine_nom'] = 'VARCHAR(255)';
-		 $fields['adresse_domaine'] = 'VARCHAR(255)';
-		 $fields['appellation'] = 'VARCHAR(255)';
-		 $fields['couleur'] = 'VARCHAR(255)';
-		 $fields['cuvee_nom'] = 'VARCHAR(255)';
-		 $fields['alcool_degre'] = 'FLOAT';
-		 $fields['centilisation'] = 'FLOAT';
-		 $fields['millesime'] = 'VARCHAR(255)';
-		 $fields['lot'] = 'VARCHAR(255)';
- 		 $fields['ingredients'] = 'TEXT';
-		 $fields['nutritionnel_energie_kj'] = 'FLOAT';
-		 $fields['nutritionnel_energie_kcal'] = 'FLOAT';
-		 $fields['nutritionnel_graisses'] = 'FLOAT';
-		 $fields['nutritionnel_acides_gras'] = 'FLOAT';
-		 $fields['nutritionnel_glucides'] = 'FLOAT';
-		 $fields['nutritionnel_sucres'] = 'FLOAT';
-		 $fields['nutritionnel_fibres'] = 'FLOAT';
-		 $fields['nutritionnel_proteines'] = 'FLOAT';
-		 $fields['nutritionnel_sel'] = 'FLOAT';
-		 $fields['nutritionnel_sodium'] = 'FLOAT';
-		 $fields['image_bouteille'] = 'BLOB';
-		 $fields['image_etiquette'] = 'BLOB';
-		 $fields['image_contreetiquette'] = 'BLOB';
- 		 $fields['autres_infos'] = 'TEXT';
-		 $fields['authorization_key'] = 'VARCHAR(100)';
-		 $fields['date_creation'] = 'VARCHAR(26)';
-		 $fields['date_version'] = 'VARCHAR(26)';
-     $fields['logo'] = 'BOOL';
-     $fields['visites'] = 'TEXT';
-     $fields['labels'] = 'TEXT';
-     $fields['versions'] = 'TEXT';
-		 return $fields;
- 	}
+    public static $getFieldsAndType = [
+        /* $fields[$id] => 'VARCHAR(255) PRIMARY KEY', */
+        'user_id' => 'VARCHAR(255)',
+        'domaine_nom' => 'VARCHAR(255)',
+        'adresse_domaine' => 'VARCHAR(255)',
+        'appellation' => 'VARCHAR(255)',
+        'couleur' => 'VARCHAR(255)',
+        'cuvee_nom' => 'VARCHAR(255)',
+        'alcool_degre' => 'FLOAT',
+        'centilisation' => 'FLOAT',
+        'millesime' => 'VARCHAR(255)',
+        'lot' => 'VARCHAR(255)',
+        'ingredients' => 'TEXT',
+        'nutritionnel_energie_kj' => 'FLOAT',
+        'nutritionnel_energie_kcal' => 'FLOAT',
+        'nutritionnel_graisses' => 'FLOAT',
+        'nutritionnel_acides_gras' => 'FLOAT',
+        'nutritionnel_glucides' => 'FLOAT',
+        'nutritionnel_sucres' => 'FLOAT',
+        'nutritionnel_fibres' => 'FLOAT',
+        'nutritionnel_proteines' => 'FLOAT',
+        'nutritionnel_sel' => 'FLOAT',
+        'nutritionnel_sodium' => 'FLOAT',
+        'image_bouteille' => 'BLOB',
+        'image_etiquette' => 'BLOB',
+        'image_contreetiquette' => 'BLOB',
+        'autres_infos' => 'TEXT',
+        'authorization_key' => 'VARCHAR(100)',
+        'date_creation' => 'VARCHAR(26)',
+        'date_version' => 'VARCHAR(26)',
+        'logo' => 'BOOL',
+        'visites' => 'TEXT',
+        'labels' => 'TEXT',
+        'versions' => 'TEXT',
+    ];
 
     public static function findByUserid($userid) {
 		$class = get_called_class();
