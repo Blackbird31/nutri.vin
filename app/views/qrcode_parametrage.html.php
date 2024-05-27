@@ -18,7 +18,7 @@
             <div class="d-flex justify-content-center align-items-center flex-column">
                 <img src="/<?php echo $qrcode->getId() ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? 'checked' : ''?>>
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
                     <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du QR Code</label>
                 </div>
             </div>

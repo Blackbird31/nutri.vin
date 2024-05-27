@@ -304,6 +304,7 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
+        $f3->set('canSwitchLogo', in_array($qrcode->appellation, $this->getConfig($f3)['appellations']));
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
     }
@@ -311,6 +312,12 @@ class CtrlNutriVin {
     public function qrcodeDisplay(Base $f3) {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $qrcode->logo = (bool)$f3->get('POST.logo');
+
+        $config = $this->getConfig($f3);
+        if (in_array($qrcode->appellation, $config['appellations']) === false) {
+            $qrcode->logo = false;
+        }
+
         $qrcode->save();
         return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId(), false);
     }
