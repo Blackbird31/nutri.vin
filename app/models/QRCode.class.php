@@ -294,8 +294,9 @@ class QRCode extends Mapper
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
 		}
-		$this->date_version = date('c');
+
 		if (!$this->date_creation) {
+      $this->date_version = date('c');
 			$this->date_creation = $this->date_version;
 		}
 
@@ -319,6 +320,7 @@ class QRCode extends Mapper
 
     if (array_diff_assoc($current, $initial)) {
       $this->addVersion($current);
+      $this->date_version = date('c');
     }
   }
 
