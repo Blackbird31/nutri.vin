@@ -104,6 +104,12 @@ class CtrlNutriVin {
     function qrcodeEdit(Base $f3) {
         $this->authenticatedUserOnly($f3);
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
+
+        if ($qrcode === null) {
+            $f3->error(404, "QRCode non trouvé");
+            exit;
+        }
+
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
