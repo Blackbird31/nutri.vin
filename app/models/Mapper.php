@@ -63,7 +63,7 @@ abstract class Mapper
 
 	public function tableExists() {
 		try {
-			$t = get_called_class()::getFieldsAndType();
+			$t = get_called_class()::$getFieldsAndType;
 			return count($t) && $this->mapper->exists(array_keys($t)[0]);
 		}catch(Exception $e) {
 			return false;
