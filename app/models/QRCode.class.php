@@ -47,7 +47,6 @@ class QRCode extends Mapper
 		"autres_infos" => 1,
 		"authorization_key" => 1,
     "labels" => 1,
-    "versions" => 1,
   ];
 
     public static $getFieldsAndType = [
@@ -295,8 +294,9 @@ class QRCode extends Mapper
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
 		}
-		$this->date_version = date('c');
+
 		if (!$this->date_creation) {
+      $this->date_version = date('c');
 			$this->date_creation = $this->date_version;
 		}
 
@@ -311,6 +311,7 @@ class QRCode extends Mapper
     if (!$this->getId()) return;
 
     $initial = (self::findById($this->getId()))->toArray();
+    $versionDate = $initial['date_version'];
     $current = $this->toArray();
 
     foreach (self::$versionning_ignore_fields as $field) {
@@ -319,7 +320,8 @@ class QRCode extends Mapper
     }
 
     if (array_diff_assoc($current, $initial)) {
-      $this->addVersion($current);
+      $this->addVersion($initial, $versionDate);
+      $this->date_version = date('c');
     }
   }
 
@@ -372,16 +374,9 @@ class QRCode extends Mapper
     $this->visites = json_encode($visites);
   }
 
-  private function addVersion(array $qrcode, $datetime = null) {
+  private function addVersion(array $qrcode, $datetime) {
     $versions = $this->getVersions();
-    $key = date(self::VERSION_KEY_DATEFORMAT);
-    if ($datetime) {
-      if ($d = DateTime::createFromFormat(self::VERSION_KEY_DATEFORMAT, $datetime)) {
-        if ($d->format(self::VERSION_KEY_DATEFORMAT) === $datetime) {
-          $key = $datetime;
-        }
-      }
-    }
+    $key = date(self::VERSION_KEY_DATEFORMAT, strtotime($datetime));
     $versions[$key] = $qrcode;
     krsort($versions);
     $this->versions = json_encode($versions);
