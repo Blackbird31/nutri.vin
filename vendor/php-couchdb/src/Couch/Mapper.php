@@ -62,17 +62,58 @@ class Mapper extends \DB\Cursor {
 	}
 
 	function select($fields=NULL,$filter=NULL,array $options=NULL,$ttl=0) {
-		if($filter && isset($filter[0]) && isset($filter[1]) && strpos($filter[0], '_id') === 0) {
-			return [$this->db->getDoc($filter[1])];
+        if (! $filter) {
+            trigger_error('select function must have filter', E_USER_ERROR);
+        }
+
+		if(isset($filter[0]) && isset($filter[1]) && strpos($filter[0], '_id') === 0) {
+            $doc = $this->db->getDoc($filter[1]);
+            return [$this->factory($doc)];
 		}
-		if($filter && isset($filter['_id'])) {
-			return [$this->db->getDoc($filter['_id'])];
+
+		if(isset($filter['_id'])) {
+            $doc = $this->db->getDoc($filter['_id']);
+            return [$this->factory($doc)];
 		}
+
 		trigger_error('select function can only query on _id field', E_USER_ERROR);
 	}
 
+    function factory($row)
+    {
+        $mapper = clone($this);
+        $mapper->reset();
+
+        if ($row) {
+            foreach ($row as $key => $val) {
+                $mapper->document[$key] = $val;
+            }
+        }
+
+        $mapper->query = [clone($mapper)];
+
+        if (isset($mapper->trigger['load'])) {
+            \Base::instance()->call($mapper->trigger['load'],$mapper);
+        }
+
+        return $mapper;
+    }
+
 	function count($filter = null, array $options = null, $ttl = 0) {
 		//a implementer
+	}
+
+	/**
+	*	Return record at specified offset using criteria of previous
+	*	load() call and make it active
+	*	@return array
+	*	@param $ofs int
+	**/
+	function skip($ofs=1) {
+		$this->document=($out=parent::skip($ofs))?$out->document:[];
+		if ($this->document && isset($this->trigger['load']))
+			\Base::instance()->call($this->trigger['load'],$this);
+		return $out;
 	}
 
 	function insert() {

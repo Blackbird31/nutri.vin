@@ -44,6 +44,12 @@ $qr->save();
 
 $test->expect($qr->_id !== null, "Le qrcode a un identifiant : $qr->_id");
 
+$old_id = $qr->_id;
+$qr = QRCode::findById($qr->_id);
+@$test->expect(! is_null($qr), "On retrouve bien le qrcode");
+@$test->expect($qr->_id === $old_id, "Son id est bien le même");
+@$test->expect($qr->domaine_nom ===  "Domaine test", "Son domaine est bien le même");
+
 foreach ($test->results() as $result) {
     $status = ($result['status']) ? 'PASS' : 'FAIL';
     if (php_sapi_name() === 'cli') {
