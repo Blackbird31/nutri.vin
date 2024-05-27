@@ -311,6 +311,7 @@ class QRCode extends Mapper
     if (!$this->getId()) return;
 
     $initial = (self::findById($this->getId()))->toArray();
+    $versionDate = $initial['date_version'];
     $current = $this->toArray();
 
     foreach (self::$versionning_ignore_fields as $field) {
@@ -319,7 +320,7 @@ class QRCode extends Mapper
     }
 
     if (array_diff_assoc($current, $initial)) {
-      $this->addVersion($current);
+      $this->addVersion($initial, $versionDate);
       $this->date_version = date('c');
     }
   }
