@@ -76,7 +76,7 @@ class Mapper extends \DB\Cursor {
             return [$this->factory($doc)];
 		}
 
-		trigger_error('select function can only query on _id field', E_USER_ERROR);
+        return $this->db->find($filter);
 	}
 
     function factory($row)
