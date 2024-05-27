@@ -51,6 +51,13 @@ class DBManager {
             return self::$db->exec($sql);
         } else {
             self::$db->createDb();
+            self::$db->createIndex([
+                'index' => [
+                    'fields' => ['user_id']
+                ],
+                "name" => "user_id-index",
+                "type" => "json"
+            ]);
         }
     }
 }
