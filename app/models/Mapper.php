@@ -10,8 +10,13 @@ abstract class Mapper
     public function __construct()
     {
         $mapper = DBManager::getMapper();
-        $this->mapper = new $mapper(DBManager::getDB(), strtolower(get_called_class()));
+        $this->mapper = new $mapper(DBManager::getDB(), strtolower(self::getTableName()));
         self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper::getPrimaryKey() : 'id';
+    }
+
+    public static function getTableName()
+    {
+        return (new \ReflectionClass(get_called_class()))->getShortName();
     }
 
 	public function getId() {
@@ -58,7 +63,8 @@ abstract class Mapper
         $fields = get_called_class()::$getFieldsAndType;
         $pk = (method_exists(DBManager::getMapper(), 'getPrimaryKey')) ? DBManager::getMapper()::getPrimaryKey() : 'id';
         $fields = array_merge([$pk => 'VARCHAR(255) PRIMARY KEY'], $fields);
-        DBManager::createTable(get_called_class(), $fields);
+
+        DBManager::createTable(self::getTableName(), $fields);
 	}
 
 	public function tableExists() {
