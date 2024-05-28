@@ -10,7 +10,10 @@ abstract class Mapper
     public function __construct()
     {
         $mapper = DBManager::getMapper();
-        $this->mapper = new $mapper(DBManager::getDB(), strtolower(self::getTableName()));
+
+        $tableOrClass = method_exists(DBManager::getDB(), 'schema') ? strtolower(self::getTableName()) : get_called_class();
+
+        $this->mapper = new $mapper(DBManager::getDB(), $tableOrClass);
         self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper::getPrimaryKey() : 'id';
     }
 
