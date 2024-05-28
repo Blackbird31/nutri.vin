@@ -273,6 +273,7 @@ class CtrlNutriVin {
         }
 
         $versions = $qrcode->getVersions();
+        $lastVersion = $qrcode->date_version;
         $allVersions = array_merge([$lastVersion], array_keys($versions));
         $currentVersion = $qrcode->date_version;
         if ($f3->get('GET.version') && !empty($versions[$f3->get('GET.version')])) {
@@ -285,6 +286,7 @@ class CtrlNutriVin {
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
         $f3->set('publicview', true);
+        $f3->set('lastVersion', $lastVersion);
         $f3->set('allVersions', $allVersions);
 
         echo View::instance()->render('layout_public.html.php');
