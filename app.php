@@ -1,5 +1,7 @@
 <?php
 
+use app\models\DBManager;
+
 $f3 = require(__DIR__.'/vendor/fatfree-core/base.php');
 
 require __DIR__.'/vendor/autoload.php';
@@ -27,10 +29,7 @@ if (isset($config['urlbase'])) {
     $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
 }
 
-require_once('app/models/DBManager.class.php');
-DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin');
-
-require_once('app/models/QRCode.class.php');
+DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin_test');
 
 include('app/routes.php');
 

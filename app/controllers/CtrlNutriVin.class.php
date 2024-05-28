@@ -1,6 +1,7 @@
 <?php
 
 use app\exporters\Exporter;
+use app\models\QRCode;
 use Web\Geo;
 
 class CtrlNutriVin {

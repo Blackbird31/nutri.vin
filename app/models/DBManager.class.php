@@ -1,5 +1,7 @@
 <?php
 
+namespace app\models;
+
 class DBManager {
     static $db = null;
     static $mapper = null;

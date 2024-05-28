@@ -1,8 +1,9 @@
 <?php
 
-use app\exporters\Exporter;
+namespace app\models;
 
-require_once('Mapper.php');
+use app\exporters\Exporter;
+use app\models\DBManager;
 
 class QRCode extends Mapper
 {

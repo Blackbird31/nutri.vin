@@ -10,7 +10,7 @@
 # au chemin enregistré dans notre tableau de namespace
 
 $psr4 = [
-    "app\\" => "../app/",
+    "app\\" => "../app",
     "chillerlan\\QRCode\\" => "php-qrcode/src",
     "chillerlan\\Settings\\" => "php-settings-container/src",
     "TCPDF\\" => "tcpdf",
@@ -43,5 +43,8 @@ spl_autoload_register(function ($class) use ($psr4) {
     $baseDirectory = $psr4[$prefix];
     $path = fqcnToPath($class, $prefix);
 
-    require __DIR__ . '/' . $baseDirectory . '/' . $path;
+    $file = __DIR__.'/'.$baseDirectory.'/'.$path;
+    $file = is_file($file) ? $file : str_replace('.php', '.class.php', $file);
+
+    require $file;
 });

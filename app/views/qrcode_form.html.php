@@ -166,7 +166,7 @@
                     </div>
                 </div>
                 <datalist id="ingredients_list">
-                    <?php foreach(QRCode::getFullListeIngredients() as $ingredient => $extra): ?>
+                    <?php foreach($qrcode::getFullListeIngredients() as $ingredient => $extra): ?>
                     <option value="<?php echo $ingredient ?>"<?php
                         foreach($extra as $k => $v) {
                             echo ' data-'.$k.'="'.$v.'"';
@@ -174,7 +174,7 @@
                     <?php endforeach; ?>
                 </datalist>
                 <datalist id="categories_additif_list">
-                    <?php foreach(QRCode::getListeCategoriesAdditif() as $categorie): ?>
+                    <?php foreach($qrcode::getListeCategoriesAdditif() as $categorie): ?>
                     <option value="<?php echo $categorie ?>"></option>
                     <?php endforeach; ?>
                 </datalist>
@@ -430,7 +430,7 @@
         <h3 class="mt-4 mb-4">Labels complémentaires</h3>
         <?php $labels = $qrcode->getLabels(); ?>
         <div class="mb-3">
-          <?php foreach (QRCode::$LABELS as $label): ?>
+          <?php foreach ($qrcode::$LABELS as $label): ?>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="label<?php echo $label ?>" value="<?php echo $label ?>" name="labels[]"<?php if(in_array($label, $labels)): ?> checked<?php endif; ?> />
               <label class="form-check-label" for="label<?php echo $label ?>"><?php echo $label ?></label>
