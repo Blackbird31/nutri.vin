@@ -11,6 +11,7 @@
 
 $psr4 = [
     "app\\" => "../app",
+    "tests\\" => "../tests",
     "chillerlan\\QRCode\\" => "php-qrcode/src",
     "chillerlan\\Settings\\" => "php-settings-container/src",
     "TCPDF\\" => "tcpdf",
