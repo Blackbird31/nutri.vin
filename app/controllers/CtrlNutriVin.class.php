@@ -34,8 +34,7 @@ class CtrlNutriVin {
             if ($f3->exists('POST.id')) {
                 $qrcode = QRCode::findById($f3->get('POST.id'));
             } else {
-                // ?? Ce code sert ??
-                $qrcode = new QRCode($f3->get('DB'));
+                $qrcode = new QRCode();
             }
 
             if ($qrcode->user_id && $qrcode->user_id != $f3->get('PARAMS.userid')) {
@@ -92,7 +91,7 @@ class CtrlNutriVin {
             return $f3->reroute('/admin/setup', false);
         }
         $qrcode->user_id = $f3->get('PARAMS.userid');
-        $qrcode->copyFrom('GET');
+        $qrcode->clone('GET');
 
         $this->initDefaultOnQRCode($qrcode);
 
@@ -248,9 +247,11 @@ class CtrlNutriVin {
 
     public function qrcodeDuplicate(Base $f3) {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
-        $fields = $qrcode->toArray();
-        $fields["visites"] = 0;
-        return $f3->reroute('/qrcode/'.$qrcode->user_id.'/create?'.http_build_query($fields), false);
+        $fields = $qrcode->exportToHttp();
+
+        return $f3->reroute(
+            $f3->alias('qrcodecreate', ['userid' => $qrcode->user_id]) . '?' . http_build_query($fields),
+        );
     }
 
     public function qrcodeView(Base $f3)
