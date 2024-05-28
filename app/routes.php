@@ -4,6 +4,7 @@ require_once('controllers/CtrlNutriVin.class.php');
 $f3->route('GET /', 'CtrlNutriVin->home');
 $f3->route('GET /admin/setup', 'CtrlNutriVin->setup');
 $f3->route('GET @qrcodecreate: /qrcode/@userid/create', 'CtrlNutriVin->qrcodeCreate');
+$f3->route('GET /admin/exportall', 'CtrlNutriVin->exportAll');
 $f3->route('POST /qrcode/@userid/write', 'CtrlNutriVin->qrcodeWrite');
 $f3->route('GET /qrcode/@userid/edit/@qrcodeid', 'CtrlNutriVin->qrcodeEdit');
 $f3->route('GET /qrcode/@userid/edit/@qrcodeid/img/@index/delete', 'CtrlNutriVin->qrcodeDeleteImage');

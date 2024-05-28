@@ -19,6 +19,24 @@ class CtrlNutriVin {
 
     }
 
+    function exportAll(Base $f3) {
+      $csv = null;
+      $rows = QRCode::findAll();
+      foreach ($rows as $row) {
+        $qrcode = $row->cast();
+        foreach (QRCode::$versionning_ignore_fields as $field) {
+          if (isset($qrcode[$field])) unset($qrcode[$field]);
+        }
+        if (!$csv) {
+          $csv = 'appellation de l\'instance;'.implode(';', array_keys($qrcode))."\n";
+        }
+        $csv .= (int)$this->isAppellationInConfig($qrcode['appellation']).';'.implode(';', array_values($qrcode))."\n";
+      }
+      header('Content-Type: text/csv');
+      header('Content-Disposition: attachment; filename="'.date('YmdHi').'_qrcodes.csv'.'"');
+      echo $csv;
+    }
+
     private function authenticatedUserOnly(Base $f3) {
         if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
              ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
@@ -308,7 +326,7 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
-        $f3->set('canSwitchLogo', in_array($qrcode->appellation, $this->getConfig($f3)['appellations']));
+        $f3->set('canSwitchLogo', $this->isAppellationInConfig($qrcode->appellation));
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
     }
@@ -318,7 +336,7 @@ class CtrlNutriVin {
         $qrcode->logo = (bool)$f3->get('POST.logo');
 
         $config = $this->getConfig($f3);
-        if (in_array($qrcode->appellation, $config['appellations']) === false) {
+        if ($this->isAppellationInConfig($qrcode->appellation) === false) {
             $qrcode->logo = false;
         }
 
@@ -379,5 +397,9 @@ class CtrlNutriVin {
         Exporter::getInstance()->setResponseHeaders($f3->get('PARAMS.format'));
 
         echo $qrcode->getQRCodeContent($f3->get('PARAMS.format'), $f3->get('urlbase'), $f3->get('config')['qrcode']);
+    }
+
+    public function isAppellationInConfig($appellation) {
+      return in_array($appellation, $this->getConfig($f3)['appellations']);
     }
 }
