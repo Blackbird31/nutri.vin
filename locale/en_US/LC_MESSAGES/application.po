@@ -304,4 +304,4 @@ msgid "Pectine méthylestérase"
 msgstr "Pectin methylesterase"
 
 msgid "Polygalacturonase"
-msgstr "Polygalacturonase
+msgstr "Polygalacturonase"

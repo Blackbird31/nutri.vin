@@ -7,7 +7,6 @@ use app\models\DBManager;
 
 class QRCode extends Mapper
 {
-    const VERSION_KEY_DATEFORMAT = 'Y-m-d H:i:s';
 
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
@@ -377,8 +376,7 @@ class QRCode extends Mapper
 
   private function addVersion(array $qrcode, $datetime) {
     $versions = $this->getVersions();
-    $key = date(self::VERSION_KEY_DATEFORMAT, strtotime($datetime));
-    $versions[$key] = $qrcode;
+    $versions[$datetime] = $qrcode;
     krsort($versions);
     $this->versions = json_encode($versions);
   }
