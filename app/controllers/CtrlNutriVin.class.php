@@ -307,7 +307,7 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
-        $f3->set('canSwitchLogo', in_array($qrcode->appellation, $this->getConfig($f3)['appellations']));
+        $f3->set('canSwitchLogo', $this->isAppellationInConfig($qrcode->appellation));
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
     }
@@ -317,7 +317,7 @@ class CtrlNutriVin {
         $qrcode->logo = (bool)$f3->get('POST.logo');
 
         $config = $this->getConfig($f3);
-        if (in_array($qrcode->appellation, $config['appellations']) === false) {
+        if ($this->isAppellationInConfig($qrcode->appellation) === false) {
             $qrcode->logo = false;
         }
 
@@ -378,5 +378,9 @@ class CtrlNutriVin {
         Exporter::getInstance()->setResponseHeaders($f3->get('PARAMS.format'));
 
         echo $qrcode->getQRCodeContent($f3->get('PARAMS.format'), $f3->get('urlbase'), $f3->get('config')['qrcode']);
+    }
+
+    public function isAppellationInConfig($appellation) {
+      return in_array($appellation, $this->getConfig($f3)['appellations']);
     }
 }
