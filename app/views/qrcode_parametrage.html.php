@@ -51,7 +51,6 @@
     });
 
     <?php if (isset($from)): ?>
-    console.log('<?php echo $from; ?>');
         history.pushState({ page: "edit" }, "edit", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/edit/".$qrcode->_id; ?>");
         history.pushState({ page: "parametrage" }, "parametrage", "<?php echo $urlbase."/qrcode/".$qrcode->user_id."/parametrage/".$qrcode->_id; ?>");
 

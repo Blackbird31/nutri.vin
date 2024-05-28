@@ -1,0 +1,307 @@
+msgid "Informations complémentaires"
+msgstr "Additional information"
+
+msgid "Volume d'alcool"
+msgstr "Alcohol volume"
+
+msgid "Contenance"
+msgstr "Capacity"
+
+msgid "N° de lot"
+msgstr "Batch number"
+
+msgid "Ingrédients"
+msgstr "Ingredients"
+
+#, php-format
+msgid "Ingrédients allergènes indiqués en %sgras%s."
+msgstr "Allergenic ingredients indicated in %sbold%s."
+
+#, php-format
+msgid "Ingrédients issus de l'agriculture biologique indiqué avec une %s*%s."
+msgstr "Ingredients from organic farming indicated with a %s*%s."
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Pour 100 mL"
+msgstr "Per 100 mL"
+
+msgid "Énergie"
+msgstr "Energy"
+
+msgid "kJ"
+msgstr "kJ"
+
+msgid "kCal"
+msgstr "kCal"
+
+msgid "Matières grasses"
+msgstr "Fat"
+
+msgid "dont acides gras saturés"
+msgstr "of which saturated fat"
+
+msgid "g"
+msgstr "g"
+
+msgid "Glucides"
+msgstr "Carbohydrates"
+
+msgid "dont sucres"
+msgstr "of which sugars"
+
+msgid "Fibres alimentaires"
+msgstr "Dietary fiber"
+
+msgid "Protéines"
+msgstr "Proteins"
+
+msgid "Sel"
+msgstr "Salt"
+
+msgid "Sodium"
+msgstr "Sodium"
+
+msgid "Autres informations"
+msgstr "Other information"
+
+msgid "Raisins"
+msgstr "Grapes"
+
+msgid "Moût de raisin concentré"
+msgstr "Concentrated grape must"
+
+msgid "Liqueur de tirage et liqueur d'expédition"
+msgstr "Tirage liqueur and shipping liqueur"
+
+msgid "Acide tartrique - E334"
+msgstr "Tartaric acid - E334"
+
+msgid "Acide malique - E296"
+msgstr "Malic acid - E296"
+
+msgid "Acide lactique - E270"
+msgstr "Lactic acid - E270"
+
+msgid "Tartrate de potassium - E336"
+msgstr "Potassium tartrate - E336"
+
+msgid "Bicarbonate de potassium - E501"
+msgstr "Potassium bicarbonate - E501"
+
+msgid "Carbonate de calcium - E170"
+msgstr "Calcium carbonate - E170"
+
+msgid "Tartrate de calcium - E354"
+msgstr "Calcium tartrate - E354"
+
+msgid "Sulfate de calcium - E516"
+msgstr "Calcium sulfate - E516"
+
+msgid "Carbonate de potassium - E501"
+msgstr "Potassium carbonate - E501"
+
+msgid "Hydrogénotartrate de potassium - E336"
+msgstr "Potassium hydrogen tartrate - E336"
+
+msgid "Acide citrique - E330"
+msgstr "Citric acid - E330"
+
+msgid "Tanins"
+msgstr "Tannins"
+
+msgid "Ferrocyanure de potassium - E536"
+msgstr "Potassium ferrocyanide - E536"
+
+msgid "Phytate de calcium"
+msgstr "Calcium phytate"
+
+msgid "Acide métatartrique - E353"
+msgstr "Metatartaric acid - E353"
+
+msgid "Gomme arabique - E414"
+msgstr "Gum arabic - E414"
+
+msgid "Acide DL-tartrique"
+msgstr "DL-Tartaric acid"
+
+msgid "Sel neutre de potassium"
+msgstr "Neutral potassium salt"
+
+msgid "Mannoprotéines de levures"
+msgstr "Yeast mannoproteins"
+
+msgid "Carboxyméthylcellulose - E466"
+msgstr "Carboxymethylcellulose - E466"
+
+msgid "Copolymères polyvinylimidazole/polyvinylpyrrolidone"
+msgstr "Polyvinylimidazole/polyvinylpyrrolidone copolymers"
+
+msgid "Polyaspartate de potassium - E456"
+msgstr "Potassium polyaspartate - E456"
+
+msgid "Dioxyde de soufre - E220"
+msgstr "Sulfur dioxide - E220"
+
+msgid "Bisulfite de potassium - E228"
+msgstr "Potassium bisulfite - E228"
+
+msgid "Métabisulfite de potassium - E224"
+msgstr "Potassium metabisulfite - E224"
+
+msgid "Sorbate de potassium - E202"
+msgstr "Potassium sorbate - E202"
+
+msgid "Lysozyme - E1105"
+msgstr "Lysozyme - E1105"
+
+msgid "Acide L-ascorbique - E300"
+msgstr "L-Ascorbic acid - E300"
+
+msgid "Dicarbonate de diméthyle - E242"
+msgstr "Dimethyl dicarbonate - E242"
+
+msgid "Argon - E938"
+msgstr "Argon - E938"
+
+msgid "Azote - E941"
+msgstr "Nitrogen - E941"
+
+msgid "Dioxyde de carbone - E290"
+msgstr "Carbon dioxide - E290"
+
+msgid "Oxygène gazeux - E948"
+msgstr "Gaseous oxygen - E948"
+
+msgid "Sulfites"
+msgstr "Sulfites"
+
+msgid "Anhydride sulfureux"
+msgstr "Sulfurous anhydride"
+
+msgid "Oeuf"
+msgstr "Egg"
+
+msgid "Protéine de l'oeuf"
+msgstr "Egg protein"
+
+msgid "Produit de l'oeuf"
+msgstr "Egg product"
+
+msgid "Lysozyme de l'oeuf"
+msgstr "Egg lysozyme"
+
+msgid "Albumine de l'oeuf"
+msgstr "Egg albumin"
+
+msgid "Lait"
+msgstr "Milk"
+
+msgid "Produits du lait"
+msgstr "Milk products"
+
+msgid "Caséine du lait ou protéine du lait"
+msgstr "Milk casein or milk protein"
+
+msgid "Résine de pin d'Alep"
+msgstr "Aleppo pine resin"
+
+msgid "Lies fraîches"
+msgstr "Fresh lees"
+
+msgid "Caramel - E150"
+msgstr "Caramel - E150"
+
+msgid "Isothiocyanate d'allyle"
+msgstr "Allyl isothiocyanate"
+
+msgid "Levures inactivées"
+msgstr "Inactivated yeasts"
+
+msgid "Charbons à usage oenologique"
+msgstr "Enological charcoals"
+
+msgid "Fibres végétales sélectives"
+msgstr "Selective plant fibers"
+
+msgid "Cellulose microcristalline - E460"
+msgstr "Microcrystalline cellulose - E460"
+
+msgid "Hydrogénophosphate de diammonium - E342/CAS7783-28-0"
+msgstr "Diammonium hydrogen phosphate - E342/CAS7783-28-0"
+
+msgid "Sulfate d'ammonium - E517/CAS7783-20-2"
+msgstr "Ammonium sulfate - E517/CAS7783-20-2"
+
+msgid "Bisulfite d'ammonium"
+msgstr "Ammonium bisulfite"
+
+msgid "Chlorhydrate de thiamine"
+msgstr "Thiamine hydrochloride"
+
+msgid "Autolysats de levures"
+msgstr "Yeast autolysates"
+
+msgid "Levures inactivées ayant des niveaux garantis de glutathion"
+msgstr "Inactivated yeasts with guaranteed levels of glutathione"
+
+msgid "Gélatine alimentaire"
+msgstr "Food-grade gelatin"
+
+msgid "Protéine de blé"
+msgstr "Wheat protein"
+
+msgid "Protéine issue de pois"
+msgstr "Pea protein"
+
+msgid "Protéine issue de pommes de terre"
+msgstr "Potato protein"
+
+msgid "Colle de poisson"
+msgstr "Isinglass"
+
+msgid "Caséines"
+msgstr "Caseins"
+
+msgid "Caséinates de potassium"
+msgstr "Potassium caseinates"
+
+msgid "Ovalbumine"
+msgstr "Ovalbumin"
+
+msgid "Bentonite - E558"
+msgstr "Bentonite - E558"
+
+msgid "Dioxyde de silicium - E551"
+msgstr "Silicon dioxide - E551"
+
+msgid "Kaolin"
+msgstr "Kaolin"
+
+msgid "Chitosane dérivé d'Aspergillus niger"
+msgstr "Chitosan derived from Aspergillus niger"
+
+msgid "Chitine-glucane dérivé d'Aspergillus"
+msgstr "Chitin-glucan derived from Aspergillus"
+
+msgid "Polyvinylpolypyrrolidone - E1202"
+msgstr "Polyvinylpolypyrrolidone - E1202"
+
+msgid "Alginate de calcium - E404"
+msgstr "Calcium alginate - E404"
+
+msgid "Alginate de potassium - E402"
+msgstr "Potassium alginate - E402"
+
+msgid "Uréase"
+msgstr "Urease"
+
+msgid "Pectines lyases"
+msgstr "Pectin lyases"
+
+msgid "Pectine méthylestérase"
+msgstr "Pectin methylesterase"
+
+msgid "Polygalacturonase"
+msgstr "Polygalacturonase"

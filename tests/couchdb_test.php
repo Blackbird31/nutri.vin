@@ -1,5 +1,8 @@
 <?php
 
+use app\models\QRCode;
+use app\models\DBManager;
+
 // INIT
 $f3 = require(__DIR__.'/../vendor/fatfree-core/base.php');
 require __DIR__.'/../vendor/autoload.php';
@@ -14,8 +17,6 @@ $test = new Test();
 require_once __DIR__.'/../config/config.php';
 $f3->set('config', $config);
 
-require_once __DIR__.'/../app/models/DBManager.class.php';
-
 $couch = new \DB\Couch('http://admin:admin@127.0.0.1:5984/nutrivin_test');
 try {
     $couch->getDBInfos();
@@ -28,7 +29,6 @@ DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin_test');
 /* DBManager::createDB('sqlite:'.__DIR__.'/../db/nutrivin_test.sqlite'); */
 
 // TESTS
-require_once('app/models/QRCode.class.php');
 QRCode::createTable();
 $test->message('Création de la base');
 
