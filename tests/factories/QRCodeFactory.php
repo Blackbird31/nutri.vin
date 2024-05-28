@@ -21,7 +21,7 @@ class QRCodeFactory
         $qrcode->centilisation = '75 cl';
         $qrcode->millesime = date('Y') - 1;
         $qrcode->lot = "Lot ".rand(1, 1000);
-        $qrcode->ingredients = array_rand(QRCode::getFullListeIngredients(), 4);
+        $qrcode->ingredients = implode(', ', array_rand(QRCode::getFullListeIngredients(), 4));
         $qrcode->authorization_key = \Base::instance()->hash(uniqid());
         $qrcode->date_creation = date('c');
         $qrcode->date_version = date('c');
