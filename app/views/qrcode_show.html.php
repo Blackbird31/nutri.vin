@@ -1,3 +1,6 @@
+<?php if (!empty($publicview) && $qrcode->date_version != $lastVersion): ?>
+<div class="p-1 mt-2 bg-warning-subtle text-warning-emphasis small">Vous consultez la version du QRCode en date du <?php echo date('d/m/Y H:i', strtotime($qrcode->date_version)) ?>.<br />Pour consulter la dernière version à jour, veuillez suivre ce lien : <a href="<?php echo $urlbase."/".$qrcode->getId() ?>"><?php echo $urlbase."/".$qrcode->getId() ?></a></div>
+<?php endif; ?>
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
 
     <div id="carrousel" class="bg-white border rounded rounded-bottom-0 shadow-sm d-flex justify-content-center">
