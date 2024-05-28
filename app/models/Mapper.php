@@ -1,6 +1,6 @@
 <?php
 
-require_once('DBManager.class.php');
+namespace app\models;
 
 abstract class Mapper
 {
