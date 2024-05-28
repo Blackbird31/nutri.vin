@@ -51,12 +51,12 @@
 <div class="px-3 pt-3 bg-light-subtle border-top ">
     <?php if(empty($publicview) || (!empty($publicview) && ($qrcode->alcool_degre || $qrcode->centilisation || $qrcode->lot))): ?>
     <div class="card text-bg-light mt-2 mb-4 shadow-sm liveform_anchor">
-        <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> Informations complémentaires</div>
+        <div class="card-header text-center"><i class="bi bi-info-circle float-start"></i> <?php echo _("Informations complémentaires"); ?></div>
         <table class="table table-sm table-striped-columns mb-0">
             <tbody>
                 <?php if (empty($publicview) || $qrcode->alcool_degre): ?>
                 <tr>
-                    <td class="text-start">Volume d'alcool</td>
+                    <td class="text-start"><?php echo _("Volume d'alcool"); ?></td>
                     <td class="text-end"
                         data-liveform-name="alcool_degre" data-liveform-template='{{%s}} % vol'
                     ><?php echo $qrcode->alcool_degre ?>% vol</td>
@@ -64,7 +64,7 @@
                 <?php endif; ?>
                 <?php if (empty($publicview) || $qrcode->centilisation): ?>
                 <tr>
-                    <td class="text-start">Contenance</td>
+                    <td class="text-start"><?php echo _("Contenance"); ?></td>
                     <td class="text-end"
                         data-liveform-name="centilisation" data-liveform-template='{{%s}} cl'>
                             <?php echo $qrcode->centilisation ?> cl</td>
@@ -72,7 +72,7 @@
                 <?php endif; ?>
                 <?php if (empty($publicview) || $qrcode->lot): ?>
                 <tr>
-                    <td class="text-start">N° de lot</td>
+                    <td class="text-start"><?php echo _("N° de lot"); ?></td>
                     <td class="text-end"
                         data-liveform-name="lot" data-liveform-template='{{%s}}'>
                             <?php echo $qrcode->lot ?></td>
@@ -84,15 +84,15 @@
     <?php endif; ?>
     <?php if (empty($publicview) || (!empty($publicview) && $qrcode->ingredients)): ?>
     <div class="card text-bg-secondary mt-4 mb-3 shadow-sm liveform_anchor">
-        <div class="card-header text-center"><i class="bi bi-card-list float-start"></i> Ingrédients</div>
+        <div class="card-header text-center"><i class="bi bi-card-list float-start"></i> <?php echo _("Ingrédients"); ?></div>
         <div class="card-body text-dark bg-white">
             <p data-liveform-name="ingredients" data-liveform-template='{{%s}}'
                 class="card-text">
                 <?php echo $qrcode->ingredients ?>
             </p>
             <small>
-                Ingrédients allergènes indiqués en <strong>gras</strong>.<br/>
-                Ingrédients issus de l'agriculture biologique indiqué avec une <em>*</em>
+                <?php echo sprintf(_("Ingrédients allergènes indiqués en %sgras%s."), "<strong>", "</strong>"); ?><br/>
+                <?php echo sprintf(_("Ingrédients issus de l'agriculture biologique indiqué avec une %s*%s."), "<em>", "</em>"); ?>
             </small>
         </div>
     </div>
@@ -114,24 +114,24 @@
         <table class="table table-sm table-striped-columns mb-0">
             <thead>
                 <tr>
-                    <th class="text-start col-6">Type</th>
-                    <th class="text-end col-6">Pour 100 mL</th>
+                    <th class="text-start col-6"><?php echo _("Type"); ?></th>
+                    <th class="text-end col-6"><?php echo _("Pour 100 mL"); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kj || $qrcode->nutritionnel_energie_kj === 0)) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kcal || $qrcode->nutritionnel_energie_kcal === 0))): ?>
                 <tr>
-                    <td class="text-start">Énergie</td>
+                    <td class="text-start"><?php echo _("Énergie"); ?></td>
                     <td class="text-end">
                         <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kj || $qrcode->nutritionnel_energie_kj === 0))): ?>
                         <span data-liveform-name="nutritionnel_energie_kj" data-liveform-template='{{%s}} kJ'>
-                            <?php echo $qrcode->nutritionnel_energie_kj ?: 0 ?> kJ
+                            <?php echo $qrcode->nutritionnel_energie_kj ?: 0 ?> <?php echo _("kJ"); ?>
                         </span>
                         <br>
                         <?php endif; ?>
                         <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_energie_kcal || $qrcode->nutritionnel_energie_kcal === 0))): ?>
                         <span data-liveform-name="nutritionnel_energie_kcal" data-liveform-template='{{%s}} kCal'>
-                            <?php echo $qrcode->nutritionnel_energie_kcal ?: 0 ?> kCal
+                            <?php echo $qrcode->nutritionnel_energie_kcal ?: 0 ?> <?php echo _("kCal"); ?>
                         </span><br>
                         <?php endif; ?>
                     </td>
@@ -139,15 +139,15 @@
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_graisses || $qrcode->nutritionnel_graisses === 0))): ?>
                 <tr>
-                    <td class="text-start">Matières grasses<br><small class="ps-3">dont acides gras saturés</small></td>
+                    <td class="text-start"><?php echo _("Matières grasses"); ?><br><small class="ps-3"><?php echo _("dont acides gras saturés"); ?></small></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_graisses" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_graisses ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_graisses ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                         <br>
                         <small>
                         <span data-liveform-name="nutritionnel_acides_gras" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_acides_gras ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_acides_gras ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                         </small>
                     </td>
@@ -155,15 +155,15 @@
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_glucides || $qrcode->nutritionnel_glucides === 0))): ?>
                 <tr>
-                    <td class="text-start">Glucides<br><small class="ps-3">dont sucres</small></td>
+                    <td class="text-start"><?php echo _("Glucides"); ?><br><small class="ps-3"><?php echo _("dont sucres"); ?></small></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_glucides" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_glucides ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_glucides ?: 0.00 ?><?php echo _("g"); ?>
                         </span>
                         <br>
                         <small>
                         <span data-liveform-name="nutritionnel_sucres" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_sucres ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_sucres ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                         </small>
                     </td>
@@ -171,40 +171,40 @@
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_fibres || $qrcode->nutritionnel_fibres === 0))): ?>
                 <tr>
-                    <td class="text-start">Fibres alimentaires</td>
+                    <td class="text-start"><?php echo _("Fibres alimentaires"); ?></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_fibres" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_fibres ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_fibres ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                     </td>
                 </tr>
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_proteines || $qrcode->nutritionnel_proteines === 0))): ?>
                 <tr>
-                    <td class="text-start">Protéines</td>
+                    <td class="text-start"><?php echo _("Protéines"); ?></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_proteines" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_proteines ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_proteines ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                     </td>
                 </tr>
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_sel || $qrcode->nutritionnel_sel === 0))): ?>
                 <tr>
-                    <td class="text-start">Sel</td>
+                    <td class="text-start"><?php echo _("Sel"); ?></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_sel" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_sel ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_sel ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                     </td>
                 </tr>
                 <?php endif; ?>
                 <?php if (empty($publicview) || (!empty($publicview) && ($qrcode->nutritionnel_sodium || $qrcode->nutritionnel_sodium === 0))): ?>
                 <tr>
-                    <td class="text-start">Sodium</td>
+                    <td class="text-start"><?php echo _("Sodium"); ?></td>
                     <td class="text-end">
                         <span data-liveform-name="nutritionnel_sodium" data-liveform-template='{{%s}} g'>
-                            <?php echo $qrcode->nutritionnel_sodium ?: 0.00 ?> g
+                            <?php echo $qrcode->nutritionnel_sodium ?: 0.00 ?> <?php echo _("g"); ?>
                         </span>
                     </td>
                 </tr>
@@ -222,7 +222,7 @@
 
     <?php if (!empty($qrcode->autres_infos)): ?>
     <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
-        <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i>Autres informations</div>
+        <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i><?php echo _("Autres informations"); ?></div>
         <p class="pt-2 px-2"
            data-liveform-name="autres_infos" data-liveform-template='{{%s}}'
         >
@@ -233,7 +233,7 @@
 
     <div class="mb-1 small text-center">
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?> (Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie.)" style="cursor: pointer;"></i>
+      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?> <?php echo _(("Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie."));?>" style="cursor: pointer;"></i>
     </div>
 
 </div>

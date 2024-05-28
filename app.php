@@ -11,6 +11,12 @@ $f3->set('ROOT', __DIR__);
 $f3->set('UI', $f3->get('ROOT')."/app/views/");
 $f3->set('THEME', $f3->get('ROOT')."/themes/ivso/");
 
+putenv('LC_ALL=en_EN');
+setlocale(LC_ALL, 'en_EN');
+
+bindtextdomain("nutrivin", "./locale");
+textdomain("nutrivin");
+
 require_once('config/config.php');
 $f3->set('config', $config);
 
