@@ -19,6 +19,24 @@ class CtrlNutriVin {
 
     }
 
+    function exportAll(Base $f3) {
+      $csv = null;
+      $rows = QRCode::findAll();
+      foreach ($rows as $row) {
+        $qrcode = $row->cast();
+        foreach (QRCode::$versionning_ignore_fields as $field) {
+          if (isset($qrcode[$field])) unset($qrcode[$field]);
+        }
+        if (!$csv) {
+          $csv = 'appellation de l\'instance;'.implode(';', array_keys($qrcode))."\n";
+        }
+        $csv .= (int)$this->isAppellationInConfig($qrcode['appellation']).';'.implode(';', array_values($qrcode))."\n";
+      }
+      header('Content-Type: text/csv');
+      header('Content-Disposition: attachment; filename="'.date('YmdHi').'_qrcodes.csv'.'"');
+      echo $csv;
+    }
+
     private function authenticatedUserOnly(Base $f3) {
         if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
              ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
