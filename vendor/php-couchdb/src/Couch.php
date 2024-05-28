@@ -26,12 +26,15 @@ class Couch {
 		return $this->db;
 	}
 
-	public function __construct ($dsn, $db, $options = []) {
+	public function __construct ($dsn, $options = []) {
 		if (!function_exists('curl_init')) {
 			throw new \Exception('cURL must be enabled');
 		}
-		$this->dsn = $dsn;
-		$this->db = $db;
+		$this->dsn = str_replace('couchdb:', '', $dsn);
+        $this->dsn = substr($this->dsn, 0, strrpos($this->dsn, '/'));
+
+		$this->db = substr(strrchr($dsn, '/'), 1);
+
 		$this->options = $options;
 	}
 
@@ -42,6 +45,20 @@ class Couch {
 	public function createDb() {
 		return $this->query('PUT', '/'.urlencode($this->db));
 	}
+
+    public function createIndex($indexDefinition = [])
+    {
+        /**
+         * array $indexDefinition = [
+         *  "index" => [
+         *      "fields" => ["field_1"]
+         *   ],
+         *   "name" => "field_1-index", // optional
+         *   "type" => "json" // optional
+         * ]
+         */
+        return $this->query('POST', '/'.urlencode($this->db).'/_index', [], $indexDefinition);
+    }
 
 	public function deleteDb() {
 		return $this->query('DELETE', '/'.urlencode($this->db));
@@ -98,6 +115,21 @@ class Couch {
 		return $this->query('PUT', $url, [], $file);
 	}
 
+    public function find($selector = [], $fields = [], $sort = [], $limit = false)
+    {
+        $search_key = strtok($selector[0], '='); // hack: on gère les `=?` qui sont pour le sql normalement
+        $search_value = $selector[1];
+
+        $search = ["selector" => [$search_key => ["\$eq" => $search_value]]];
+        if ($sort) {
+            $search['sort'] = [$sort[0] => $sort[1]];
+        }
+
+        $results = $this->query('POST', '/'.urlencode($this->db).'/_find', [], $search);
+
+        return $results->docs;
+    }
+
 	public function deleteAttachment ($doc, $attachmentName) {
 		if ( !is_object($doc)) {
 			throw new InvalidArgumentException ("Document should be an object");
@@ -138,7 +170,7 @@ class Couch {
 				CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Accept: application/json, text/html, text/plain, */*']
     ];
 		if ($data) {
-			if (!is_object($data) && is_file($data)) {
+			if (!is_object($data) && !is_array($data) && is_file($data)) {
 				$fstream = fopen($data,'r');
 				$options[CURLOPT_INFILE] = $fstream;
 				$options[CURLOPT_INFILESIZE] = filesize($data);

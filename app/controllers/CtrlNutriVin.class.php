@@ -104,6 +104,12 @@ class CtrlNutriVin {
     function qrcodeEdit(Base $f3) {
         $this->authenticatedUserOnly($f3);
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
+
+        if ($qrcode === null) {
+            $f3->error(404, "QRCode non trouvé");
+            exit;
+        }
+
         if ($qrcode->user_id != $f3->get('PARAMS.userid')) {
             throw new Exception('not allowed');
         }
@@ -266,11 +272,20 @@ class CtrlNutriVin {
             header('Pragma: cache');
         }
 
+        $versions = $qrcode->getVersions();
+        $allVersions = array_merge([date(QRCode::VERSION_KEY_DATEFORMAT, strtotime($qrcode->date_version))], array_keys($versions));
+        $currentVersion = $qrcode->date_version;
+        if ($f3->get('GET.version') && !empty($versions[$f3->get('GET.version')])) {
+          $qrcode->date_version = $f3->get('GET.version');
+          $qrcode->copyfrom($versions[$qrcode->date_version]);
+        }
+
         $this->initDefaultOnQRCode($qrcode);
 
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
         $f3->set('publicview', true);
+        $f3->set('allVersions', $allVersions);
 
         echo View::instance()->render('layout_public.html.php');
     }
@@ -289,6 +304,7 @@ class CtrlNutriVin {
         }
         $f3->set('qrcode', $qrcode);
 
+        $f3->set('canSwitchLogo', in_array($qrcode->appellation, $this->getConfig($f3)['appellations']));
         $f3->set('content', 'qrcode_parametrage.html.php');
         echo View::instance()->render('layout.html.php');
     }
@@ -296,6 +312,12 @@ class CtrlNutriVin {
     public function qrcodeDisplay(Base $f3) {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $qrcode->logo = (bool)$f3->get('POST.logo');
+
+        $config = $this->getConfig($f3);
+        if (in_array($qrcode->appellation, $config['appellations']) === false) {
+            $qrcode->logo = false;
+        }
+
         $qrcode->save();
         return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId(), false);
     }

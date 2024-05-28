@@ -6,10 +6,20 @@ require_once('Mapper.php');
 
 class QRCode extends Mapper
 {
+    const VERSION_KEY_DATEFORMAT = 'Y-m-d H:i:s';
+
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
                             '0123456789';
     public static $LABELS = ["HVE", "Demeter", "Biodyvin"];
+
+    public static $versionning_ignore_fields = [
+      'authorization_key',
+      'date_version',
+      'logo',
+      'visites',
+      'versions'
+    ];
 
 	public static $copy_field_filter = [
 		"domaine_nom" => 1,
@@ -36,49 +46,55 @@ class QRCode extends Mapper
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
 		"authorization_key" => 1,
-        "labels" => 1,
+    "labels" => 1,
   ];
 
-	 public static function getFieldsAndType() {
-		 $fields['id'] = 'VARCHAR(255) PRIMARY KEY';
-		 $fields['user_id'] = 'VARCHAR(255)';
-     $fields['domaine_nom'] = 'VARCHAR(255)';
-		 $fields['adresse_domaine'] = 'VARCHAR(255)';
-		 $fields['appellation'] = 'VARCHAR(255)';
-		 $fields['couleur'] = 'VARCHAR(255)';
-		 $fields['cuvee_nom'] = 'VARCHAR(255)';
-		 $fields['alcool_degre'] = 'FLOAT';
-		 $fields['centilisation'] = 'FLOAT';
-		 $fields['millesime'] = 'VARCHAR(255)';
-		 $fields['lot'] = 'VARCHAR(255)';
- 		 $fields['ingredients'] = 'TEXT';
-		 $fields['nutritionnel_energie_kj'] = 'FLOAT';
-		 $fields['nutritionnel_energie_kcal'] = 'FLOAT';
-		 $fields['nutritionnel_graisses'] = 'FLOAT';
-		 $fields['nutritionnel_acides_gras'] = 'FLOAT';
-		 $fields['nutritionnel_glucides'] = 'FLOAT';
-		 $fields['nutritionnel_sucres'] = 'FLOAT';
-		 $fields['nutritionnel_fibres'] = 'FLOAT';
-		 $fields['nutritionnel_proteines'] = 'FLOAT';
-		 $fields['nutritionnel_sel'] = 'FLOAT';
-		 $fields['nutritionnel_sodium'] = 'FLOAT';
-		 $fields['image_bouteille'] = 'BLOB';
-		 $fields['image_etiquette'] = 'BLOB';
-		 $fields['image_contreetiquette'] = 'BLOB';
- 		 $fields['autres_infos'] = 'TEXT';
-		 $fields['authorization_key'] = 'VARCHAR(100)';
-		 $fields['date_creation'] = 'VARCHAR(26)';
-		 $fields['date_version'] = 'VARCHAR(26)';
-     $fields['logo'] = 'BOOL';
-     $fields['visites'] = 'TEXT';
-     $fields['labels'] = 'TEXT';
-		 return $fields;
- 	}
+    public static $getFieldsAndType = [
+        /* $fields[$id] => 'VARCHAR(255) PRIMARY KEY', */
+        'user_id' => 'VARCHAR(255)',
+        'domaine_nom' => 'VARCHAR(255)',
+        'adresse_domaine' => 'VARCHAR(255)',
+        'appellation' => 'VARCHAR(255)',
+        'couleur' => 'VARCHAR(255)',
+        'cuvee_nom' => 'VARCHAR(255)',
+        'alcool_degre' => 'FLOAT',
+        'centilisation' => 'FLOAT',
+        'millesime' => 'VARCHAR(255)',
+        'lot' => 'VARCHAR(255)',
+        'ingredients' => 'TEXT',
+        'nutritionnel_energie_kj' => 'FLOAT',
+        'nutritionnel_energie_kcal' => 'FLOAT',
+        'nutritionnel_graisses' => 'FLOAT',
+        'nutritionnel_acides_gras' => 'FLOAT',
+        'nutritionnel_glucides' => 'FLOAT',
+        'nutritionnel_sucres' => 'FLOAT',
+        'nutritionnel_fibres' => 'FLOAT',
+        'nutritionnel_proteines' => 'FLOAT',
+        'nutritionnel_sel' => 'FLOAT',
+        'nutritionnel_sodium' => 'FLOAT',
+        'image_bouteille' => 'BLOB',
+        'image_etiquette' => 'BLOB',
+        'image_contreetiquette' => 'BLOB',
+        'autres_infos' => 'TEXT',
+        'authorization_key' => 'VARCHAR(100)',
+        'date_creation' => 'VARCHAR(26)',
+        'date_version' => 'VARCHAR(26)',
+        'logo' => 'BOOL',
+        'visites' => 'TEXT',
+        'labels' => 'TEXT',
+        'versions' => 'TEXT',
+    ];
 
     public static function findByUserid($userid) {
 		$class = get_called_class();
         $e = new $class();
-		return $e->mapper->find(array('user_id=?',$userid));
+        $qr = [];
+        foreach ($e->mapper->find(array('user_id=?',$userid)) as $result) {
+            $a = new $class();
+            $a->mapper->load([self::$primaryKey.'=?', $result->{self::$primaryKey}]);
+            $qr[] = $a;
+        };
+        return $qr;
 	}
 
     public static function getListeCategoriesAdditif() {
@@ -278,13 +294,36 @@ class QRCode extends Mapper
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
 		}
-		$this->date_version = date('c');
+
 		if (!$this->date_creation) {
+      $this->date_version = date('c');
 			$this->date_creation = $this->date_version;
 		}
 
+    $this->saveVersion();
+
 		return $this->mapper->save();
 	}
+
+  private function saveVersion() {
+    if (!$this->getVisites()) return;
+    if (!$this->changed()) return;
+    if (!$this->getId()) return;
+
+    $initial = (self::findById($this->getId()))->toArray();
+    $versionDate = $initial['date_version'];
+    $current = $this->toArray();
+
+    foreach (self::$versionning_ignore_fields as $field) {
+      if (isset($initial[$field])) unset($initial[$field]);
+      if (isset($current[$field])) unset($current[$field]);
+    }
+
+    if (array_diff_assoc($current, $initial)) {
+      $this->addVersion($initial, $versionDate);
+      $this->date_version = date('c');
+    }
+  }
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
@@ -309,12 +348,24 @@ class QRCode extends Mapper
         );
   }
 
-  public function getVisites() {
-    $visites = $this->get('visites');
-    if ($visites) {
-      return json_decode($visites, true);
+  protected function getJsonValueField($field) {
+    $value = $this->get($field);
+    if ($value) {
+      return json_decode($value, true);
     }
     return [];
+  }
+
+  public function getVisites() {
+    return $this->getJsonValueField('visites');
+  }
+
+  public function getLabels() {
+    return $this->getJsonValueField('labels');
+  }
+
+  public function getVersions() {
+    return $this->getJsonValueField('versions');
   }
 
   public function addVisite(array $infos) {
@@ -323,11 +374,11 @@ class QRCode extends Mapper
     $this->visites = json_encode($visites);
   }
 
-  public function getLabels() {
-    $labels = $this->get('labels');
-    if ($labels) {
-      return json_decode($labels, true);
-    }
-    return [];
+  private function addVersion(array $qrcode, $datetime) {
+    $versions = $this->getVersions();
+    $key = date(self::VERSION_KEY_DATEFORMAT, strtotime($datetime));
+    $versions[$key] = $qrcode;
+    krsort($versions);
+    $this->versions = json_encode($versions);
   }
 }

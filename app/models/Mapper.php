@@ -5,18 +5,21 @@ require_once('DBManager.class.php');
 abstract class Mapper
 {
     private $mapper;
+    static public $primaryKey;
 
     public function __construct()
     {
-        $this->mapper = new \DB\SQL\Mapper(DBManager::getDB(), strtolower(get_called_class()));
+        $mapper = DBManager::getMapper();
+        $this->mapper = new $mapper(DBManager::getDB(), strtolower(get_called_class()));
+        self::$primaryKey = (method_exists($this->mapper, 'getPrimaryKey')) ? $this->mapper::getPrimaryKey() : 'id';
     }
 
 	public function getId() {
-		return $this->mapper->get('id');
+		return $this->mapper->get(self::$primaryKey);
 	}
 
 	public function setId($id) {
-		$this->mapper->set('id', $id);
+		$this->mapper->set(self::$primaryKey, $id);
 	}
 
 	public function toArray() {
@@ -30,8 +33,8 @@ abstract class Mapper
 	public static function findById($id) {
 		$class = get_called_class();
         $e = new $class();
-		$e->mapper->load(array('id=?',$id));
-		if (!$e->id) {
+		$e->mapper->load(array(self::$primaryKey.'=?', $id));
+		if (!$e->{self::$primaryKey}) {
 			return null;
 		}
 		return $e;
@@ -52,18 +55,15 @@ abstract class Mapper
 	}
 
 	public static function createTable() {
-		$create_fields_sql = '';
-		foreach(get_called_class()::getFieldsAndType() as $field => $type) {
-			$create_fields_sql .= ($create_fields_sql) ? ",\n" : '';
-			$create_fields_sql .= "$field $type";
-		}
-		$sql = "CREATE TABLE ".strtolower(get_called_class())." (".$create_fields_sql.");";
-		return DBManager::getDB()->exec($sql);
+        $fields = get_called_class()::$getFieldsAndType;
+        $pk = (method_exists(DBManager::getMapper(), 'getPrimaryKey')) ? DBManager::getMapper()::getPrimaryKey() : 'id';
+        $fields = array_merge([$pk => 'VARCHAR(255) PRIMARY KEY'], $fields);
+        DBManager::createTable(get_called_class(), $fields);
 	}
 
 	public function tableExists() {
 		try {
-			$t = get_called_class()::getFieldsAndType();
+			$t = get_called_class()::$getFieldsAndType;
 			return count($t) && $this->mapper->exists(array_keys($t)[0]);
 		}catch(Exception $e) {
 			return false;
@@ -97,6 +97,14 @@ abstract class Mapper
 
     public function __debug() {
         return $this->toArray();
+    }
+
+    public function changed($key = null) {
+      return $this->mapper->changed($key);
+    }
+
+    public function erase($filter = null, $quick = true) {
+      return $this->mapper->erase($filter, $quick);
     }
 
 }
