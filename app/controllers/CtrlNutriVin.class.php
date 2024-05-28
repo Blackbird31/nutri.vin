@@ -273,7 +273,7 @@ class CtrlNutriVin {
         }
 
         $versions = $qrcode->getVersions();
-        $allVersions = array_merge([date(QRCode::VERSION_KEY_DATEFORMAT, strtotime($qrcode->date_version))], array_keys($versions));
+        $allVersions = array_merge([$lastVersion], array_keys($versions));
         $currentVersion = $qrcode->date_version;
         if ($f3->get('GET.version') && !empty($versions[$f3->get('GET.version')])) {
           $qrcode->date_version = $f3->get('GET.version');
