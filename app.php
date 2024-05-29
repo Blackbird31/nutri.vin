@@ -44,7 +44,11 @@ if (isset($config['urlbase'])) {
     $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
 }
 
-DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin_test');
+if (isset($config['dbpdo']) && $config['db_pdo']) {
+    DBManager::createDB($config['db_pdo']);
+}else{
+    DBManager::createDB('sqlite://'.__DIR__.'/db/nutrivin.sqlite');
+}
 
 include('app/routes.php');
 
@@ -64,6 +68,7 @@ function selectLanguage($lang, $f3, $putCookie = false) {
         $cookieDate = strtotime('+1 year');
         setcookie("LANGUAGE", $langSupported, ['expires' => $cookieDate, 'samesite' => 'Strict', 'path' => "/"]);
     }
+    $f3->set('current_language', $langSupported);
     putenv("LANGUAGE=$langSupported");
 }
 
