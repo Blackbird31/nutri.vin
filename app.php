@@ -68,6 +68,7 @@ function selectLanguage($lang, $f3, $putCookie = false) {
         $cookieDate = strtotime('+1 year');
         setcookie("LANGUAGE", $langSupported, ['expires' => $cookieDate, 'samesite' => 'Strict', 'path' => "/"]);
     }
+    $f3->set('current_language', $langSupported);
     putenv("LANGUAGE=$langSupported");
 }
 

@@ -1,17 +1,3 @@
-<?php if (!empty($publicview) && $qrcode->date_version != $lastVersion): ?>
-<div class="p-1 mt-2 bg-warning-subtle text-warning-emphasis small">Vous consultez la version du QRCode en date du <?php echo date('d/m/Y H:i', strtotime($qrcode->date_version)) ?>.<br />Pour consulter la dernière version à jour, veuillez suivre ce lien : <a href="<?php echo $urlbase."/".$qrcode->getId() ?>"><?php echo $urlbase."/".$qrcode->getId() ?></a></div>
-<?php endif; ?>
-<div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
-        <button class="btn btn-outline-secondary btn-sm  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="d-none d-md-inline"><i class='bi bi-translate'></i> <?php echo _("Language"); ?></span>
-            <span class="d-md-none"><i class="bi bi-translate"></i></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <?php foreach ($SUPPORTED_LANGUAGES as $key => $langue):?>
-                <li><a class="dropdown-item" href="?lang=<?php echo $key ?>"><?php echo $langue ?></a></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
 <div class="p-3 py-4 bg-white text-center liveform_anchor">
 
     <div id="carrousel" class="bg-white border rounded rounded-bottom-0 shadow-sm d-flex justify-content-center">
@@ -245,21 +231,19 @@
     </div>
     <?php endif; ?>
 
-    <?php if (!empty($publicview)): ?>
     <div class="py-2 small text-center border-top">
-      <span>Créé le <?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
-      <?php if (!empty($publicview) && count($allVersions) > 1): ?>
-        – <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Modifié le <?php echo date('d/m/Y H:i', strtotime($lastVersion)); ?></span>
-        <ul class="dropdown-menu">
-          <?php foreach ($allVersions as $version): ?>
-          <li><a class="dropdown-item<?php if($version == $qrcode->date_version): ?> active disabled<?php endif; ?>" href="<?php echo $urlbase."/".$qrcode->getId() ?>?version=<?php echo urlencode($version); ?>">Voir la version du <?php echo date('d/m/Y H:i', strtotime($version)); ?></a></li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif; ?>
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <span class="ps-3"><i class="bi bi-eye align-middle" title="<?php echo _(("Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie.")); ?>" style="cursor: pointer;"></i> <?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?></span>
+      <i class="bi bi-eye text-muted" title="<?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?> <?php echo _(("Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie."));?>" style="cursor: pointer;"></i>
+      <?php if (!empty($publicview) && count($allVersions) > 1): ?>
+      <div class="col-5 float-end">
+        <select class="form-select form-select-sm" aria-label="Versions" onchange="document.location.href=this.value;">
+          <?php foreach ($allVersions as $version): ?>
+          <option value="<?php echo $urlbase."/".$qrcode->getId() ?>?version=<?php echo $version; ?>"<?php if($version == $qrcode->date_version): ?> selected="selected"<?php endif; ?>><?php echo $version; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
 
 </div>
 

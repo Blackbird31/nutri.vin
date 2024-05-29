@@ -16,6 +16,17 @@
   </head>
   <body id="body_public">
     <div class="container-sm text-center" style="max-width: 540px;">
+        <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                <button class="btn btn-outline-secondary btn-sm  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="d-none d-md-inline"><i class='bi bi-translate'></i> <?php echo _("Language"); ?></span>
+                    <span class="d-md-none"><i class="bi bi-translate"></i></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <?php foreach ($SUPPORTED_LANGUAGES as $key => $langue):?>
+                        <li><a class="dropdown-item" href="?lang=<?php echo $key ?>"><?php if($current_language == $key):?><strong><?php endif;?><?php echo $langue ?><?php if($current_language == $key):?></strong><?php endif;?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         <?php include($THEME.'header_public.php'); ?>
         <?php include($content); ?>
     </div>
