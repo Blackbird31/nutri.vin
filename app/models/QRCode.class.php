@@ -415,4 +415,8 @@ class QRCode extends Mapper
         $this->image_etiquette = Flash::instance()->getKey('qrcode.image_etiquette');
         $this->image_contreetiquette = Flash::instance()->getKey('qrcode.image_contreetiquette');
     }
+
+    public function getIngredientsTraduits() {
+        return implode('',array_map('_',preg_split("/([ ]*[,;()][ ]*)/", $this->ingredients, -1, PREG_SPLIT_NO_EMPTY  | PREG_SPLIT_DELIM_CAPTURE)));
+    }
 }
