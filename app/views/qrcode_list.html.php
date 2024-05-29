@@ -41,7 +41,7 @@
                             <?php echo ($qr->centilisation) ? ' - '.$qr->centilisation . ' cl' : ''; ?>
                         </td>
                         <td><?php if ($qr->visites) {
-                                echo "<a href='$urlbase/qrcode/".$qr->user_id."/stats/".$qr->getId()."'>";
+                                echo "<a href='$urlbase/qrcode/".$qr->user_id."/stats/".$qr->getId()."/week'>";
                                 echo count( (array) json_decode($qr->visites) );
                             }else {
                                 echo 0;
@@ -50,7 +50,7 @@
                         <td>
                             <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->getId() ?>"><i class="bi bi-pencil-fill"></i></a>
                             <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->getId() ?>"><i class="bi bi-qr-code"></i></a>
-                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/stats/<?php echo $qr->getId() ?>"><i class="bi bi-clipboard2-data"></i></a>
+                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/stats/<?php echo $qr->getId() ?>/week"><i class="bi bi-clipboard2-data"></i></a>
                             <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->getId() ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
                         </td>
                         <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->getId(); ?>'></td>

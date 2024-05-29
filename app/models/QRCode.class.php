@@ -429,6 +429,38 @@ class QRCode extends Mapper
         return implode('',array_map('_',preg_split("/([ ]*[,;()][ ]*)/", $this->ingredients, -1, PREG_SPLIT_NO_EMPTY  | PREG_SPLIT_DELIM_CAPTURE)));
     }
 
+
+    public function getGeoStats() {
+        $stats = [];
+        foreach($this->getVisites() as $v) {
+            $v = $v['location'];
+            $name = 'localisation inconnue';
+            $k = $name;
+            if (isset($v['country_code']) && isset($v['region_code']) ) {
+                $k = $v['country_code'].$v['region_code'];
+                $name = $v['region_name'].' ('.$v['country_name'].')';
+            }
+            if (!isset($stats[$k])) {
+                $stats[$k] = ['nb' => 0, 'name' => $name];
+            }
+            $stats[$k]['nb']++;
+        }
+        return $stats;
+    }
+
+
+    public function getStats($type) {
+        switch ($type) {
+            case 'week':
+                return $this->getWeekStats();
+                break;
+            case 'geo':
+                return $this->getGeoStats();
+            default:
+                throw new \Exception('wrong stats type '.$type);
+                break;
+        }
+    }
     public function getWeekStats() {
         $stats = [];
         foreach($this->getVisites() as $v) {
@@ -452,7 +484,7 @@ class QRCode extends Mapper
                 $stats[$i] = ['nb' => 0];
             }
             $wday = (date('w', strtotime($annee.'-01-01')) + 6) % 7;
-            $stats[$i]['firstday'] = date('Y-m-d', strtotime($annee.'-01-01 + ' . $wday.' days +'.($week -1).' weeks'));
+            $stats[$i]['name'] = date('Y-m-d', strtotime($annee.'-01-01 + ' . $wday.' days +'.($week -1).' weeks'));
         }
         return $stats;
     }
