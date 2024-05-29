@@ -95,7 +95,11 @@
         <div class="card-body text-dark bg-white">
             <p data-liveform-name="ingredients" data-liveform-template='{{%s}}'
                 class="card-text">
-                <?php echo $qrcode->ingredients ?>
+                <?php if ($current_language == 'fr_FR.utf8'): ?>
+                    <?php echo $qrcode->ingredients ?>
+                <?php else: ?>
+                    <?php echo $qrcode->getIngredientsTraduits($qrcode->ingredients); ?>
+                <?php endif; ?>
             </p>
             <small>
                 <?php echo sprintf(_("Ingrédients allergènes indiqués en %sgras%s."), "<strong>", "</strong>"); ?><br/>

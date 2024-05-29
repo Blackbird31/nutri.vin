@@ -424,4 +424,8 @@ class QRCode extends Mapper
         $this->image_etiquette = Base::instance()->get('SESSION.qrcode.image_etiquette');
         $this->image_contreetiquette = Base::instance()->get('SESSION.qrcode.image_contreetiquette');
     }
+
+    public function getIngredientsTraduits() {
+        return implode('',array_map('_',preg_split("/([ ]*[,;()][ ]*)/", $this->ingredients, -1, PREG_SPLIT_NO_EMPTY  | PREG_SPLIT_DELIM_CAPTURE)));
+    }
 }
