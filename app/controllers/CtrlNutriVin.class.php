@@ -114,6 +114,7 @@ class CtrlNutriVin {
         $this->initDefaultOnQRCode($qrcode);
 
         $f3->set('qrcode', $qrcode);
+        $f3->set('create', true);
         $f3->set('content','qrcode_form.html.php');
         echo View::instance()->render('layout.html.php');
     }

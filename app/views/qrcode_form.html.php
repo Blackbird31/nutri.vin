@@ -391,7 +391,7 @@
                     <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
-                    <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                    <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/0/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
@@ -405,7 +405,7 @@
                     <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
-                    <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                    <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/1/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
@@ -419,7 +419,7 @@
                     <span class="img-reset btn btn-link btn-sm d-none">
                         Réinitialiser
                     </span>
-                    <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false) { echo 'display: none;'; }?>">
+                    <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/2/delete">Supprimer</a>
                     </span>
                     <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
