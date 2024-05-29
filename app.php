@@ -13,28 +13,26 @@ $f3->set('ROOT', __DIR__);
 $f3->set('UI', $f3->get('ROOT')."/app/views/");
 $f3->set('THEME', $f3->get('ROOT')."/themes/ivso/");
 
-// setlocale(LC_ALL, '');
-// $f3->language(isset($f3->get('HEADERS')['Accept-Language']) ? $f3->get('HEADERS')['Accept-Language'] : '');
-//
-// $f3->set('SUPPORTED_LANGUAGES',
-//     [
-//         'en_US' => 'English',
-//         'fr' => 'Français',
-//     ]);
-// if ($f3->get('GET.lang')) {
-//     selectLanguage($f3->get('GET.lang'), $f3, true);
-// } elseif (isset($_COOKIE['LANGUAGE'])) {
-//     selectLanguage($_COOKIE['LANGUAGE'], $f3, true);
-// } else {
-//     selectLanguage($f3->get('LANGUAGE'), $f3, true);
-// }
+setlocale(LC_ALL, '');
+$f3->language(isset($f3->get('HEADERS')['Accept-Language']) ? $f3->get('HEADERS')['Accept-Language'] : '');
 
-$domain = 'application';
-$lang = "en_US.utf8";
-putenv("LANGUAGE=" . $lang);
+$f3->set('SUPPORTED_LANGUAGES',
+    [
+        'en_US.utf8' => 'English',
+        'fr_FR.utf8' => 'Français',
+    ]);
+if ($f3->get('GET.lang')) {
+    selectLanguage($f3->get('GET.lang'), $f3, true);
+} elseif (isset($_COOKIE['LANGUAGE'])) {
+    selectLanguage($_COOKIE['LANGUAGE'], $f3, true);
+} else {
+    selectLanguage($f3->get('LANGUAGE'), $f3, true);
+}
+
+$domain = basename(glob($f3->get('ROOT')."/locale/application.pot")[0], '.pot');
+
 bindtextdomain($domain, $f3->get('ROOT')."/locale");
 textdomain($domain);
-setlocale(LC_ALL, '');
 
 require_once('config/config.php');
 $f3->set('config', $config);
@@ -62,14 +60,11 @@ function selectLanguage($lang, $f3, $putCookie = false) {
     if(!$langSupported) {
         return null;
     }
-    $langSupported = 'en_US.utf8';
     if($putCookie) {
         $cookieDate = strtotime('+1 year');
         setcookie("LANGUAGE", $langSupported, ['expires' => $cookieDate, 'samesite' => 'Strict', 'path' => "/"]);
     }
-    if (!setlocale(LC_ALL, '')) {
-        throw new Exception('Locale non supportée');
-    }
+    putenv("LANGUAGE=$langSupported");
 }
 
 
