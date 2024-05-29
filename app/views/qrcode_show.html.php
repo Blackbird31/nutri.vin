@@ -242,6 +242,12 @@
     </div>
     <?php endif; ?>
 
+    <?php if ($qrcode->adresse_domaine): ?>
+    <div class="py-2 small text-secondary text-center">
+        <?php echo $qrcode->domaine_nom ?>, <?php echo $qrcode->adresse_domaine ?>
+    </div>
+    <?php endif ?>
+
     <?php if (!empty($publicview)): ?>
     <div class="py-2 small text-secondary text-center border-top">
       <span>Créé le <?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
