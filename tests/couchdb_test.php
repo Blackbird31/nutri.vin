@@ -57,7 +57,7 @@ $qr2->domaine_nom = "Domaine Lorem";
 $qr2->logo = true;
 $qr2->save();
 
-$test->expect($qr2->_id !== null, "Le 2ème qrcode a un identifiant : $qr->_id");
+$test->expect($qr2->_id !== null, "Le 2ème qrcode a un identifiant : $qr2->_id");
 $test->expect($qr2->_id !== $qr->_id, "Le 2ème qrcode a un identifiant différent du premier");
 $qr2 = QRCode::findById($qr2->_id);
 $test->expect(! is_null($qr2), "On retrouve bien le 2ème qrcode");
