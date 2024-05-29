@@ -414,6 +414,19 @@ class CtrlNutriVin {
         echo $qrcode->getQRCodeContent($f3->get('PARAMS.format'), $f3->get('urlbase'), $f3->get('config')['qrcode']);
     }
 
+    public function adminUsers(Base $f3) {
+        if (!$this->isAdmin($f3)) {
+            die('Unauthorized');
+        }
+        $users = [];
+        foreach (QRCode::findAll() as $d) {
+            $users[$d->user_id] = $d->domaine_nom;
+        }
+        $f3->set('users', $users);
+        $f3->set('content', 'admin_users.html.php');
+        echo View::instance()->render('layout.html.php');
+    }
+
     public function isAppellationInConfig($appellation) {
         $c = Base::instance()->get('config');
         $appellationsInstance = array_key_exists('appellations', $c) ? $c['appellations'] : [];
