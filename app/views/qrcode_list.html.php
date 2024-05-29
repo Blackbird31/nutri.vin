@@ -58,6 +58,28 @@
     </div>
 </div>
 
+<?php if (!$qrlist): ?>
+<div class="modal" id="modal-info-list" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalTitle">À votre aimable attention</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Ce service vous est mis à disposition par l'IVSO.</p>
+        <p>Vous ne serez facturé que si l'appellation de votre vin ne figure pas dans le catalogue de l'interprofession.</p>
+
+        <p>Happy QRCoding !</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif ?>
+
 <script>
 
 document.getElementById('allCheck').addEventListener("click", function() {
@@ -72,5 +94,10 @@ document.querySelector('#list_qr').addEventListener('change', function (e) {
     }
 })
 
-
+<?php if (! $qrlist): ?>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = new bootstrap.Modal('#modal-info-list');
+    modal.show();
+});
+<?php endif ?>
 </script>
