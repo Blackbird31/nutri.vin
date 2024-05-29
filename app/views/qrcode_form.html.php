@@ -192,15 +192,15 @@
 
         <ul id="nutritionnelle_tabs" class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="nutritionnelle_simplifie_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_simplifie" type="button" role="tab" aria-controls="nutritionnelle_simplifie" aria-selected="true">Simplifié</button>
+              <button class="nav-link<?php echo $qrcode->nutritionnel_energie_kj ? '' : ' active' ?>" id="nutritionnelle_simplifie_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_simplifie" type="button" role="tab" aria-controls="nutritionnelle_simplifie" aria-selected="true">Simplifié</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="nutritionnelle_complet_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_complet" type="button" role="tab" aria-controls="nutritionnelle_complet" aria-selected="false">Complet</button>
+              <button class="nav-link<?php echo $qrcode->nutritionnel_energie_kj ? ' active' : '' ?>" id="nutritionnelle_complet_tab" data-bs-toggle="tab" data-bs-target="#nutritionnelle_complet" type="button" role="tab" aria-controls="nutritionnelle_complet" aria-selected="false">Complet</button>
             </li>
         </ul>
 
         <div class="tab-content mb-3 pt-4">
-            <div class="tab-pane show active m-0 p-0" id="nutritionnelle_simplifie" role="tabpanel" aria-labelledby="nutritionnelle_simplifie" tabindex="0">
+            <div class="tab-pane show<?php echo $qrcode->nutritionnel_energie_kj ? '' : ' show active' ?> m-0 p-0" id="nutritionnelle_simplifie" role="tabpanel" aria-labelledby="nutritionnelle_simplifie" tabindex="0">
             <table class="table table-sm table-striped">
               <tbody>
                 <tr>
@@ -246,7 +246,7 @@
             </div>
             </div>
 
-            <div class="tab-pane m-0 p-0" id="nutritionnelle_complet" role="tabpanel" aria-labelledby="nutritionnelle_complet">
+            <div class="tab-pane m-0 p-0<?php echo $qrcode->nutritionnel_energie_kj ? ' show active' : '' ?>" id="nutritionnelle_complet" role="tabpanel" aria-labelledby="nutritionnelle_complet">
                 <table class="table table-sm table-striped">
                 <tbody>
                   <tr>
