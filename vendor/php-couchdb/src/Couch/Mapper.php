@@ -24,6 +24,18 @@ class Mapper extends \DB\Cursor {
 		return 'Couch';
 	}
 
+    public function changed($key = null)
+    {
+        $orig = $this->query[0]->document;
+        $new = $this->document;
+
+        if ($key) {
+            return $orig[$key] !== $new[$key];
+        }
+
+        return serialize($orig) !== serialize($new);
+    }
+
 	function exists($key) {
 		return array_key_exists($key, $this->document);
 	}
