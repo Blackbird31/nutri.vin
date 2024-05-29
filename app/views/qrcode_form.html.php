@@ -648,6 +648,28 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#table_ingredients tbody').appendChild(rowOriginal);
         //rowOriginal.remove();
     });
+
+<?php if (isset($create)): ?>
+    function dataURLtoBlob(dataurl) {
+        let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], {type:mime});
+    };
+
+    (document.querySelectorAll('.imgs-list img') || []).forEach(function (i) {
+        if (i.src.startsWith('data:') === false) { return false; }
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(new File([dataURLtoBlob(i.src)], i.id+'.png', {type: 'image/png'}))
+
+        const input = document.querySelector("input[type=file]#"+i.id.replace('img_', ''))
+        input.files = dataTransfer.files
+    })
+<?php endif ?>
+
 })
 
 function ingredientsTextToTable() {
