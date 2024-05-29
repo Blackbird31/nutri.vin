@@ -243,7 +243,7 @@
     <?php endif; ?>
 
     <?php if (!empty($publicview)): ?>
-    <div class="py-2 small text-center border-top">
+    <div class="py-2 small text-secondary text-center border-top">
       <span>Créé le <?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
       <?php if (!empty($publicview) && count($allVersions) > 1): ?>
       – <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Modifié le <?php echo date('d/m/Y H:i', strtotime($lastVersion)); ?></span>
@@ -254,7 +254,7 @@
         </ul>
       <?php endif; ?>
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <span class="ps-3"><i class="bi bi-eye align-middle" title="Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pa
+      <span class="ps-3"><i class="bi bi-eye" title="Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pa
 s de cookie." style="cursor: pointer;"></i> <?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?></span>
     </div>
     <?php endif ?>
