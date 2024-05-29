@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 12:36+0200\n"
+"POT-Creation-Date: 2024-05-29 17:35+0200\n"
 "PO-Revision-Date: 2024-05-29 12:42+0200\n"
 "Last-Translator: tale-fau <tale-fau@24eme.fr>\n"
 "Language-Team: English\n"
@@ -84,6 +84,26 @@ msgstr "Sodium"
 
 msgid "Autres informations"
 msgstr "Other Information"
+
+msgid "Créé le "
+msgstr "Created on "
+
+msgid "Modifié le "
+msgstr "Modified on "
+
+msgid "Voir la version du "
+msgstr "See version from "
+
+msgid ""
+"Seules l'heure de la visite et son origine géographique sont conservées pour "
+"réaliser cette statistique. Conformément à la législation, aucun tracking "
+"n'est réalisé. La consultation de la page ne nécessite pas de cookie."
+msgstr ""
+"Only the time of the visit and its geographical origin are kept for this "
+"statistic. In accordance with the legislation, no tracking is carried out. Viewing the page does not require cookies."
+
+msgid "vue"
+msgstr "view"
 
 msgid "Raisins"
 msgstr "Grapes"
