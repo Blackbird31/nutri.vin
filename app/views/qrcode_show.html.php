@@ -252,18 +252,17 @@
 
     <?php if (!empty($publicview)): ?>
     <div class="py-2 small text-secondary text-center border-top">
-      <span>Créé le <?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
+      <span><?php echo _("Créé le "); ?><?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
       <?php if (!empty($publicview) && count($allVersions) > 1): ?>
-      – <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Modifié le <?php echo date('d/m/Y H:i', strtotime($lastVersion)); ?></span>
+      – <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo _("Modifié le "); ?><?php echo date('d/m/Y H:i', strtotime($lastVersion)); ?></span>
         <ul class="dropdown-menu">
           <?php foreach ($allVersions as $version): ?>
-              <li><a class="dropdown-item<?php if($version == $qrcode->date_version): ?> active disabled<?php endif; ?>" href="<?php echo $urlbase."/".$qrcode->getId() ?>?version=<?php echo urlencode($version); ?>">Voir la version du <?php echo date('d/m/Y H:i', strtotime($version)); ?></a></li>
+              <li><a class="dropdown-item<?php if($version == $qrcode->date_version): ?> active disabled<?php endif; ?>" href="<?php echo $urlbase."/".$qrcode->getId() ?>?version=<?php echo urlencode($version); ?>"><?php echo _("Voir la version du "); ?><?php echo date('d/m/Y H:i', strtotime($version)); ?></a></li>
           <?php endforeach; ?>
         </ul>
       <?php endif; ?>
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <span class="ps-3"><i class="bi bi-eye" title="Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pa
-s de cookie." style="cursor: pointer;"></i> <?php echo $nbVue; ?> vue<?php if ($nbVue > 1): ?>s<?php endif; ?></span>
+      <span class="ps-3"><i class="bi bi-eye" title="<?php echo _("Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie."); ?>" style="cursor: pointer;"></i> <?php echo $nbVue; ?> <?php echo _("vue"); ?><?php if ($nbVue > 1): ?>s<?php endif; ?></span>
     </div>
     <?php endif ?>
 

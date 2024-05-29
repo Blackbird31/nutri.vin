@@ -48,7 +48,7 @@ if (isset($config['urlbase'])) {
     $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
 }
 
-if (isset($config['dbpdo']) && $config['db_pdo']) {
+if (isset($config['db_pdo']) && $config['db_pdo']) {
     DBManager::createDB($config['db_pdo']);
 }else{
     DBManager::createDB('sqlite://'.__DIR__.'/db/nutrivin.sqlite');

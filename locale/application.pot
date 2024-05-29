@@ -85,6 +85,24 @@ msgstr ""
 msgid "Autres informations"
 msgstr ""
 
+msgid "Créé le "
+msgstr ""
+
+msgid "Modifié le "
+msgstr ""
+
+msgid "Voir la version du "
+msgstr ""
+
+msgid ""
+"Seules l'heure de la visite et son origine géographique sont conservées pour "
+"réaliser cette statistique. Conformément à la législation, aucun tracking "
+"n'est réalisé. La consultation de la page ne nécessite pas de cookie."
+msgstr ""
+
+msgid "vue"
+msgstr ""
+
 msgid "Raisins"
 msgstr ""
 
