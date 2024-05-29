@@ -400,6 +400,9 @@ class CtrlNutriVin {
     }
 
     public function isAppellationInConfig($appellation) {
-      return in_array($appellation, $this->getConfig($f3)['appellations']);
+        $c = Base::instance()->get('config');
+        $appellationsInstance = array_key_exists('appellations', $c) ? $c['appellations'] : [];
+
+        return in_array($appellation, $appellationsInstance);
     }
 }
