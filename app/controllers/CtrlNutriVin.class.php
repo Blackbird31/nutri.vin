@@ -37,7 +37,21 @@ class CtrlNutriVin {
       echo $csv;
     }
 
+    private function isAdmin(Base $f3) {
+        if ( !$f3->exists('SESSION.userid')) {
+            return false;
+        }
+        $config = $this->getConfig($f3);
+        if (!isset($config['admin_user'])) {
+            return false;
+        }
+        return $f3->get('SESSION.userid') == $config['admin_user'];
+    }
+
     private function authenticatedUserOnly(Base $f3) {
+        if ($this->isAdmin($f3)) {
+            return true;
+        }
         if ( !$f3->exists('SESSION.userid') || !$f3->exists('PARAMS.userid') ||
              ($f3->get('PARAMS.userid') != $f3->get('SESSION.userid')))
         {

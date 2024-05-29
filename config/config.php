@@ -55,4 +55,5 @@ $config = [
         'logo'  => __DIR__.'/../web/images/ivso.svg',
     ],
 //    'db_pdo' => 'couchdb:http://admin:admin@127.0.0.1:5984/nutrivin_test',
+//    'admin_user' => 'userid',
 ];
