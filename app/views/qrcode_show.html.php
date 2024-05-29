@@ -95,10 +95,12 @@
         <div class="card-body text-dark bg-white">
             <p data-liveform-name="ingredients" data-liveform-template='{{%s}}'
                 class="card-text">
-                <?php if ($current_language == 'fr_FR.utf8'): ?>
-                    <?php echo $qrcode->ingredients ?>
-                <?php else: ?>
-                    <?php echo $qrcode->getIngredientsTraduits($qrcode->ingredients); ?>
+                <?php if ($qrcode->ingredients): ?>
+                    <?php if ($current_language == 'fr_FR.utf8'): ?>
+                        <?php echo $qrcode->ingredients ?>
+                    <?php else: ?>
+                        <?php echo $qrcode->getIngredientsTraduits($qrcode->ingredients); ?>
+                    <?php endif; ?>
                 <?php endif; ?>
             </p>
             <small>
