@@ -25,6 +25,15 @@ class Mapper extends \DB\Cursor {
 	}
 
 	function exists($key) {
+		$db_exists = false;
+		try {
+		    $d = (array) $this->db->getDbInfos();
+		}catch(\Exception $e) {
+		    $d = [];
+		}
+		if (!isset($d['db_name'])) {
+		    return false;
+		}
 		return array_key_exists($key, $this->document);
 	}
 
