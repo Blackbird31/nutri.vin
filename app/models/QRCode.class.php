@@ -5,6 +5,7 @@ namespace app\models;
 use app\exporters\Exporter;
 use app\models\DBManager;
 use \Flash;
+use \Base;
 
 class QRCode extends Mapper
 {
@@ -390,6 +391,14 @@ class QRCode extends Mapper
     $this->versions = json_encode($versions);
   }
 
+    public function getImages()
+    {
+        $images['image_bouteille'] = $this->image_bouteille;
+        $images['image_etiquette'] = $this->image_etiquette;
+        $images['image_contreetiquette'] = $this->image_contreetiquette;
+        return $images;
+    }
+
     public function exportToHttp()
     {
         $fields = $this->toArray();
@@ -401,9 +410,9 @@ class QRCode extends Mapper
         unset($fields['date_creation']);
         unset($fields['date_version']);
 
-        Flash::instance()->setKey('qrcode.image_etiquette', $this->image_etiquette ?: null);
-        Flash::instance()->setKey('qrcode.image_contreetiquette', $this->image_contreetiquette ?: null);
-        Flash::instance()->setKey('qrcode.image_bouteille', $this->image_bouteille ?: null);
+        Base::instance()->set('SESSION.qrcode.image_etiquette', $this->image_etiquette ?: null);
+        Base::instance()->set('SESSION.qrcode.image_contreetiquette', $this->image_contreetiquette ?: null);
+        Base::instance()->set('SESSION.qrcode.image_bouteille', $this->image_bouteille ?: null);
 
         return $fields;
     }
@@ -411,8 +420,12 @@ class QRCode extends Mapper
     public function clone($from)
     {
         $this->copyFrom($from);
-        $this->image_bouteille = Flash::instance()->getKey('qrcode.image_bouteille');
-        $this->image_etiquette = Flash::instance()->getKey('qrcode.image_etiquette');
-        $this->image_contreetiquette = Flash::instance()->getKey('qrcode.image_contreetiquette');
+        $this->image_bouteille = Base::instance()->get('SESSION.qrcode.image_bouteille');
+        $this->image_etiquette = Base::instance()->get('SESSION.qrcode.image_etiquette');
+        $this->image_contreetiquette = Base::instance()->get('SESSION.qrcode.image_contreetiquette');
+    }
+
+    public function getIngredientsTraduits() {
+        return implode('',array_map('_',preg_split("/([ ]*[,;()][ ]*)/", $this->ingredients, -1, PREG_SPLIT_NO_EMPTY  | PREG_SPLIT_DELIM_CAPTURE)));
     }
 }

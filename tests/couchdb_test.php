@@ -26,7 +26,10 @@ try {
 }
 
 DBManager::createDB('couchdb:http://admin:admin@127.0.0.1:5984/nutrivin_test');
-/* DBManager::createDB('sqlite:'.__DIR__.'/../db/nutrivin_test.sqlite'); */
+try {
+    /* unlink(__DIR__.'/../db/nutrivin_test.sqlite'); */
+    /* DBManager::createDB('sqlite:'.__DIR__.'/../db/nutrivin_test.sqlite'); */
+} catch (\Exception $e) {}
 
 // TESTS
 QRCode::createTable();

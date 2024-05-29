@@ -26,7 +26,11 @@ if ($f3->get('GET.lang')) {
 } elseif (isset($_COOKIE['LANGUAGE'])) {
     selectLanguage($_COOKIE['LANGUAGE'], $f3, true);
 } else {
-    selectLanguage($f3->get('LANGUAGE'), $f3, true);
+    selectLanguage($f3->get('LANGUAGE'), $f3);
+}
+
+if (!$f3->get('current_language')) {
+    $f3->set('current_language', 'fr_FR.utf8');
 }
 
 $domain = basename(glob($f3->get('ROOT')."/locale/application.pot")[0], '.pot');
