@@ -346,6 +346,17 @@ class CtrlNutriVin {
         echo View::instance()->render('layout.html.php');
     }
 
+    public function qrcodeWeekStats(Base $f3) {
+        $this->authenticatedUserOnly($f3);
+        $qrcodeid = $f3->get('PARAMS.qrcodeid');
+        $qrcode = QRCode::findById($qrcodeid);
+
+        $f3->set('qrcode', $qrcode);
+        $f3->set('content', 'qrcode_weekstats.html.php');
+        echo View::instance()->render('layout.html.php');
+
+    }
+
     public function qrcodeDisplay(Base $f3) {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $qrcode->logo = (bool)$f3->get('POST.logo');

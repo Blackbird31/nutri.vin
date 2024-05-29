@@ -428,4 +428,32 @@ class QRCode extends Mapper
     public function getIngredientsTraduits() {
         return implode('',array_map('_',preg_split("/([ ]*[,;()][ ]*)/", $this->ingredients, -1, PREG_SPLIT_NO_EMPTY  | PREG_SPLIT_DELIM_CAPTURE)));
     }
+
+    public function getWeekStats() {
+        $stats = [];
+        foreach($this->getVisites() as $v) {
+            $v = str_replace(' ', '-', $v['date']);
+            $duedt = explode("-", $v);
+            $date  = mktime(0, 0, 0, $duedt[1], $duedt[2], $duedt[0]);
+            $week  = sprintf('%04d%02d', $duedt[0], (int)date('W', $date));
+            if (!isset($stats[$week])) {
+                $stats[$week] = ['nb' => 0];
+            }
+            $stats[$week]['nb']++;
+        }
+        for($i = min(array_keys($stats)) ; $i <= max(array_keys($stats)) ; $i++) {
+            $week = substr($i, 4, 2);
+            $annee = substr($i, 0, 4);
+            if ($week > 52) {
+                $i = $annee.'00';
+                continue;
+            }
+            if (!isset($stats[$i])) {
+                $stats[$i] = ['nb' => 0];
+            }
+            $wday = (date('w', strtotime($annee.'-01-01')) + 6) % 7;
+            $stats[$i]['firstday'] = date('Y-m-d', strtotime($annee.'-01-01 + ' . $wday.' days +'.($week -1).' weeks'));
+        }
+        return $stats;
+    }
 }
