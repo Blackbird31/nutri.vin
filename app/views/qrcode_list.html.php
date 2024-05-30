@@ -1,5 +1,5 @@
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
+<nav id="breadcrumb" class="small" aria-label="breadcrumb">
+  <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Liste de vos QR Codes</li>
     </ol>
 </nav>

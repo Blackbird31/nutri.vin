@@ -1,4 +1,4 @@
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+<nav id="breadcrumb" class="small" aria-label="breadcrumb">
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo '/qrcode/'.$qrcode->user_id.'/list'; ?>">Liste de vos QR Codes</a></li>
       <li class="breadcrumb-item active" aria-current="page"><?php if ($qrcode->getId()): ?>Modification du QR Code<?php else: ?>Création d'un QR Code<?php endif; ?></li>
