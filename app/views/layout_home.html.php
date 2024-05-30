@@ -13,6 +13,7 @@
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="/css/common.css" rel="stylesheet" />
+    <?php include($THEME.'css.php'); ?>
   </head>
   <body id="body_home">
     <div class="container-sm p-3"  style="max-width: 768px;">

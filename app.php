@@ -6,12 +6,20 @@ $f3 = require(__DIR__.'/vendor/fatfree-core/base.php');
 
 require __DIR__.'/vendor/autoload.php';
 
+require_once('config/config.php');
+$f3->set('config', $config);
+
 if(getenv("DEBUG")) {
     $f3->set('DEBUG', getenv("DEBUG"));
 }
+
 $f3->set('ROOT', __DIR__);
 $f3->set('UI', $f3->get('ROOT')."/app/views/");
-$f3->set('THEME', $f3->get('ROOT')."/themes/ivso/");
+$f3->set('THEME', implode(DIRECTORY_SEPARATOR, [$f3->get('ROOT'), "themes", $config['theme'], '']));
+
+if (is_dir($f3->get('THEME')) === false) {
+    $f3->set('THEME', implode(DIRECTORY_SEPARATOR, [$f3->get('ROOT'), "themes", 'nutrivin', '']));
+}
 
 setlocale(LC_ALL, '');
 $f3->language(isset($f3->get('HEADERS')['Accept-Language']) ? $f3->get('HEADERS')['Accept-Language'] : '');
@@ -37,9 +45,6 @@ $domain = basename(glob($f3->get('ROOT')."/locale/application.pot")[0], '.pot');
 
 bindtextdomain($domain, $f3->get('ROOT')."/locale");
 textdomain($domain);
-
-require_once('config/config.php');
-$f3->set('config', $config);
 
 if (isset($config['urlbase'])) {
     $f3->set('urlbase', $config['urlbase']);
