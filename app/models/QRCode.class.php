@@ -533,7 +533,7 @@ class QRCode extends Mapper
         return substr($this->responsable_siret, 0, 9);
     }
 
-    private function resizeImage($image, $max) {
+    public static function resizeImage($image, $max) {
       if (!is_file($image)) {
         return false;
       }
