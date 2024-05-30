@@ -47,6 +47,9 @@ class QRCode extends Mapper
 		"image_etiquette" => 1,
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
+        'responsable_nom' => 1,
+        'responsable_siret' => 1,
+        'responsable_adresse' => 1,
 		"authorization_key" => 1,
     "labels" => 1,
   ];
@@ -78,6 +81,9 @@ class QRCode extends Mapper
         'image_etiquette' => 'BLOB',
         'image_contreetiquette' => 'BLOB',
         'autres_infos' => 'TEXT',
+        'responsable_nom' => 'VARCHAR(255)',
+        'responsable_siret' => 'VARCHAR(14)',
+        'responsable_adresse' => 'VARCHAR(255)',
         'authorization_key' => 'VARCHAR(100)',
         'date_creation' => 'VARCHAR(26)',
         'date_version' => 'VARCHAR(26)',
@@ -487,5 +493,9 @@ class QRCode extends Mapper
             $stats[$i]['name'] = date('Y-m-d', strtotime($annee.'-01-01 + ' . $wday.' days +'.($week -1).' weeks'));
         }
         return $stats;
+    }
+
+    public function getResponsableSIREN() {
+        return substr($this->responsable_siret, 0, 9);
     }
 }

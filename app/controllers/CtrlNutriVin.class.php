@@ -104,7 +104,7 @@ class CtrlNutriVin {
         return $f3->reroute('/qrcode/'.$qrcode->user_id.'/edit/'.$qrcode->getId()."#photos", false);
     }
 
-    function initDefaultOnQRCode(& $qrcode){
+    function initDefaultOnQRCode(& $qrcode, $f3) {
         if (!$qrcode->image_bouteille) {
             $qrcode->image_bouteille = '/images/default_bouteille.jpg';
         }
@@ -113,6 +113,12 @@ class CtrlNutriVin {
         }
         if (!$qrcode->image_contreetiquette) {
             $qrcode->image_contreetiquette = '/images/default_contreetiquette.jpg';
+        }
+        if (!$qrcode->responsable_siret && $f3->get('SESSION.siret')) {
+            $qrcode->responsable_siret = $f3->get('SESSION.siret');
+        }
+        if (!$qrcode->responsable_nom && $f3->get('SESSION.username')) {
+            $qrcode->responsable_nom = $f3->get('SESSION.username');
         }
     }
 
@@ -125,7 +131,7 @@ class CtrlNutriVin {
         $qrcode->user_id = $f3->get('PARAMS.userid');
         $qrcode->clone('GET');
 
-        $this->initDefaultOnQRCode($qrcode);
+        $this->initDefaultOnQRCode($qrcode, $f3);
 
         $f3->set('qrcode', $qrcode);
         $f3->set('create', true);
@@ -147,7 +153,7 @@ class CtrlNutriVin {
             throw new Exception('not allowed');
         }
 
-        $this->initDefaultOnQRCode($qrcode);
+        $this->initDefaultOnQRCode($qrcode, $f3);
 
         $f3->set('qrcode', $qrcode);
         $f3->set('content','qrcode_form.html.php');
@@ -229,8 +235,11 @@ class CtrlNutriVin {
             if (preg_match('/cas:viticonnect_entity_1_accises>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
                 $userid = $m[1];
             }
-            if (!$userid && preg_match('/cas:viticonnect_entity_1_siret>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
-                $userid = $m[1];
+            if (preg_match('/cas:viticonnect_entity_1_siret>([^<]*)<\/cas:viticonnect_entity_1/', $validate, $m)) {
+                $f3->set('SESSION.siret', $m[1]);
+                if (!$userid) {
+                    $userid = $m[1];
+                }
             }
             if (!$userid && $origin && preg_match('/cas:user>([^<]*)<\/cas:user/', $validate, $m)) {
                 $userid = $origin.':'.$m[1];
@@ -316,7 +325,7 @@ class CtrlNutriVin {
           $qrcode->copyfrom($versions[$qrcode->date_version]);
         }
 
-        $this->initDefaultOnQRCode($qrcode);
+        $this->initDefaultOnQRCode($qrcode, $f3);
 
         $f3->set('content', 'qrcode_show.html.php');
         $f3->set('qrcode', $qrcode);
