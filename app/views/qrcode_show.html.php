@@ -227,14 +227,14 @@
     </div>
     <?php endif; ?>
 
-    <div class="py-2 bg-white text-center liveform_anchor">
+    <div class="py-4 bg-white text-center liveform_anchor">
       <?php foreach ($qrcode->getLabels() as $label): ?>
         <img class="bg-white px-1" style="height: 30px;" title="Vin labellisé <?php echo $label ?>" src="/images/labels/<?php echo strtolower($label) ?>.png" >
       <?php endforeach; ?>
     </div>
 
     <?php if (!empty($qrcode->autres_infos)): ?>
-    <div class="card text-bg-Light mt-4 mb-1 shadow-sm liveform_anchor">
+    <div class="card text-bg-Light my-4 shadow-sm liveform_anchor">
         <div class="card-header text-center"><i class="bi bi-clipboard-data float-start"></i><?php echo _("Autres informations"); ?></div>
         <p class="pt-2 px-2"
            data-liveform-name="autres_infos" data-liveform-template='{{%s}}'
@@ -244,15 +244,28 @@
     </div>
     <?php endif; ?>
 
-    <?php if ($qrcode->adresse_domaine): ?>
-    <div class="py-2 small text-secondary text-center">
-        <?php echo $qrcode->domaine_nom ?>, <?php echo $qrcode->adresse_domaine ?>
-    </div>
-    <?php endif ?>
+    <div class="mt-2 pt-2 small text-secondary text-center border-top liveform_anchor">
+            <strong>Mentions légales :</strong>
 
+            Cette fiche nutritionnelle est éditée sous la seule responsablité de :
+                <span data-liveform-name="responsable_nom" data-liveform-template='{{%s}}' ><?php echo $qrcode->responsable_nom; ?></span>
+                (<a target="_blank" href="https://annuaire-entreprises.data.gouv.fr/entreprise/<?php echo $qrcode->getResponsableSIREN(); ?>" class="link-secondary"><span data-liveform-name="responsable_siret" data-liveform-template='{{%s}}' ><?php echo $qrcode->getResponsableSIREN(); ?></span></a>),
+                <span data-liveform-name="responsable_adresse" data-liveform-template='{{%s}}' ><?php echo $qrcode->responsable_adresse; ?></span>.
+
+            Elle est hébergée par :
+                <?php echo $config['herbergeur_raison_sociale']; ?>
+                (<a target="_blank" href="https://annuaire-entreprises.data.gouv.fr/entreprise/<?php echo $config['herbergeur_siren']; ?>" class="link-secondary"><?php echo $config['herbergeur_siren']; ?></a>),
+                <?php echo $config['herbergeur_adresse']; ?>, <?php echo $config['herbergeur_contact']; ?>.
+
+            <?php echo $config['herbergeur_raison_sociale']; ?>,
+            sa plateforme <?php echo preg_replace('/https?:../', '', $urlbase); ?>
+            et le projet libre <a target="_blank" href="https://github.com/24eme/nutri.vin/" class="link-secondary">NutriVin</a>
+            ne peuvent être tenus responsables des informations publiées. Un historique de chaque modification est conservée et consultable publiquement
+        </p>
+    </div>
     <?php if (!empty($publicview)): ?>
-    <div class="py-2 small text-secondary text-center border-top">
-      <span><?php echo _("Créé le "); ?><?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?></span>
+    <div class="small text-secondary text-center">
+      <?php echo _("Créé le "); ?><?php echo date('d/m/Y H:i', strtotime($qrcode->date_creation)); ?>
       <?php if (!empty($publicview) && count($allVersions) > 1): ?>
       – <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo _("Modifié le "); ?><?php echo date('d/m/Y H:i', strtotime($lastVersion)); ?></span>
         <ul class="dropdown-menu">
@@ -262,7 +275,9 @@
         </ul>
       <?php endif; ?>
       <?php $nbVue = count($qrcode->getVisites()); ?>
-      <span class="ps-3"><i class="bi bi-eye" title="<?php echo _("Seules l'heure de la visite et son origine géographique sont conservées pour réaliser cette statistique. Conformément à la législation, aucun tracking n'est réalisé. La consultation de la page ne nécessite pas de cookie."); ?>" style="cursor: pointer;"></i> <?php echo $nbVue; ?> <?php echo _("vue"); ?><?php if ($nbVue > 1): ?>s<?php endif; ?></span>
+      <span class="ps-3" title="<?php echo _("Seules l'heure de la première visite de la session et une évaluation géographique de la connexion sont conservées pour réaliser cette statistique. Conformément à la législation, aucune données à caractère personnel n'est conservé et aucuun suivi des visiteurs de cette fiche n'est réalisé. La consultation de la page ne nécessite pas de cookie."); ?>">
+          <i class="bi bi-eye"  style="cursor: pointer;"></i> <?php echo $nbVue; ?> <?php echo _("vue"); ?><?php if ($nbVue > 1): ?>s<?php endif; ?>
+      </span>
     </div>
     <?php endif ?>
 

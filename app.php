@@ -7,7 +7,8 @@ $f3 = require(__DIR__.'/vendor/fatfree-core/base.php');
 require __DIR__.'/vendor/autoload.php';
 
 require_once('config/config.php');
-$f3->set('config', $config);
+require_once('config/instances.php');
+
 
 if(getenv("DEBUG")) {
     $f3->set('DEBUG', getenv("DEBUG"));
@@ -53,11 +54,31 @@ if (isset($config['urlbase'])) {
     $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
 }
 
+$instance_id = null;
+if ($f3->get('urlbase')) {
+    $site = preg_replace('/https?:../', '', $f3->get('urlbase'));
+    if (isset($instances[$site])) {
+        $instance_id = $instances[$site];
+    }
+}
+if (!$instance_id) {
+    if (isset($config['instance_id'])) {
+        $instance_id = $config['instance_id'];
+    }
+}
+if (!$instance_id) {
+    $instance_id = '0';
+}
+putenv('INSTANCE_ID='.$instance_id);
+$config['instance_id'] = $instance_id;
+
 if (isset($config['db_pdo']) && $config['db_pdo']) {
     DBManager::createDB($config['db_pdo']);
 }else{
     DBManager::createDB('sqlite://'.__DIR__.'/db/nutrivin.sqlite');
 }
+
+$f3->set('config', $config);
 
 include('app/routes.php');
 

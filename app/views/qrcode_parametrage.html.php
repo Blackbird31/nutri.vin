@@ -14,12 +14,16 @@
         <?php include('_phone.html.php') ?>
     </div>
     <div class="col-6 mt-5 offset-1 border-start">
-        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->getId() ?>" enctype="multipart/form-data">
+        <form id="logoForm" method="POST" action="/qrcode/<?php echo $qrcode->user_id ?>/parametrage/<?php echo $qrcode->getId() ?>">
             <div class="d-flex justify-content-center align-items-center flex-column">
                 <img src="/<?php echo $qrcode->getId() ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
-                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du QR Code</label>
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="mentions" id="switch-mentions-qrcode"<?php echo $qrcode->mentions ? ' checked' : ''?>>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-mentions-qrcode">Intégrer les mentions obligatoires autour du QRCode</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code</label>
                 </div>
             </div>
         </form>
@@ -44,10 +48,12 @@
 </div>
 
 <script>
-    const checkbox = document.getElementById('switch-logo-qrcode');
+    const checkboxes = [document.getElementById('switch-logo-qrcode'), document.getElementById('switch-mentions-qrcode')];
 
-    checkbox.addEventListener('change', function() {
-        document.getElementById('logoForm').submit();
+    checkboxes.forEach((item, i) => {
+        item.addEventListener('change', function() {
+            document.getElementById('logoForm').submit();
+        });
     });
 
     <?php if (isset($from)): ?>

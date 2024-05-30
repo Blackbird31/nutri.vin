@@ -394,7 +394,7 @@
                     <span style="<?php if (strpos($qrcode->image_bouteille ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/0/delete">Supprimer</a>
                     </span>
-                    <input type="file" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
+                    <input type="file" accept="image/png, image/jpeg" class="d-none form-control" id="image_bouteille" name="image_bouteille" data-imageorigin="img_image_bouteille" defaultvalue="<?php echo $qrcode->image_bouteille; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Étiquette<br/>
@@ -408,7 +408,7 @@
                     <span style="<?php if (strpos($qrcode->image_etiquette ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/1/delete">Supprimer</a>
                     </span>
-                    <input type="file" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
+                    <input type="file" accept="image/png, image/jpeg" class="d-none form-control" id="image_etiquette" name="image_etiquette" data-imageorigin="img_image_etiquette" defaultvalue="<?php echo $qrcode->image_etiquette; ?>"/>
                 </div>
                 <div class="text-center col-sm-4 img_selector">
                     Contre-étiquette<br/>
@@ -422,7 +422,7 @@
                     <span style="<?php if (strpos($qrcode->image_contreetiquette ?? '', 'data:') === false || isset($create)) { echo 'display: none;'; }?>">
                         <a class="btn btn-link btn-sm" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId(); ?>/img/2/delete">Supprimer</a>
                     </span>
-                    <input type="file" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
+                    <input type="file" accept="image/png, image/jpeg" class="d-none form-control" id="image_contreetiquette" name="image_contreetiquette" data-imageorigin="img_image_contreetiquette" defaultvalue="<?php echo $qrcode->image_contreetiquette; ?>"/>
                 </div>
             </div>
         </div>
@@ -445,6 +445,27 @@
             <div class="form-text">
               Les informations indiquée ici ne doivent être ni commerciales, ni marketing.
             </div>
+        </div>
+
+        <h3 class="mt-4 mb-4">Responsabilité juridique</h3>
+
+        <p>Vous êtes le seul responsable des informations nutritionelles affichées sur cette fiche. En la validant, vous garantissez qu'elle ne contienne ni information commerciales ni information marketing. Pour des raisons légales, la fiche doit contenir les informations permettant aux visiteurs et aux institutions en charge de la concurrence et de la répression des fraudes de vous contacter :</p>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="responsable_siret" name="responsable_siret" placeholder="SIRET du responsable" value="<?php echo $qrcode->responsable_siret ;?>" required="required"/>
+            <label for="responsable_siret">SIRET du responsable</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="responsable_nom" name="responsable_nom" placeholder="Nom du responsable" value="<?php echo $qrcode->responsable_nom; ?>" required="required"/>
+            <label for="responsable_nom">Dénomination sociale et forme juridique du responsable</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="responsable_adresse" name="responsable_adresse" placeholder="L'adresse du responsable" value="<?php echo $qrcode->responsable_adresse ;?>" required="required"/>
+            <label for="responsable_adresse">Adresse du responsable</label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="responsable_valid" required="required" data-liveform-ignore/>
+            <label for="responsable_valid" class="form-check-label">J'ai vérifié que les informations de cette fiche sont conformes à mon vin et qu'aucune information commerciale ou marketing ne sera publiée.</label>
         </div>
 
         <?php if ($qrcode->exists('authorization_key')): ?>
