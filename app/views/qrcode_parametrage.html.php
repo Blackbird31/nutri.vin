@@ -22,8 +22,8 @@
                     <label class="form-check-label" style="cursor: pointer" for="switch-mentions-qrcode">Intégrer les mentions obligatoires autour du QRCode</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
-                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code</label>
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo ($qrcode->logo && $canSwitchLogo) ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code<?php if (!$canSwitchLogo) { echo " (appellation non compatible)";} ?></label>
                 </div>
             </div>
         </form>

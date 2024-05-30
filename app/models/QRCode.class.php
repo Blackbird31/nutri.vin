@@ -92,6 +92,7 @@ class QRCode extends Mapper
         'date_version' => 'VARCHAR(26)',
         'logo' => 'BOOL',
         'mentions' => 'BOOL',
+        'appellation_instance' => 'BOOL',
         'visites' => 'TEXT',
         'labels' => 'TEXT',
         'versions' => 'TEXT',
@@ -325,9 +326,12 @@ class QRCode extends Mapper
 		}
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
-			$this->logo = 1;
-			$this->mentions = 1;
+			$this->logo = true;
+			$this->mentions = true;
 		}
+        if (!$this->appellation_instance) {
+            $this->logo = false;
+        }
 
 		if (!$this->date_creation) {
       $this->date_version = date('c');

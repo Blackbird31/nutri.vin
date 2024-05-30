@@ -91,6 +91,7 @@ class CtrlNutriVin {
                     }
                 }
             }
+            $qrcode->appellation_instance = $this->isAppellationInConfig($qrcode->appellation);
             $qrcode->save();
             return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId().'?from=create', false);
         }
