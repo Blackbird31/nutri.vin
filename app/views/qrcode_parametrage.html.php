@@ -6,7 +6,7 @@
 </nav>
 
 <div class="mb-4">
-    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
+    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-link" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
 </div>
 <div class="row justify-content-end">
     <div class="col-4 offset-1">
