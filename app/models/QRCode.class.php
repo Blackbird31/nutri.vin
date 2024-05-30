@@ -345,7 +345,8 @@ class QRCode extends Mapper
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
-			$id = '10';
+			$id = getenv('INSTANCE_ID');
+			$id = ($id) ? $id : "0";
 			for($i = strlen($id) ; $i < 8 ; $i++) {
 				$id .= substr(self::$CHARID, rand(0, strlen(self::$CHARID)), 1);
 			}
