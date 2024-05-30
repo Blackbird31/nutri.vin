@@ -488,7 +488,7 @@
     </div>
 </div>
 
-<div class="row mt-5">
+<div style="margin-bottom: calc(-.5 * var(--bs-gutter-x))" class="row mt-5 border-top py-3 bg-light">
     <div class="col-6">
         <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
     </div>
