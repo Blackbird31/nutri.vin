@@ -136,8 +136,8 @@
                   <tbody></tbody>
             </table>
             <template id="ingredient_row">
-                <tr>
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;" draggable="true"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                <tr draggable="true">
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_additif text-center align-middle">
                         <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                         <div class="input-group d-none">
@@ -634,20 +634,65 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     });
 
-    document.querySelector('#table_ingredients').addEventListener('dragstart', function (e) {
-        const row = e.target.closest('tr');
-        e.dataTransfer.addElement(row);
-        e.dataTransfer.setData('indexOf', Array.from(document.querySelector('#table_ingredients tbody').children).indexOf(row))
-    });
+    (function () {
+        const table = document.querySelector('#table_ingredients')
+        const tbody = table.querySelector('tbody')
+        const thead = table.querySelector('thead')
 
-    document.querySelector('#table_ingredients').addEventListener('dragend', function (e) {
-        console.log(e);
-        console.log(e.dataTransfer.getData('indexOf'));
-        const rowOriginal = Array.from(document.querySelector('#table_ingredients tbody').children)[e.dataTransfer.getData('indexOf')];
+        let elDragged
 
-        document.querySelector('#table_ingredients tbody').appendChild(rowOriginal);
-        //rowOriginal.remove();
-    });
+        table.addEventListener('dragstart', function (e) {
+            console.log('dragstart')
+
+            elDragged = e.target.tag === 'TR' ? e.target : e.target.closest('tr');
+            elDragged.classList.add('dragging')
+            e.dataTransfer.effectAllowed = 'move'
+        });
+
+        table.addEventListener('dragover', function (e) {
+            console.log('drag');
+            e.preventDefault();
+
+            const row = e.target.tag === 'TR' ? e.target : e.target.closest('tr');
+            row.style = 'border-bottom: dashed 1px black'
+        })
+
+        table.addEventListener('dragleave', function (e) {
+            console.log('drag');
+            e.preventDefault();
+
+            const row = e.target.tag === 'TR' ? e.target : e.target.closest('tr');
+            row.style = 'border-bottom: solid 0 inherit'
+        })
+
+        tbody.addEventListener('drop', function (e) {
+            e.preventDefault();
+            console.log('drop');
+
+            const hoveredRow = e.target.tag === 'TR' ? e.target : e.target.closest('tr');
+                  hoveredRow.style = 'border-bottom: solid 0 inherit'
+            const nextSibling = hoveredRow.nextSibling
+            tbody.insertBefore(elDragged, nextSibling)
+        })
+
+        thead.addEventListener('drop', function (e) {
+            // pour mettre en premier élément
+            e.preventDefault();
+            console.log('drop');
+
+            const hoveredRow = e.target.tag === 'TR' ? e.target : e.target.closest('tr');
+                  hoveredRow.style = 'border-bottom: solid 0 inherit'
+            tbody.insertBefore(elDragged, tbody.querySelector('tr'))
+        })
+
+        table.addEventListener('dragend', function (e) {
+            console.log('dragend')
+
+            elDragged.classList.remove('dragging')
+            elDragged = null
+            ingredientsTableToText()
+        });
+    })();
 
 <?php if (isset($create)): ?>
     function dataURLtoBlob(dataurl) {
