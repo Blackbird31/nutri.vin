@@ -397,6 +397,15 @@ class QRCode extends Mapper
 
   private function addVersion(array $qrcode, $datetime) {
     $versions = $this->getVersions();
+    if (!empty($qrcode['image_bouteille'])) {
+      $qrcode['image_bouteille'] = $this->getImageResized($qrcode['image_bouteille']);
+    }
+    if (!empty($qrcode['image_etiquette'])) {
+      $qrcode['image_etiquette'] = $this->getImageResized($qrcode['image_etiquette']);
+    }
+    if (!empty($qrcode['image_contreetiquette'])) {
+      $qrcode['image_contreetiquette'] = $this->getImageResized($qrcode['image_contreetiquette']);
+    }
     $versions[$datetime] = $qrcode;
     krsort($versions);
     $this->versions = json_encode($versions);
