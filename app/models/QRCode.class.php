@@ -105,16 +105,28 @@ class QRCode extends Mapper
       return self::find();
   }
 
-  public static function find($criteria = null) {
+  public static function find($criteria = null, $instance_only = true) {
       $class = get_called_class();
       $e = new $class();
       $items = [];
       foreach ($e->mapper->find($criteria) as $result) {
           $a = new $class();
           $a->mapper->load([self::$primaryKey.'=?', $result->{self::$primaryKey}]);
+          if ($instance_only && strpos($a->id, getenv('INSTANCE_ID')) !== 0) {
+              continue;
+          }
           $items[] = $a;
       };
       return $items;
+  }
+
+  public static function findById($id, $instance_only = true) {
+      $a = parent::findById($id);
+      if ($instance_only && strpos($a->id, getenv('INSTANCE_ID')) !== 0) {
+          return null;
+      }
+      return $a;
+
   }
 
     public static function getListeCategoriesAdditif() {
