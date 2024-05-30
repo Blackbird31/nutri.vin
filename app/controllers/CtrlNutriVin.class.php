@@ -83,7 +83,9 @@ class CtrlNutriVin {
             }
             foreach(['image_bouteille', 'image_etiquette', 'image_contreetiquette'] as $img) {
                 if(isset($_FILES[$img]) && in_array($_FILES[$img]['type'], array('image/jpeg', 'image/png'))) {
-                    $qrcode->{$img} = 'data:'.$_FILES[$img]['type'].';base64,'.base64_encode(file_get_contents($_FILES[$img]['tmp_name']));
+                    if ($imageResized = $this->resizeImage($_FILES[$img]['tmp_name'], QRCode::IMG_MAX_RESOLUTION)) {
+                      $qrcode->{$img} = 'data:'.$_FILES[$img]['type'].';base64,'.base64_encode(file_get_contents($imageResized));
+                    }
                 }
             }
             $qrcode->save();
