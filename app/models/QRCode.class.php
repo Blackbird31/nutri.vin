@@ -19,6 +19,7 @@ class QRCode extends Mapper
       'authorization_key',
       'date_version',
       'logo',
+      'mentions',
       'visites',
       'versions'
     ];
@@ -88,6 +89,7 @@ class QRCode extends Mapper
         'date_creation' => 'VARCHAR(26)',
         'date_version' => 'VARCHAR(26)',
         'logo' => 'BOOL',
+        'mentions' => 'BOOL',
         'visites' => 'TEXT',
         'labels' => 'TEXT',
         'versions' => 'TEXT',
@@ -360,7 +362,7 @@ class QRCode extends Mapper
             $urlbase.'/'.$this->getId(),
             $format,
             ($this->logo) ? $config['logo'] : false,
-            [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]
+            ($this->mentions) ? [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]: []
         );
   }
 

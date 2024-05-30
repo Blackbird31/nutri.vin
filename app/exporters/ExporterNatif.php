@@ -27,9 +27,10 @@ class ExporterNatif
         if($logo) {
             $configuration->setLogo($logo);
         }
-
-        $configuration->setTitle("  INGRÉDIENTS :");
-        $configuration->setEnergies($energies);
+        if (count($energies)) {
+            $configuration->setTitle("  INGRÉDIENTS :");
+            $configuration->setEnergies($energies);
+        }
 
         $content = (new QRCode($configuration))->render($qrCodeData);
 
