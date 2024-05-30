@@ -402,6 +402,23 @@ class QRCode extends Mapper
     $this->versions = json_encode($versions);
   }
 
+  private function getImageResized($b64Image) {
+    if (strpos($b64Image, 'base64,') === false) {
+      return $b64Image;
+    }
+    $entete = substr($b64Image, 0, strpos($b64Image, 'base64,')+7);
+    $image = base64_decode(substr($b64Image, strpos($b64Image, 'base64,')+7));
+    $tmp = tmpfile();
+    $metas = stream_get_meta_data($tmp);
+    fwrite($tmp, $image);
+    $imageResized = self::resizeImage($metas['uri'], self::IMG_VERSION_MAX_RESOLUTION);
+    if ($imageResized) {
+      return $entete.base64_encode(file_get_contents($imageResized));
+    }
+    fclose($tmp);
+    return $b64Image;
+  }
+
     public function getImages()
     {
         $images['image_bouteille'] = $this->image_bouteille;
