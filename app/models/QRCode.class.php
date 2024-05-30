@@ -498,6 +498,6 @@ class QRCode extends Mapper
     }
 
     public function getResponsableSIREN() {
-        return substr($this->responsable_siret, 0, 9);
+        return (!empty($this->responsable_siret))? substr($this->responsable_siret, 0, 9) : null;
     }
 }
