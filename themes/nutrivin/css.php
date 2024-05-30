@@ -15,4 +15,15 @@
         --bs-btn-hover-border-color: #327669;
         --bs-btn-active-border-color: #227b69;
     }
+
+    .btn-outline-primary {
+      --bs-btn-color: #277767;
+      --bs-btn-border-color: #277767;
+      --bs-btn-hover-bg: #277767;
+      --bs-btn-hover-border-color: #277767;
+      --bs-btn-active-bg: #277767;
+      --bs-btn-active-border-color: #277767;
+      --bs-btn-disabled-color: #277767;
+      --bs-btn-disabled-border-color: #277767;
+    }
 </style>

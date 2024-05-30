@@ -6,6 +6,10 @@ body {
     background-color: white;
 }
 
+#breadcrumb {
+    --bs-breadcrumb-divider: '>';
+}
+
 #carrousel {
     position: relative;
     display: flex;
@@ -15,4 +19,8 @@ body {
     display: block;
     height: 200px;
     cursor: pointer;
+}
+
+.dragging {
+    opacity: 0.4;
 }

@@ -92,6 +92,7 @@ class QRCode extends Mapper
         'date_version' => 'VARCHAR(26)',
         'logo' => 'BOOL',
         'mentions' => 'BOOL',
+        'appellation_instance' => 'BOOL',
         'visites' => 'TEXT',
         'labels' => 'TEXT',
         'versions' => 'TEXT',
@@ -105,16 +106,28 @@ class QRCode extends Mapper
       return self::find();
   }
 
-  public static function find($criteria = null) {
+  public static function find($criteria = null, $instance_only = true) {
       $class = get_called_class();
       $e = new $class();
       $items = [];
       foreach ($e->mapper->find($criteria) as $result) {
           $a = new $class();
           $a->mapper->load([self::$primaryKey.'=?', $result->{self::$primaryKey}]);
+          if ($instance_only && (!$a || strpos($a->getId(), getenv('INSTANCE_ID')) !== 0)) {
+              continue;
+          }
           $items[] = $a;
       };
       return $items;
+  }
+
+  public static function findById($id, $instance_only = true) {
+      $a = parent::findById($id);
+      if ($instance_only && $a && strpos($a->getId(), getenv('INSTANCE_ID')) !== 0) {
+          return null;
+      }
+      return $a;
+
   }
 
     public static function getListeCategoriesAdditif() {
@@ -313,7 +326,12 @@ class QRCode extends Mapper
 		}
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
+			$this->logo = true;
+			$this->mentions = true;
 		}
+        if (!$this->appellation_instance) {
+            $this->logo = false;
+        }
 
 		if (!$this->date_creation) {
       $this->date_version = date('c');
@@ -349,7 +367,7 @@ class QRCode extends Mapper
 		for($x = 0 ; $x < 10 ; $x++) {
 			$id = getenv('INSTANCE_ID');
 			$id = ($id) ? $id : "0";
-			for($i = strlen($id) ; $i < 8 ; $i++) {
+			for($i = strlen($id) ; $i < 7 ; $i++) {
 				$id .= substr(self::$CHARID, rand(0, strlen(self::$CHARID)), 1);
 			}
 			$qr = self::findById($id);

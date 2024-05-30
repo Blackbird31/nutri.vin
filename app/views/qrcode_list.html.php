@@ -1,5 +1,5 @@
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
+<nav id="breadcrumb" class="small" aria-label="breadcrumb">
+  <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">Liste de vos QR Codes</li>
     </ol>
 </nav>
@@ -48,10 +48,10 @@
                             }
                         ?></td>
                         <td>
-                            <a title="Modifier le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->getId() ?>"><i class="bi bi-pencil-fill"></i></a>
-                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->getId() ?>"><i class="bi bi-qr-code"></i></a>
-                            <a title="Visualiser le QRCode" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/stats/<?php echo $qr->getId() ?>/week"><i class="bi bi-clipboard2-data"></i></a>
-                            <a title="Dupliquer" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->getId() ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
+                            <a data-bs-toggle="tooltip" title="Modifier" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/edit/<?php echo $qr->getId() ?>"><i class="bi bi-pencil-fill"></i></a>
+                            <a data-bs-toggle="tooltip" title="Visualiser et télécharger" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/parametrage/<?php echo $qr->getId() ?>"><i class="bi bi-qr-code"></i></a>
+                            <a data-bs-toggle="tooltip" title="Voir les statistiques d'utilisations" class="p-1 text-dark" href="/qrcode/<?php echo $qr->user_id ?>/stats/<?php echo $qr->getId() ?>/week"><i class="bi bi-clipboard2-data"></i></a>
+                            <a data-bs-toggle="tooltip" title="Dupliquer (créer un nouveau QR Code à partir des informations de celui-ci)" href="/qrcode/<?php echo $qr->user_id ?>/duplicate/<?php echo $qr->getId() ?>" class="text-dark float-end"><i class="bi bi-copy"></i></a>
                         </td>
                         <td><input form="multiExportForm" type="checkbox" name="qrcodes[]" value='<?php echo $qr->getId(); ?>'></td>
                     </tr>

@@ -2,17 +2,20 @@
 
 $instances = [
     //===== Instances nationales =====
-    // 50 milliards de fiches possibles
+    // 900 millions de fiches possibles
+    // 62 instances possibles
 
     'nutri.vin' => '10',
 
     //===== Instances régionales =====
-    // 900 millions de fiches possibles
+    // 14 millions de fiches possibles
+    // 3800 instances possibles
 
     'qr-so.fr' => '200',
 
     //=====  Instances locales   =====
-    // 14 millions de fiches possibles
+    // 230 000 de fiches possibles
+    // 230 000 instances possibles
 
     'mondomaine.example.org' => '3fff',
 
