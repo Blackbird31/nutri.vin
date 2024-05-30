@@ -541,17 +541,11 @@ class QRCode extends Mapper
       $width = $size[0];
       $height = $size[1];
       $mime = $size['mime'];
-      if ($width <= $max && $height <= $max) {
+      if ($height <= $max) {
         return $image;
       }
-      $ratio = $width / $height;
-      if ($width > $height) {
-        $newWidth = $max;
-        $newHeight = $max / $ratio;
-      } else {
-        $newHeight = $max;
-        $newWidth = $max * $ratio;
-      }
+      $newHeight = $max;
+      $newWidth = floor($max * $width / $height);
       $newImage = imagecreatetruecolor($newWidth, $newHeight);
       if ($mime == 'image/jpeg') {
         $source = imagecreatefromjpeg($image);
