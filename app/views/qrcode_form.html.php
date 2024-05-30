@@ -137,21 +137,21 @@
             </table>
             <template id="ingredient_row">
                 <tr draggable="true">
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;"><i class="bi bi-grip-vertical"></i></span><input form="form_add_ingredients" type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_additif text-center align-middle">
-                        <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                        <input form="form_add_ingredients" class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                         <div class="input-group d-none">
                             <div class="input-group-text">
-                                <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                                <input form="form_add_ingredients" class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                             </div>
-                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
+                            <input form="form_add_ingredients" type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
                         </div>
                     </td>
                     <td class="ingredient_ab text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
+                        <input form="form_add_ingredients" class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
                     </td>
                     <td class="ingredient_allergene text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
+                        <input form="form_add_ingredients" class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
                     </td>
                 </tr>
             </template>
@@ -162,7 +162,7 @@
                           <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
                           <label form="lot">Ingrédient(s)</label>
                       </div>
-                      <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+                      <button form="form_add_ingredients" class="btn btn-outline-primary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
                     </div>
                 </div>
                 <datalist id="ingredients_list">
