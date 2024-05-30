@@ -584,7 +584,23 @@ document.addEventListener('DOMContentLoaded', function () {
             row.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
             row.querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
             row.querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
-            row.querySelector('.ingredient_additif .input_additif').focus();
+
+            if(!e.target.checked) {
+                row.querySelector('.ingredient_additif .input_additif').value = null
+            } else {
+                row.querySelector('.ingredient_additif .input_additif').focus();
+            }
+
+        }
+
+        if(e.target.classList.contains('input_ingredient')) {
+            const additif = autoDetectAdditif(e.target.value);
+            if(additif) {
+                if(!e.target.closest('tr').querySelector('.checkbox_additif').checked) {
+                    e.target.closest('tr').querySelector('.checkbox_additif').click()
+                }
+                e.target.closest('tr').querySelector('.input_additif').value = additif
+            }
         }
 
         if (e.target.closest('#table_ingredients')) {
@@ -593,6 +609,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (e.target.id == 'ingredients') {
             ingredientsTextToTable();
+            ingredientsTableToText();
         }
 
         if (e.target.type === 'file') {
@@ -672,6 +689,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
+function autoDetectAllergene(ingredient) {
+    if(ingredient.match(/^_[^_]*_\*?$/)) {
+
+        return ingredient
+    }
+
+    const dataOption = document.querySelector(`#ingredients_list option[value="${ingredient}"`)
+
+    if(dataOption && dataOption.dataset && dataOption.dataset.allergene) {
+        ingredient = '_'+ingredient+'_'
+    }
+
+    return ingredient
+}
+
+function autoDetectAdditif(ingredient) {
+    const dataOption = document.querySelector(`#ingredients_list option[value="${ingredient}"`)
+
+    if(dataOption && dataOption.dataset && dataOption.dataset.additif) {
+        return dataOption.dataset.additif
+    }
+
+    return null
+}
+
 function ingredientsTextToTable() {
     let ingredientsText = document.getElementById('ingredients').value
     const ingredientsTableBody = document.querySelector('table#table_ingredients tbody')
@@ -697,6 +739,10 @@ function ingredientsTextToTable() {
         if(ingredient.match(/\:/)) {
             additif = ingredient.split(/[ ]*:[ ]*/)[0]
             ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
+        }
+        ingredient = autoDetectAllergene(ingredient)
+        if(!additif) {
+            additif = autoDetectAdditif(ingredient)
         }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         if(additif) {
@@ -744,6 +790,7 @@ function ingredientsTableToText() {
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
+        ingredient = autoDetectAllergene(ingredient)
         if(item.querySelector('td.ingredient_ab input').checked) {
             ingredient += '*'
         }
@@ -765,18 +812,6 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
     }
 
     ingredient_to_add = text_add_ingredient.value;
-
-    /* selection automatique des allergenes et additif */
-    const datalist = document.getElementById(text_add_ingredient.getAttribute("list"));
-    const option = datalist.querySelector(`[value="${ingredient_to_add}"]`);
-    if (option) {
-        if (option.getAttribute('data-allergene')) {
-            ingredient_to_add = '_'+ingredient_to_add+'_';
-        }
-        if (option.getAttribute('data-additif')) {
-            ingredient_to_add = option.getAttribute('data-additif')+' : '+ingredient_to_add;
-        }
-    }
 
     if(input_ingredients.value) {
         input_ingredients.value += ', '
