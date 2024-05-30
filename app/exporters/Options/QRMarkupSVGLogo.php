@@ -56,7 +56,9 @@ class QRMarkupSVGLogo extends QRMarkupSVG
     }
 
     protected function getEnergies()
-    {
+    {   if (!$this->options->svgEnergies || count($this->options->svgEnergies) != 2) {
+            return '';
+        }
         return sprintf(
             '%3$s<text x="50%%" y="40" font-size="3" text-anchor="middle">E = %1$s KCal / %2$s KJ</text>%3$s',
             $this->options->svgEnergies[0],

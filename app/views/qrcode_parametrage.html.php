@@ -6,7 +6,7 @@
 </nav>
 
 <div class="mb-4">
-    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
+    <h1 class="text-center">Visualisation de votre QR Code <a class="btn btn-link" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a></h1>
 </div>
 <div class="row justify-content-end">
     <div class="col-4 offset-1">
@@ -22,8 +22,8 @@
                     <label class="form-check-label" style="cursor: pointer" for="switch-mentions-qrcode">Intégrer les mentions obligatoires autour du QRCode</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
-                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code</label>
+                    <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo ($qrcode->logo && $canSwitchLogo) ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code<?php if (!$canSwitchLogo) { echo " (appellation non compatible)";} ?></label>
                 </div>
             </div>
         </form>
@@ -43,8 +43,13 @@
     </div>
 </div>
 
-<div class="mt-5">
-    <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+<div class="mt-5 row">
+    <div class="col-4">
+        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+    </div>
+    <div class="col-4 text-center">
+        <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a>
+    </div>
 </div>
 
 <script>
