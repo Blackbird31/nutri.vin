@@ -3,7 +3,7 @@
     <div class="input-group shadow-sm">
         <span class="input-group-text border-bottom-0 rounded-bottom-0"><i class="bi bi-globe"></i></span>
         <input type="text" class="form-control text-muted border-bottom-0 rounded-bottom-0" readonly="readonly" value="<?php echo $urlbase."/".$qrcode->getId() ?>" />
-        <button class="input-group-text  border-bottom-0 rounded-bottom-0" type="button"><i class="bi bi-clipboard"></i></button>
+        <button class="input-group-text  border-bottom-0 rounded-bottom-0 animation-fade-in" id="btn-copy" type="button" onclick="document.getElementById('btn-copy').style.display = 'none'; navigator.clipboard.writeText('<?php echo $urlbase."/".$qrcode->getId(); ?>'); setTimeout('document.getElementById(\'btn-copy\').style.display = \'block\'', 500);"><i class="bi bi-clipboard"></i></button>
         <a class="input-group-text  border-bottom-0 rounded-bottom-0" href="/<?php echo $qrcode->getId() ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
     </div>
 <?php else:?>
