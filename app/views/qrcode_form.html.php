@@ -880,7 +880,7 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
     ingredient_to_add = text_add_ingredient.value;
 
     if(input_ingredients.value) {
-        input_ingredients.value += ', '
+        input_ingredients.value += '; '
     }
     input_ingredients.value += ingredient_to_add;
     text_add_ingredient.value = "";
