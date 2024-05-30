@@ -7,7 +7,7 @@
 </nav>
 
 <div class="mb-4">
-    <h1 class="text-center">Stat <?php echo ($type == 'week') ? 'temporelle' : 'géographique'; ?> d'un QRcode</h1>
+    <h1 class="text-center">Stats d'un QRcode</h1>
     <h2 class="text-center text-muted">
     <?php echo $qrcode->cuvee_nom; ?>
     <?php echo $qrcode->appellation; ?> <?php echo $qrcode->couleur; ?>
@@ -17,6 +17,15 @@
 </div>
 <div class="row">
 <div class="offset-1 col-10">
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link<?php if  ($type == 'week') echo ' active' ; ?>" href="week">Vue hebdomadaire</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link<?php if  ($type == 'geo') echo ' active' ; ?>" href="geo">Vue géographique</a>
+  </li>
+</ul>
+<p>Voici les statistiques disponibles pour cette vue :</p>
 <table class="table">
     <thead>
             <th><?php echo ($type == 'week') ? 'Date' : 'Localisation'; ?></th>
@@ -39,12 +48,12 @@
     <?php endif ?>
     </tbody>
 </table>
+<p class="text-muted pt-3">Le site ne collecte ou ne suit aucun utilisateur. Les seules informations issues des visites sont la date de la première visite de la page et une évaluation de la localisation de la connexion. Aucune information à caractère personnel n'est collectée, aucun cookie n'est déposé lors de la lecture d'une fiche d'un vin.</p>
 </div>
 
 <div class="mt-5">
     <div class="row">
     <p class="col-6"><a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a></p>
-    <p class="col-6 text-end"><a href="/qrcode/<?php echo $qrcode->user_id ?>/stats/<?php echo $qrcode->getId(); ?>/<?php echo ($type == 'week') ? 'geo' : 'week'; ?>" class="btn btn-success">Vue <?php echo ($type != 'week') ? 'temporelle' : 'géographique'; ?> <i class="bi bi-chevron-compact-right"></i> </a></p>
 </div>
 
 </div>
