@@ -564,7 +564,8 @@ const liveform = (function () {
             });
             reader.readAsDataURL(file);
         } else {
-            let ingredientsListe = (el.value).replace(/_(.*?)_/g, "<strong>$1</strong>");
+            let ingredientsListe = el.value.replace(/_(.*?)_/g, "<strong>$1</strong>");
+            ingredientsListe = ingredientsListe.replace(/ ?([^,]* : [^;]* ; )/g, " <em>$1</em> ");
             toUpdate.innerHTML = toUpdate.dataset.liveformTemplate.replace('{{%s}}', ingredientsListe)
         }
         const blockAnchor = toUpdate.closest('.liveform_anchor')
