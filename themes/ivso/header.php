@@ -1,4 +1,3 @@
-<?php include($THEME.'css.php'); ?>
 <div class="py-2 bg-white">
     <div class="container">
         <h1 class="fs-5 d-inline-block text-primary">

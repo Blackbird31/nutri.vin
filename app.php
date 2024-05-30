@@ -6,12 +6,21 @@ $f3 = require(__DIR__.'/vendor/fatfree-core/base.php');
 
 require __DIR__.'/vendor/autoload.php';
 
+require_once('config/config.php');
+require_once('config/instances.php');
+
+
 if(getenv("DEBUG")) {
     $f3->set('DEBUG', getenv("DEBUG"));
 }
+
 $f3->set('ROOT', __DIR__);
 $f3->set('UI', $f3->get('ROOT')."/app/views/");
-$f3->set('THEME', $f3->get('ROOT')."/themes/ivso/");
+$f3->set('THEME', implode(DIRECTORY_SEPARATOR, [$f3->get('ROOT'), "themes", $config['theme'], '']));
+
+if (is_dir($f3->get('THEME')) === false) {
+    $f3->set('THEME', implode(DIRECTORY_SEPARATOR, [$f3->get('ROOT'), "themes", 'nutrivin', '']));
+}
 
 setlocale(LC_ALL, '');
 $f3->language(isset($f3->get('HEADERS')['Accept-Language']) ? $f3->get('HEADERS')['Accept-Language'] : '');
@@ -38,9 +47,6 @@ $domain = basename(glob($f3->get('ROOT')."/locale/application.pot")[0], '.pot');
 bindtextdomain($domain, $f3->get('ROOT')."/locale");
 textdomain($domain);
 
-require_once('config/config.php');
-$f3->set('config', $config);
-
 if (isset($config['urlbase'])) {
     $f3->set('urlbase', $config['urlbase']);
 }else{
@@ -48,11 +54,31 @@ if (isset($config['urlbase'])) {
     $f3->set('urlbase', $f3->get('SCHEME').'://'.$_SERVER['SERVER_NAME'].(!in_array($port,[80,443])?(':'.$port):'').$f3->get('BASE'));
 }
 
+$instance_id = null;
+if ($f3->get('urlbase')) {
+    $site = preg_replace('/https?:../', '', $f3->get('urlbase'));
+    if (isset($instances[$site])) {
+        $instance_id = $instances[$site];
+    }
+}
+if (!$instance_id) {
+    if (isset($config['instance_id'])) {
+        $instance_id = $config['instance_id'];
+    }
+}
+if (!$instance_id) {
+    $instance_id = '0';
+}
+putenv('INSTANCE_ID='.$instance_id);
+$config['instance_id'] = $instance_id;
+
 if (isset($config['db_pdo']) && $config['db_pdo']) {
     DBManager::createDB($config['db_pdo']);
 }else{
     DBManager::createDB('sqlite://'.__DIR__.'/db/nutrivin.sqlite');
 }
+
+$f3->set('config', $config);
 
 include('app/routes.php');
 

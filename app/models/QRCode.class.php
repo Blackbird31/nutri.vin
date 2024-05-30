@@ -9,6 +9,8 @@ use \Base;
 
 class QRCode extends Mapper
 {
+    const IMG_MAX_RESOLUTION = 2000;
+    const IMG_VERSION_MAX_RESOLUTION = 200;
 
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
@@ -19,6 +21,7 @@ class QRCode extends Mapper
       'authorization_key',
       'date_version',
       'logo',
+      'mentions',
       'visites',
       'versions'
     ];
@@ -47,6 +50,9 @@ class QRCode extends Mapper
 		"image_etiquette" => 1,
 		"image_contreetiquette" => 1,
 		"autres_infos" => 1,
+        'responsable_nom' => 1,
+        'responsable_siret' => 1,
+        'responsable_adresse' => 1,
 		"authorization_key" => 1,
     "labels" => 1,
   ];
@@ -78,10 +84,14 @@ class QRCode extends Mapper
         'image_etiquette' => 'BLOB',
         'image_contreetiquette' => 'BLOB',
         'autres_infos' => 'TEXT',
+        'responsable_nom' => 'VARCHAR(255)',
+        'responsable_siret' => 'VARCHAR(14)',
+        'responsable_adresse' => 'VARCHAR(255)',
         'authorization_key' => 'VARCHAR(100)',
         'date_creation' => 'VARCHAR(26)',
         'date_version' => 'VARCHAR(26)',
         'logo' => 'BOOL',
+        'mentions' => 'BOOL',
         'visites' => 'TEXT',
         'labels' => 'TEXT',
         'versions' => 'TEXT',
@@ -337,7 +347,8 @@ class QRCode extends Mapper
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
-			$id = '10';
+			$id = getenv('INSTANCE_ID');
+			$id = ($id) ? $id : "0";
 			for($i = strlen($id) ; $i < 8 ; $i++) {
 				$id .= substr(self::$CHARID, rand(0, strlen(self::$CHARID)), 1);
 			}
@@ -354,7 +365,7 @@ class QRCode extends Mapper
             $urlbase.'/'.$this->getId(),
             $format,
             ($this->logo) ? $config['logo'] : false,
-            [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]
+            ($this->mentions) ? [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]: []
         );
   }
 
@@ -487,5 +498,12 @@ class QRCode extends Mapper
             $stats[$i]['name'] = date('Y-m-d', strtotime($annee.'-01-01 + ' . $wday.' days +'.($week -1).' weeks'));
         }
         return $stats;
+    }
+
+    public function getResponsableSIREN() {
+        if (!$this->responsable_siret) {
+            return '';
+        }
+        return substr($this->responsable_siret, 0, 9);
     }
 }
