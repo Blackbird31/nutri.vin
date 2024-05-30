@@ -83,13 +83,51 @@ class CtrlNutriVin {
             }
             foreach(['image_bouteille', 'image_etiquette', 'image_contreetiquette'] as $img) {
                 if(isset($_FILES[$img]) && in_array($_FILES[$img]['type'], array('image/jpeg', 'image/png'))) {
-                    $qrcode->{$img} = 'data:'.$_FILES[$img]['type'].';base64,'.base64_encode(file_get_contents($_FILES[$img]['tmp_name']));
+                    if ($imageResized = $this->resizeImage($_FILES[$img]['tmp_name'], QRCode::IMG_MAX_RESOLUTION)) {
+                      $qrcode->{$img} = 'data:'.$_FILES[$img]['type'].';base64,'.base64_encode(file_get_contents($imageResized));
+                    }
                 }
             }
             $qrcode->save();
             return $f3->reroute('/qrcode/'.$qrcode->user_id.'/parametrage/'.$qrcode->getId().'?from=create', false);
         }
         return $f3->reroute('/qrcode', false);
+    }
+
+    private function resizeImage($image, $max) {
+      if (!is_file($image)) {
+        return false;
+      }
+      $size = getimagesize($image);
+      $width = $size[0];
+      $height = $size[1];
+      $mime = $size['mime'];
+      if ($width <= $max && $height <= $max) {
+        return $image;
+      }
+      $ratio = $width / $height;
+      if ($width > $height) {
+          $newWidth = $max;
+          $newHeight = $max / $ratio;
+      } else {
+          $newHeight = $max;
+          $newWidth = $max * $ratio;
+      }
+      $newImage = imagecreatetruecolor($newWidth, $newHeight);
+      if ($mime == 'image/jpeg') {
+        $source = imagecreatefromjpeg($image);
+        imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagejpeg($newImage, $image);
+      } elseif ($mime == 'image/png') {
+        $source = imagecreatefrompng($image);
+        imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagepng($newImage, $image);
+      } else {
+        return false;
+      }
+      imagedestroy($source);
+      imagedestroy($newImage);
+      return $image;
     }
 
     function qrcodeDeleteImage(Base $f3) {

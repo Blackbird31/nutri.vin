@@ -9,6 +9,8 @@ use \Base;
 
 class QRCode extends Mapper
 {
+    const IMG_MAX_RESOLUTION = 2000;
+    const IMG_VERSION_MAX_RESOLUTION = 200;
 
     public static $CHARID = 'azertyuiopqsdfghjklmwxcvbn'.
                             'AZERTYUIOPQSDFGHJKLMWXCVBN'.
