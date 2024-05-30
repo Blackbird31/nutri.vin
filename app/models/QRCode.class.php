@@ -325,6 +325,8 @@ class QRCode extends Mapper
 		}
 		if (!$this->getId()) {
 			$this->setId(self::generateId());
+			$this->logo = 1;
+			$this->mentions = 1;
 		}
 
 		if (!$this->date_creation) {
