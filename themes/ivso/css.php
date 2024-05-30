@@ -3,6 +3,14 @@
         --bs-primary-rgb: 14, 34 , 68;
         --bs-primary: #0e2244;
         --bs-primary-bg-subtle: #648cd0;
+        --bs-link-color-rgb: 62, 90, 138;
+        --bs-link-hover-color-rgb: 14, 34, 68;
+        --bs-link-color: #1a335d;
+        --bs-nav-link-hover-color: #0e2244;
+    }
+
+    .btn-link {
+        --bs-btn-hover-color: #0e2244;
     }
 
     .btn-primary {
