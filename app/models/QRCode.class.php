@@ -553,6 +553,8 @@ class QRCode extends Mapper
         imagejpeg($newImage, $image);
       } elseif ($mime == 'image/png') {
         $source = imagecreatefrompng($image);
+        imagealphablending($newImage, false);
+        imagesavealpha($newImage,true);
         imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
         imagepng($newImage, $image);
       } else {
