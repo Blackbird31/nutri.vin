@@ -9,10 +9,13 @@ class CtrlNutriVin {
         echo View::instance()->render('layout_home.html.php');
     }
 
-    function setup(Base $f3) {
+    function adminSetup(Base $f3) {
         $qrcode = new QRCode();
         if (!$qrcode->tableExists()) {
             QRcode::createTable();
+        }
+        if (!$this->isAdmin($f3) && count(QRCode::findAll())) {
+            die('Unauthorized');
         }
         $f3->set('content','admin_setup.html.php');
         echo View::instance()->render('layout.html.php');
