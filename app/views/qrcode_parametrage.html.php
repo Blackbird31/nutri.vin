@@ -19,11 +19,11 @@
                 <img src="/<?php echo $qrcode->getId() ?>/svg" class="img-thumbnail" style="height: 350px; width: 350px;">
                 <div class="form-check form-switch">
                     <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="mentions" id="switch-mentions-qrcode"<?php echo $qrcode->mentions ? ' checked' : ''?>>
-                    <label class="form-check-label" style="cursor: pointer" for="switch-mentions-qrcode">Afficher les mentions obligatoires autour du QRCode</label>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-mentions-qrcode">Intégrer les mentions obligatoires autour du QRCode</label>
                 </div>
                 <div class="form-check form-switch">
                     <input class="form-check-input" style="cursor: pointer" type="checkbox" role="switch" value="1" name="logo" id="switch-logo-qrcode"<?php echo $qrcode->logo ? ' checked' : ''?> <?php echo $canSwitchLogo === false ? ' disabled' : '' ?>>
-                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Afficher le logo au centre du QR Code</label>
+                    <label class="form-check-label" style="cursor: pointer" for="switch-logo-qrcode">Intégrer le logo au centre du QR Code</label>
                 </div>
             </div>
         </form>
