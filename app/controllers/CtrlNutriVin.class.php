@@ -408,6 +408,7 @@ class CtrlNutriVin {
     public function qrcodeDisplay(Base $f3) {
         $qrcode = QRCode::findById($f3->get('PARAMS.qrcodeid'));
         $qrcode->logo = (bool)$f3->get('POST.logo');
+        $qrcode->mentions = (bool)$f3->get('POST.mentions');
 
         $config = $this->getConfig($f3);
         if ($this->isAppellationInConfig($qrcode->appellation) === false) {

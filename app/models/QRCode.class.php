@@ -21,6 +21,7 @@ class QRCode extends Mapper
       'authorization_key',
       'date_version',
       'logo',
+      'mentions',
       'visites',
       'versions'
     ];
@@ -90,6 +91,7 @@ class QRCode extends Mapper
         'date_creation' => 'VARCHAR(26)',
         'date_version' => 'VARCHAR(26)',
         'logo' => 'BOOL',
+        'mentions' => 'BOOL',
         'visites' => 'TEXT',
         'labels' => 'TEXT',
         'versions' => 'TEXT',
@@ -345,7 +347,8 @@ class QRCode extends Mapper
 
 	public static function generateId() {
 		for($x = 0 ; $x < 10 ; $x++) {
-			$id = '10';
+			$id = getenv('INSTANCE_ID');
+			$id = ($id) ? $id : "0";
 			for($i = strlen($id) ; $i < 8 ; $i++) {
 				$id .= substr(self::$CHARID, rand(0, strlen(self::$CHARID)), 1);
 			}
@@ -362,7 +365,7 @@ class QRCode extends Mapper
             $urlbase.'/'.$this->getId(),
             $format,
             ($this->logo) ? $config['logo'] : false,
-            [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]
+            ($this->mentions) ? [$this->nutritionnel_energie_kcal, $this->nutritionnel_energie_kj]: []
         );
   }
 
@@ -498,6 +501,9 @@ class QRCode extends Mapper
     }
 
     public function getResponsableSIREN() {
-        return (!empty($this->responsable_siret))? substr($this->responsable_siret, 0, 9) : null;
+        if (!$this->responsable_siret) {
+            return '';
+        }
+        return substr($this->responsable_siret, 0, 9);
     }
 }
