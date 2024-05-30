@@ -1,5 +1,3 @@
-<?php include($THEME.'css.php'); ?>
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 <div class="container">
   <a class="navbar-brand" href="/qrcode/userid/list"><img src="/images/logo.svg" class="mx-auto d-block" alt="Logo nutrivin" width="42" height="42"></a>
