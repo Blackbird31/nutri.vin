@@ -113,7 +113,7 @@ class QRCode extends Mapper
       foreach ($e->mapper->find($criteria) as $result) {
           $a = new $class();
           $a->mapper->load([self::$primaryKey.'=?', $result->{self::$primaryKey}]);
-          if ($instance_only && strpos($a->id, getenv('INSTANCE_ID')) !== 0) {
+          if ($instance_only && strpos($a->getId(), getenv('INSTANCE_ID')) !== 0) {
               continue;
           }
           $items[] = $a;
@@ -123,7 +123,7 @@ class QRCode extends Mapper
 
   public static function findById($id, $instance_only = true) {
       $a = parent::findById($id);
-      if ($instance_only && strpos($a->id, getenv('INSTANCE_ID')) !== 0) {
+      if ($instance_only && strpos($a->getId(), getenv('INSTANCE_ID')) !== 0) {
           return null;
       }
       return $a;
