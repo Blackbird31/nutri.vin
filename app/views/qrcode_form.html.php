@@ -137,21 +137,21 @@
             </table>
             <template id="ingredient_row">
                 <tr draggable="true">
-                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;"><i class="bi bi-grip-vertical"></i></span><input type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
+                    <td class="ingredient_libelle" scope="row"><div class="input-group"><span class="input-group-text" style="cursor: grab;"><i class="bi bi-grip-vertical"></i></span><input form="form_add_ingredients" type="text" class="form-control input_ingredient" list="ingredients_list"></div></td>
                     <td class="ingredient_additif text-center align-middle">
-                        <input class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                        <input form="form_add_ingredients" class="form-check-input checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                         <div class="input-group d-none">
                             <div class="input-group-text">
-                                <input class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
+                                <input form="form_add_ingredients" class="form-check-input mt-0 checkbox_additif" type="checkbox" value="" label="case à cocher pour déclarer un additif">
                             </div>
-                            <input type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
+                            <input form="form_add_ingredients" type="text" class="form-control input_additif" list="categories_additif_list" placeholder="Catégorie">
                         </div>
                     </td>
                     <td class="ingredient_ab text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
+                        <input form="form_add_ingredients" class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient bio">
                     </td>
                     <td class="ingredient_allergene text-center align-middle">
-                        <input class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
+                        <input form="form_add_ingredients" class="form-check-input" type="checkbox" value="" aria-label="case à cocher pour déclarer un ingrédient allergène">
                     </td>
                 </tr>
             </template>
@@ -162,7 +162,7 @@
                           <input list="ingredients_list" form="form_add_ingredients" id="text_add_ingredient" type="text" class="form-control" placeholder="Ingrédient(s)" aria-label="Ingrédient(s)" aria-describedby="btn_add_ingredient">
                           <label form="lot">Ingrédient(s)</label>
                       </div>
-                      <button form="form_add_ingredients" class="btn btn-secondary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
+                      <button form="form_add_ingredients" class="btn btn-outline-primary" type="submit" id="btn_add_ingredient"><i class="bi bi-plus-circle"></i> Ajouter</button>
                     </div>
                 </div>
                 <datalist id="ingredients_list">
@@ -605,7 +605,23 @@ document.addEventListener('DOMContentLoaded', function () {
             row.querySelectorAll('.checkbox_additif').forEach(function(item) { item.checked = e.target.checked;})
             row.querySelector('.ingredient_additif .input-group').classList.toggle("d-none", !e.target.checked);
             row.querySelector('.ingredient_additif > input[type=checkbox]').classList.toggle("d-none", e.target.checked);
-            row.querySelector('.ingredient_additif .input_additif').focus();
+
+            if(!e.target.checked) {
+                row.querySelector('.ingredient_additif .input_additif').value = null
+            } else {
+                row.querySelector('.ingredient_additif .input_additif').focus();
+            }
+
+        }
+
+        if(e.target.classList.contains('input_ingredient')) {
+            const additif = autoDetectAdditif(e.target.value);
+            if(additif) {
+                if(!e.target.closest('tr').querySelector('.checkbox_additif').checked) {
+                    e.target.closest('tr').querySelector('.checkbox_additif').click()
+                }
+                e.target.closest('tr').querySelector('.input_additif').value = additif
+            }
         }
 
         if (e.target.closest('#table_ingredients')) {
@@ -614,6 +630,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (e.target.id == 'ingredients') {
             ingredientsTextToTable();
+            ingredientsTableToText();
         }
 
         if (e.target.type === 'file') {
@@ -738,6 +755,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
+function autoDetectAllergene(ingredient) {
+    if(ingredient.match(/^_[^_]*_\*?$/)) {
+
+        return ingredient
+    }
+
+    const dataOption = document.querySelector(`#ingredients_list option[value="${ingredient}"`)
+
+    if(dataOption && dataOption.dataset && dataOption.dataset.allergene) {
+        ingredient = '_'+ingredient+'_'
+    }
+
+    return ingredient
+}
+
+function autoDetectAdditif(ingredient) {
+    const dataOption = document.querySelector(`#ingredients_list option[value="${ingredient}"`)
+
+    if(dataOption && dataOption.dataset && dataOption.dataset.additif) {
+        return dataOption.dataset.additif
+    }
+
+    return null
+}
+
 function ingredientsTextToTable() {
     let ingredientsText = document.getElementById('ingredients').value
     const ingredientsTableBody = document.querySelector('table#table_ingredients tbody')
@@ -763,6 +805,10 @@ function ingredientsTextToTable() {
         if(ingredient.match(/\:/)) {
             additif = ingredient.split(/[ ]*:[ ]*/)[0]
             ingredient = ingredient.split(/[ ]*:[ ]*/)[1]
+        }
+        ingredient = autoDetectAllergene(ingredient)
+        if(!additif) {
+            additif = autoDetectAdditif(ingredient)
         }
         const templateClone = document.querySelector("#ingredient_row").content.cloneNode(true);
         if(additif) {
@@ -810,6 +856,7 @@ function ingredientsTableToText() {
         if(item.querySelector('td.ingredient_allergene input').checked) {
             ingredient = '_'+ingredient+'_'
         }
+        ingredient = autoDetectAllergene(ingredient)
         if(item.querySelector('td.ingredient_ab input').checked) {
             ingredient += '*'
         }
@@ -832,20 +879,8 @@ document.querySelector('#form_add_ingredients').addEventListener('submit', funct
 
     ingredient_to_add = text_add_ingredient.value;
 
-    /* selection automatique des allergenes et additif */
-    const datalist = document.getElementById(text_add_ingredient.getAttribute("list"));
-    const option = datalist.querySelector(`[value="${ingredient_to_add}"]`);
-    if (option) {
-        if (option.getAttribute('data-allergene')) {
-            ingredient_to_add = '_'+ingredient_to_add+'_';
-        }
-        if (option.getAttribute('data-additif')) {
-            ingredient_to_add = option.getAttribute('data-additif')+' : '+ingredient_to_add;
-        }
-    }
-
     if(input_ingredients.value) {
-        input_ingredients.value += ', '
+        input_ingredients.value += '; '
     }
     input_ingredients.value += ingredient_to_add;
     text_add_ingredient.value = "";

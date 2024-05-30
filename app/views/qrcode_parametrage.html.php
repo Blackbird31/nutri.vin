@@ -43,8 +43,13 @@
     </div>
 </div>
 
-<div class="mt-5">
-    <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+<div class="mt-5 row">
+    <div class="col-4">
+        <a href="/qrcode/<?php echo $qrcode->user_id ?>/list" class="btn btn-light"><i class="bi bi-chevron-compact-left"></i> Retour à la liste</a>
+    </div>
+    <div class="col-4 text-center">
+        <a class="btn btn-light" href="/qrcode/<?php echo $qrcode->user_id ?>/edit/<?php echo $qrcode->getId() ?>"><i class="bi bi-pencil-fill"></i> Modifier</a>
+    </div>
 </div>
 
 <script>
