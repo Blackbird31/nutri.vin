@@ -18,14 +18,14 @@
       <p class="alert alert-warning">Ce QRCode a déjà été consulté par au moins une personne extérieure. Par soucis de transparence, la modification que vous pourriez réaliser sera consultable publiquement</p>
       <?php endif; ?>
 
-      <h3 class="mt-4 mb-4"><i class="bi bi-person-fill"></i> Identité du commercialisant</h3>
+      <h4 class="mt-4 mb-4"><i class="bi bi-person-fill"></i> Identité du commercialisant</h4>
 
       <div class="form-floating mb-3">
           <input type="text" class="form-control" id="domaine_nom" name="domaine_nom" placeholder="Mon domaine" value="<?php echo $qrcode->domaine_nom; ?>"/>
           <label for="domaine_nom">Nom du Domaine</label>
       </div>
 
-      <h3 class="mt-4 mb-4"><i class="bi bi-droplet-fill"></i> Information relative au vin</h3>
+      <h4 class="mt-4 mb-4"><i class="bi bi-droplet-fill"></i> Information relative au vin</h4>
 
 
       <div class="form-floating mb-3">
@@ -74,7 +74,7 @@
 
        </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-info-circle"></i> Informations complémentaires</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-info-circle"></i> Informations complémentaires</h4>
         <div class="d-flex justify-content-between">
             <div class="col-sm-3">
                 <div class="input-group mb-3">
@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-card-list"></i> Liste des ingrédients</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-card-list"></i> Liste des ingrédients</h4>
 
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item" role="presentation">
@@ -184,7 +184,7 @@
           </div>
         </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-clipboard-data"></i> Informations nutritionelles</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-clipboard-data"></i> Informations nutritionelles</h4>
 
         <ul id="nutritionnelle_tabs" class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation">
@@ -374,7 +374,7 @@
             </div>
         </div>
 
-        <h3 class="mt-4 mb-4" id="photos"><i class="bi bi-image"></i> Photos</h3>
+        <h4 class="mt-4 mb-4" id="photos"><i class="bi bi-image"></i> Photos</h4>
 
         <div class="mb-3 imgs-list">
             <div class="row">
@@ -423,7 +423,7 @@
             </div>
         </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-tag"></i> Labels complémentaires</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-tag"></i> Labels complémentaires</h4>
         <?php $labels = $qrcode->getLabels(); ?>
         <div class="mb-3">
           <?php foreach ($qrcode::$LABELS as $label): ?>
@@ -434,7 +434,7 @@
           <?php endforeach; ?>
         </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-info-lg"></i> Autres informations destinées aux consommateurs</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-info-lg"></i> Autres informations destinées aux consommateurs</h4>
 
         <div class="mb-3">
             <textarea class="form-control" name="autres_infos" rows="3"><?php echo $qrcode->autres_infos; ?></textarea>
@@ -443,7 +443,7 @@
             </div>
         </div>
 
-        <h3 class="mt-4 mb-4"><i class="bi bi-building-check"></i> Responsabilité juridique</h3>
+        <h4 class="mt-4 mb-4"><i class="bi bi-building-check"></i> Responsabilité juridique</h4>
 
         <p>Vous êtes le seul responsable des informations nutritionelles affichées sur cette fiche. En la validant, vous garantissez qu'elle ne contienne ni information commerciales ni information marketing. Pour des raisons légales, la fiche doit contenir les informations permettant aux visiteurs et aux institutions en charge de la concurrence et de la répression des fraudes de vous contacter :</p>
 
