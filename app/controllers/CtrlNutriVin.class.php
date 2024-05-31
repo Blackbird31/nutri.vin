@@ -5,6 +5,10 @@ use app\models\QRCode;
 use Web\Geo;
 
 class CtrlNutriVin {
+    function index(Base $f3) {
+        echo View::instance()->render('layout_index.html.php');
+    }
+
     function home(Base $f3) {
         echo View::instance()->render('layout_home.html.php');
     }
