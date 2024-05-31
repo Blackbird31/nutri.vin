@@ -460,7 +460,7 @@
             <label for="responsable_nom">Dénomination sociale et forme juridique du responsable</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="responsable_adresse" name="responsable_adresse" placeholder="L'adresse du responsable" value="<?php echo $qrcode->responsable_adresse ;?>" required="required"/>
+            <input type="text" class="form-control" id="responsable_adresse" name="responsable_adresse" placeholder="L'adresse du responsable" value="<?php echo $qrcode->responsable_adresse ;?>"/>
             <label for="responsable_adresse">Adresse du responsable</label>
         </div>
         <div class="mb-3 form-check">
