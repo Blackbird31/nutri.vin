@@ -415,9 +415,35 @@ class QRCode extends Mapper
 
   private function addVersion(array $qrcode, $datetime) {
     $versions = $this->getVersions();
+    if (!empty($qrcode['image_bouteille'])) {
+      $qrcode['image_bouteille'] = $this->getImageResized($qrcode['image_bouteille']);
+    }
+    if (!empty($qrcode['image_etiquette'])) {
+      $qrcode['image_etiquette'] = $this->getImageResized($qrcode['image_etiquette']);
+    }
+    if (!empty($qrcode['image_contreetiquette'])) {
+      $qrcode['image_contreetiquette'] = $this->getImageResized($qrcode['image_contreetiquette']);
+    }
     $versions[$datetime] = $qrcode;
     krsort($versions);
     $this->versions = json_encode($versions);
+  }
+
+  private function getImageResized($b64Image) {
+    if (strpos($b64Image, 'base64,') === false) {
+      return $b64Image;
+    }
+    $entete = substr($b64Image, 0, strpos($b64Image, 'base64,')+7);
+    $image = base64_decode(substr($b64Image, strpos($b64Image, 'base64,')+7));
+    $tmp = tmpfile();
+    $metas = stream_get_meta_data($tmp);
+    fwrite($tmp, $image);
+    $imageResized = self::resizeImage($metas['uri'], self::IMG_VERSION_MAX_RESOLUTION);
+    if ($imageResized) {
+      return $entete.base64_encode(file_get_contents($imageResized));
+    }
+    fclose($tmp);
+    return $b64Image;
   }
 
     public function getImages()
@@ -523,5 +549,37 @@ class QRCode extends Mapper
             return '';
         }
         return substr($this->responsable_siret, 0, 9);
+    }
+
+    public static function resizeImage($image, $max) {
+      if (!is_file($image)) {
+        return false;
+      }
+      $size = getimagesize($image);
+      $width = $size[0];
+      $height = $size[1];
+      $mime = $size['mime'];
+      if ($height <= $max) {
+        return $image;
+      }
+      $newHeight = $max;
+      $newWidth = floor($max * $width / $height);
+      $newImage = imagecreatetruecolor($newWidth, $newHeight);
+      if ($mime == 'image/jpeg') {
+        $source = imagecreatefromjpeg($image);
+        imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagejpeg($newImage, $image);
+      } elseif ($mime == 'image/png') {
+        $source = imagecreatefrompng($image);
+        imagealphablending($newImage, false);
+        imagesavealpha($newImage,true);
+        imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagepng($newImage, $image);
+      } else {
+        return false;
+      }
+      imagedestroy($source);
+      imagedestroy($newImage);
+      return $image;
     }
 }
